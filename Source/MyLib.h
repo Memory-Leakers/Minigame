@@ -5,4 +5,4 @@
 // Include SDL libraries
 #include "SDL/include/SDL.h"				// Required for SDL base systems functionality
 #include "SDL_image/include/SDL_image.h"	// Required for image loading functionality
-#include "SDL_mixer/include/SDL_mixer.h"
+#include "SDL_mixer/include/SDL_mixer.h"	// Required for mixer loading functionality
