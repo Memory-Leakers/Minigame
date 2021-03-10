@@ -1,4 +1,4 @@
-// -------------------------------------------------------------------------
+/*// -------------------------------------------------------------------------
 // Awesome simple game with SDL
 // Lesson 2 - Input Events
 //
@@ -433,4 +433,4 @@ void DrawCircle(int x, int y, int radius, SDL_Color color)
 	int result = SDL_RenderDrawPoints(state.renderer, points, 360);
 
 	if (result != 0) printf("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
-}
+}*/
