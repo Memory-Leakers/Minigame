@@ -2,7 +2,6 @@
 
 #include "Display.h"
 
-
 class Game {
 	private:
 		Display canvas;

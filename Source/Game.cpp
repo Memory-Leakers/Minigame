@@ -1,7 +1,5 @@
 #include "Game.h"
 
-#include "Display.h"
-
 //Game::Game() {}
 //Game::~Game() {}
 
@@ -12,10 +10,9 @@
 #define MAX_MOUSE_BUTTONS 5
 
 bool Game::Init(Display Disp) {
+
 	canvas = Disp;
 	
-
-
 	return canvas.createDisplay(SCREEN_WIDTH, SCREEN_HEIGHT);;
 }
 
@@ -25,6 +22,7 @@ void Game::Draw() {
 
 	SDL_RenderClear(canvas.draw()); //NO BORRAR
 
+	// Box
 	SDL_Rect rc;
 	rc.x = 50;
 	rc.y = 50;
@@ -32,7 +30,6 @@ void Game::Draw() {
 	rc.h = 50;
 	SDL_SetRenderDrawColor(canvas.draw(), 0, 192, 0, 255);
 	SDL_RenderFillRect(canvas.draw(), &rc);
-
 
 	//UPDATE
 	SDL_RenderPresent(canvas.draw());
@@ -55,10 +52,6 @@ bool Game::Input() {
 bool Game::Tick() {
 	
 	if (!Input())	return true;
-
-
-
-
 
 	return false;
 }

@@ -1,6 +1,5 @@
 #include "Display.h";
 
-
 enum WindowEvent {
 	W_Quit = 0,
 	W_HIDE,
@@ -11,7 +10,6 @@ enum WindowEvent {
 void Display() {
 
 }
-
 
 bool Display::createDisplay(int width, int height) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {

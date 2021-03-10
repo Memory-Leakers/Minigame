@@ -1,8 +1,4 @@
-#include "Mylib.h"
-#include "Display.h"
 #include "Game.h"
-
-#include "SDL/include/SDL.h"
 
 #define SCREEN_WIDTH	1280
 #define SCREEN_HEIGHT	720
@@ -19,9 +15,10 @@ void Finish() {
 	SDL_Quit();
 }
 
-bool Start() {
+void Start() {
 	if (!Launch.Game.Init(Launch.Display)) {
-		return -1;
+		//return -1;
+		cout << "ERROR INIT" << endl;
 	}
 	bool running = false;
 	while (!running) {
@@ -33,6 +30,7 @@ bool Start() {
 
 
 int main(int argc, char* argv[]) {
+	
 	Start();
 	
 	return(EXIT_SUCCESS);
