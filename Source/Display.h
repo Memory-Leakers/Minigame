@@ -12,14 +12,18 @@ using namespace std;
 #include "SDL_mixer/include/SDL_mixer.h"    // Required for mixer loading functionality
 #include "SDL_ttf/include/SDL_ttf.h"
 
+#define TESTSEIZE 50
+
 class Display {
-	private:
-		SDL_Window *window;
-		SDL_Renderer *renderer;
-		SDL_Surface *surface;		
-		
-	public:
-		TTF_Font* testFont;
-		bool createDisplay(int width, int height);
-		SDL_Renderer* draw();
+private:
+	SDL_Window* window;
+	SDL_Renderer* renderer;
+	SDL_Surface* surface;
+	TTF_Font* testFont;
+
+public:
+
+	bool createDisplay(int width, int height);
+	SDL_Renderer* draw();
+	TTF_Font* getFonts()const { return testFont; }
 };

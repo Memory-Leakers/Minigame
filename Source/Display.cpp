@@ -43,7 +43,7 @@ bool Display::createDisplay(int width, int height) {
 	}
 
 
-	testFont = TTF_OpenFont("Assets/Fonts/arial.ttf", 25);
+	testFont = TTF_OpenFont("Assets/Fonts/arial.ttf", TESTSEIZE);
 	//SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	//SDL_RenderClear(renderer); //NO BORRAR
 	//SDL_RenderPresent(renderer);
