@@ -15,7 +15,7 @@ class Entity {
 		int width, height;
 		int health;
 		SDL_Rect bounds; //Collisions box
-		float xMove, yMove;
+		float speed;
 		struct Animation {
 			SDL_Texture* down;
 			SDL_Texture* down2;
@@ -37,16 +37,16 @@ class Entity {
 		const int DEFAULT_HEALTH = 1;
 		const float DEFAULT_SPEED = 2.5f;
 		const int ENTITY_WIDTH = 32, ENTITY_HEIGHT = 32;
-		Entity(float x, float y, int width, int height, SDL_Renderer* g) {
+		Entity(float x, float y, int width, int height, float speed, SDL_Renderer* g) {
 			this->x = x;
 			this->y = y;
 			this->width = width;
 			this->height = height;
 			this->health = DEFAULT_HEALTH;
+			this->speed = speed;
 
-
-			this->bounds.x = 0;
-			this->bounds.y = 0;
+			this->bounds.x = 0 + x;
+			this->bounds.y = 0 + y;
 			this->bounds.w = width;
 			this->bounds.h = height;
 			texturesSet(g);
@@ -59,7 +59,10 @@ class Entity {
 		bool checkCollisions(float xOffset, float yOffset);  //Checks Coll
 		SDL_Rect getCollsionBounds(float xOffset, float yOffset);  //Returns collision box
 		virtual void texturesSet(SDL_Renderer* g);
-		void moveY();
-		void moveX();
-		void move();
+		void moveY(int direction) {
+			this->y += speed*direction;
+		}
+		void moveX(int direction) {
+			this->x += speed * direction;
+		}
 };

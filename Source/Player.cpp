@@ -40,7 +40,8 @@ void Player::texturesSet(SDL_Renderer* g) {
 }
 
 void Player::tick() {
-
+	bounds.x = 0 + x;
+	bounds.y = 0 + y;
 }
 
 void Player::draw(SDL_Renderer* g) {

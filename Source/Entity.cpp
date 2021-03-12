@@ -24,7 +24,7 @@ void Entity::hurt(int dmg) {
 
 
 bool checkEntityCollsions(float xOffset, float yOffset) {
-
+	return false;
 }
 
 SDL_Rect Entity::getCollsionBounds(float xOffset, float yOffset) {
@@ -34,35 +34,6 @@ SDL_Rect Entity::getCollsionBounds(float xOffset, float yOffset) {
 	bounds.w = this->bounds.w;
 	bounds.h = this->bounds.h;
 	return bounds;
-}
-
-void Entity::moveX() {
-	if (this->xMove > 0) { //Move Right
-		//int tx = (x + xMove + bounds.x + bounds.w) / 32;
-		anim.idle = anim.right;
-	}
-	else if (this->xMove < 0) { //Move Left
-		anim.idle = anim.left;
-	}
-}
-
-void Entity::moveY() {
-	if (this->yMove < 0) { //Move up
-		anim.idle = anim.up;
-	}
-	else if (this->yMove > 0) { //Move down
-		anim.idle = anim.down;
-	}
-}
-
-void Entity::move() {
-	if (!checkEntityCollsions(xMove, 0)) {
-		moveX();
-	}
-
-	if (!checkEntityCollsions(0, yMove)) {
-		moveY();
-	}
 }
 
 void Entity::texturesSet(SDL_Renderer* g) {

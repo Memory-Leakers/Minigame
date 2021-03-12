@@ -1,10 +1,10 @@
 #include "Game.h"
 
-#define SCREEN_WIDTH	1280
-#define SCREEN_HEIGHT	720
-
-#define MAX_KEYBOARD_KEYS 256
-#define MAX_MOUSE_BUTTONS 5
+#include <stdio.h>
+#include <io.h>
+#include <fcntl.h>
+#include <windows.h>
+#include "SDL/include/SDL.h"
 
 struct Launcher {
 	Game Game;
@@ -30,7 +30,6 @@ void Start() {
 
 
 int main(int argc, char* argv[]) {
-	
 	Start();
 	
 	return(EXIT_SUCCESS);

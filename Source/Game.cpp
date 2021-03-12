@@ -3,10 +3,11 @@
 //Game::Game() {}
 //Game::~Game() {}
 
-
 Player* p;
-#define SCREEN_WIDTH	1280
-#define SCREEN_HEIGHT	720
+bool debug = false;
+
+#define SCREEN_WIDTH	544
+#define SCREEN_HEIGHT	544
 
 #define MAX_KEYBOARD_KEYS 256
 #define MAX_MOUSE_BUTTONS 5
@@ -36,7 +37,8 @@ bool Game::Init(Display Disp) {
 
 	canvas = Disp;
 
-	p = new Player(200, 200, 32, 32, canvas.draw());
+	p = new Player(200, 200, 32, 32, 2.5, canvas.draw());
+
 	currentScreen = MENU;
 	//dp.draw(canvas.draw());
 
@@ -46,12 +48,62 @@ bool Game::Init(Display Disp) {
 		keys[i] = KEY_IDLE;
 }
 
+bool Game::Tick() {
+
+
+
+	switch (currentScreen)
+	{
+
+	case Game::MENU:
+		if (keys[SDL_SCANCODE_RETURN] == KEY_DOWN) currentScreen = GAMEPLAY;
+		break;
+
+	case Game::GAMEPLAY:
+		if (keys[SDL_SCANCODE_L] == KEY_DOWN) currentScreen = GAME_OVER;
+
+		//------Debug-------
+		if (keys[SDL_SCANCODE_F10] == KEY_DOWN) {
+			debug = !debug;
+		}
+		//----------Player-------------
+		//position update
+		if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
+			p->moveY(-1);
+		}
+		if (keys[SDL_SCANCODE_DOWN] == KEY_REPEAT) {
+			p->moveY(1);;
+		}
+		if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) {
+			p->moveX(-1);
+		}
+		if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
+			p->moveX(1);
+		}
+
+
+		//Player update
+		//---------------------------------
+		p->tick();
+
+		break;
+
+	case Game::GAME_OVER:
+		if (keys[SDL_SCANCODE_R] == KEY_DOWN) currentScreen = GAMEPLAY;
+		else if (keys[SDL_SCANCODE_E] == KEY_DOWN) currentScreen = MENU;
+
+		break;
+	}
+
+	if (!Input())	return true;
+
+	return false;
+}
+
 void Game::Draw() {
 
 	SDL_RenderClear(canvas.draw());
 
-	//Draw
-	p->draw(canvas.draw());
 	switch (currentScreen) {
 	case MENU:
 
@@ -65,20 +117,34 @@ void Game::Draw() {
 	case GAMEPLAY:
 		//Rectangle Draw Test
 		SDL_SetRenderDrawColor(canvas.draw(), 0, 0, 0, 255);
+		SDL_RenderClear(canvas.draw()); 
+		//MAP
+		
 
+		//--------Entities-------
+		p->draw(canvas.draw());
 
-		SDL_RenderClear(canvas.draw()); //NO BORRAR
-
+		//-------------
+		// 
+		//----------HUD--------------
 		menu.showText(canvas.draw(), 500, 360, "Gameplay. Press <L> to lose.", 50);
 
-		// Box
-		SDL_Rect rc;
-		rc.x = 50;
-		rc.y = 50;
-		rc.w = 50;
-		rc.h = 50;
-		SDL_SetRenderDrawColor(canvas.draw(), 0, 192, 0, 255);
-		SDL_RenderFillRect(canvas.draw(), &rc);
+		if (debug == true) {
+			if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
+				menu.showText(canvas.draw(), 0, 0, "UP!", 10);
+			}
+			if (keys[SDL_SCANCODE_DOWN] == KEY_REPEAT) {
+				menu.showText(canvas.draw(), 0, 0, "DOWN!", 10);
+			}
+			if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) {
+				menu.showText(canvas.draw(), 0, 0, "LEFT!", 10);
+			}
+			if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
+				menu.showText(canvas.draw(), 0, 0, "RIGHT!", 10);
+			}
+		}
+		
+		//-----------------------------
 
 		break;
 	case GAME_OVER:
@@ -91,11 +157,10 @@ void Game::Draw() {
 
 		break;
 	}
-
+	menu.showText(canvas.draw(), 500, 0, "100 FPS", 10); //DEBUG FPS
 	SDL_RenderPresent(canvas.draw());
 
 	SDL_Delay(10);
-
 }
 
 bool Game::Input()
@@ -170,27 +235,4 @@ bool Game::Input()
 	return true;
 }
 
-bool Game::Tick() {
 
-	switch (currentScreen)
-	{
-
-	case Game::MENU:
-		if (keys[SDL_SCANCODE_RETURN] == KEY_DOWN) currentScreen = GAMEPLAY;
-		break;
-
-	case Game::GAMEPLAY:
-		if (keys[SDL_SCANCODE_L] == KEY_DOWN) currentScreen = GAME_OVER;
-		break;
-
-	case Game::GAME_OVER:
-		if (keys[SDL_SCANCODE_R] == KEY_DOWN) currentScreen = GAMEPLAY;
-		else if (keys[SDL_SCANCODE_E] == KEY_DOWN) currentScreen = MENU;
-
-		break;
-	}
-
-	if (!Input())	return true;
-
-	return false;
-}
