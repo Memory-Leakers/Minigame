@@ -17,6 +17,7 @@ class Display {
 		SDL_Window *window;
 		SDL_Renderer *renderer;
 		SDL_Surface *surface;
+		
 	public:
 		bool createDisplay(int width, int height);
 		SDL_Renderer* draw();

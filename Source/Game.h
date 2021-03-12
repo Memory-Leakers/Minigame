@@ -2,10 +2,17 @@
 
 #include "Display.h"
 #include "Player.h"
+#define MAX_KEYBOARD_KEYS 256
 
 class Game {
 	private:
 		Display canvas;
+		SDL_Window* window;
+		enum GameState {
+			MENU,
+			GAMEPLAY,
+			GAME_OVER
+		} currentScreen;
 
 	public:
 		bool Init(Display Disp);
