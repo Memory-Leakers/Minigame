@@ -17,6 +17,12 @@ bool Display::createDisplay(int width, int height) {
 		return false;
 	}
 
+	if (TTF_Init() != 0) {
+		SDL_Log("Unable to initialize TTF: %s", TTF_GetError());
+		return false;
+	}
+
+
 	window = SDL_CreateWindow("Minijuego || Chaketeros", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
 	SDL_GetWindowSurface(window);
 	if (window == NULL) {

@@ -1,5 +1,5 @@
 #include "Game.h"
-
+#include "Menu.h"
 //Game::Game() {}
 //Game::~Game() {}
 
@@ -28,10 +28,13 @@ KeyState mouse_buttons[MAX_MOUSE_BUTTONS];
 int mouse_x;
 int mouse_y;
 
+Menu menu;
+
 bool Game::Init(Display Disp) {
 
 	canvas = Disp;
-	
+	currentScreen = MENU;
+
 	return canvas.createDisplay(SCREEN_WIDTH, SCREEN_HEIGHT);;
 	//Initialize keys array
 	for (int i = 0; i < MAX_KEYBOARD_KEYS; ++i)
@@ -39,24 +42,51 @@ bool Game::Init(Display Disp) {
 }
 
 void Game::Draw() {
-	//Rectangle Draw Test
-	SDL_SetRenderDrawColor(canvas.draw(), 0, 0, 0, 255);
 
-	SDL_RenderClear(canvas.draw()); //NO BORRAR
+	switch (currentScreen) {
+	case MENU:
 
-	// Box
-	SDL_Rect rc;
-	rc.x = 50;
-	rc.y = 50;
-	rc.w = 50;
-	rc.h = 50;
-	SDL_SetRenderDrawColor(canvas.draw(), 0, 192, 0, 255);
-	SDL_RenderFillRect(canvas.draw(), &rc);
+		SDL_SetRenderDrawColor(canvas.draw(), 0, 255, 0, 255);
 
-	//UPDATE
+		SDL_RenderClear(canvas.draw()); 
+
+		menu.showText(canvas.draw(), 500, 360, "Start Game with <Enter>", 50); //Shows a Text
+		
+		break;
+	case GAMEPLAY:
+		//Rectangle Draw Test
+		SDL_SetRenderDrawColor(canvas.draw(), 0, 0, 0, 255);
+
+
+		SDL_RenderClear(canvas.draw()); //NO BORRAR
+
+		menu.showText(canvas.draw(), 500, 360, "Gameplay. Press <L> to lose.", 50);
+
+		// Box
+		SDL_Rect rc;
+		rc.x = 50;
+		rc.y = 50;
+		rc.w = 50;
+		rc.h = 50;
+		SDL_SetRenderDrawColor(canvas.draw(), 0, 192, 0, 255);
+		SDL_RenderFillRect(canvas.draw(), &rc);
+
+		break;
+	case GAME_OVER:
+		SDL_SetRenderDrawColor(canvas.draw(), 255, 0, 0, 255);
+
+		SDL_RenderClear(canvas.draw());
+
+		menu.showText(canvas.draw(), 500, 360, "Game Over!", 50);
+		menu.showText(canvas.draw(), 250, 420, "Press <R> to retry. Press <E> to exit to the Main Menu", 25);
+
+		break;
+	}
+
 	SDL_RenderPresent(canvas.draw());
 
-	SDL_Delay(10);	// 1000/10 = 100 fps max
+	SDL_Delay(10);
+	
 }
 
 bool Game::Input()
@@ -133,6 +163,24 @@ bool Game::Input()
 
 bool Game::Tick() {
 	
+	switch (currentScreen)
+	{
+
+	case Game::MENU:
+		if (keys[SDL_SCANCODE_RETURN] == KEY_DOWN) currentScreen = GAMEPLAY;
+		break;
+
+	case Game::GAMEPLAY:
+		if (keys[SDL_SCANCODE_L] == KEY_DOWN) currentScreen = GAME_OVER;
+		break;
+
+	case Game::GAME_OVER:
+		if (keys[SDL_SCANCODE_R] == KEY_DOWN) currentScreen = GAMEPLAY;
+		else if (keys[SDL_SCANCODE_E] == KEY_DOWN) currentScreen = MENU;
+
+		break;
+	}
+
 	if (!Input())	return true;
 
 	return false;
