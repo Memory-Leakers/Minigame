@@ -16,9 +16,10 @@ class Display {
 	private:
 		SDL_Window *window;
 		SDL_Renderer *renderer;
-		SDL_Surface *surface;
+		SDL_Surface *surface;		
 		
 	public:
+		TTF_Font* testFont;
 		bool createDisplay(int width, int height);
 		SDL_Renderer* draw();
 };

@@ -59,7 +59,7 @@ void Game::Draw() {
 
 		SDL_RenderClear(canvas.draw());
 
-		menu.showText(canvas.draw(), 500, 360, "Start Game with <Enter>", 50); //Shows a Text
+		menu.showText(canvas.draw(), 500, 360, "Start Game with <Enter>", canvas.testFont); //Shows a Text
 
 		break;
 	case GAMEPLAY:
@@ -69,7 +69,7 @@ void Game::Draw() {
 
 		SDL_RenderClear(canvas.draw()); //NO BORRAR
 
-		menu.showText(canvas.draw(), 500, 360, "Gameplay. Press <L> to lose.", 50);
+		menu.showText(canvas.draw(), 500, 360, "Gameplay. Press <L> to lose.", canvas.testFont);
 
 		// Box
 		SDL_Rect rc;
@@ -86,8 +86,8 @@ void Game::Draw() {
 
 		SDL_RenderClear(canvas.draw());
 
-		menu.showText(canvas.draw(), 500, 360, "Game Over!", 50);
-		menu.showText(canvas.draw(), 250, 420, "Press <R> to retry. Press <E> to exit to the Main Menu", 25);
+		menu.showText(canvas.draw(), 500, 360, "Game Over!", canvas.testFont);
+		menu.showText(canvas.draw(), 250, 420, "Press <R> to retry. Press <E> to exit to the Main Menu", canvas.testFont);
 
 		break;
 	}
