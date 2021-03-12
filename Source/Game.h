@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Display.h"
+#include "Player.h"
 
 class Game {
 	private:

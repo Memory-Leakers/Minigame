@@ -3,6 +3,8 @@
 //Game::Game() {}
 //Game::~Game() {}
 
+
+Player* p;
 #define SCREEN_WIDTH	1280
 #define SCREEN_HEIGHT	720
 
@@ -13,6 +15,9 @@ bool Game::Init(Display Disp) {
 
 	canvas = Disp;
 	
+	p = new Player(200, 200, 32, 32, canvas.draw());
+	//dp.draw(canvas.draw());
+
 	return canvas.createDisplay(SCREEN_WIDTH, SCREEN_HEIGHT);;
 }
 
@@ -20,7 +25,10 @@ void Game::Draw() {
 	//Rectangle Draw Test
 	SDL_SetRenderDrawColor(canvas.draw(), 0, 0, 0, 255);
 
-	SDL_RenderClear(canvas.draw()); //NO BORRAR
+	SDL_RenderClear(canvas.draw()); 
+
+	//Draw
+	p->draw(canvas.draw());
 
 	// Box
 	SDL_Rect rc;
