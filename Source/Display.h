@@ -14,8 +14,6 @@ using namespace std;
 #include "SDL_mixer/include/SDL_mixer.h"    // Required for mixer loading functionality
 #include "SDL_ttf/include/SDL_ttf.h"
 
-#define TESTSEIZE 50
-
 class Display {
 private:
 	SDL_Window* window;

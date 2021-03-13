@@ -36,16 +36,17 @@ Menu menu;
 bool Game::Init(Display Disp) {
 
 	canvas = Disp;
-
 	p = new Player(200, 200, 32, 32, 2.5, canvas.draw());
 
 	currentScreen = MENU;
 	//dp.draw(canvas.draw());
 
-	return canvas.createDisplay(SCREEN_WIDTH, SCREEN_HEIGHT);;
+
 	//Initialize keys array
 	for (int i = 0; i < MAX_KEYBOARD_KEYS; ++i)
 		keys[i] = KEY_IDLE;
+
+	return canvas.createDisplay(SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 bool Game::Tick() {

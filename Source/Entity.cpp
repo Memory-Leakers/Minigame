@@ -1,9 +1,6 @@
 #include "Entity.h"
 
 
-
-
-
 SDL_Surface* Entity::cropSurface(SDL_Surface* img, int x, int y, int width, int height) {
 	SDL_Surface* surface = SDL_CreateRGBSurface(img->flags, width, height, img->format->BitsPerPixel, img->format->Rmask, img->format->Gmask, img->format->Bmask, img->format->Amask);
 	SDL_Rect rect = { x, y, width, height };

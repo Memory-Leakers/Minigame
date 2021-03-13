@@ -8,6 +8,7 @@ class Player : public Entity {
 		void texturesSet(SDL_Renderer* g) override;
 		void draw(SDL_Renderer* g) override;
 		void tick() override;
+
 	//friend class Entity;
 
 };

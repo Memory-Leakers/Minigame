@@ -2,19 +2,24 @@
 
 
 void Player::texturesSet(SDL_Renderer* g) {
+	
 	SDL_Rect crop;
 	crop.x = 0;
 	crop.y = 0;
 	crop.w = 32;
 	crop.y = 32;
 
-	
 	int flags = IMG_INIT_JPG | IMG_INIT_PNG;
 	int initted = IMG_Init(flags);
+
 	if ((initted & flags) != flags) {
 		SDL_Log("IMG_Init: Failed to init required jpg and png support!\n");
 		SDL_Log("IMG_Init: %s\n", IMG_GetError());
 	}
+
+	SDL_Surface* surf = IMG_Load("Assets/myAssets/Sprites/shoot.png");
+	tex = SDL_CreateTextureFromSurface(g, IMG_Load("Assets/myAssets/Sprites/shoot.png"));
+
 	//anim.idle = SDL_CreateTextureFromSurface(g, IMG_Load("Assets/myAssets/Sprites/player.png"));
 	/*
 	SDL_Surface* surf = IMG_Load("\Assets\myAssets\Sprites\player.png");
@@ -51,6 +56,10 @@ void Player::draw(SDL_Renderer* g) {
 	//bounds.h = 32;
 
 	SDL_SetRenderDrawColor(g, 0, 127, 200, 5);
-	SDL_RenderFillRect(g, &this->bounds);
-	//SDL_RenderCopy(g, anim.idle, NULL, &bounds);
+	SDL_RenderFillRect(g, &bounds);
+
+	SDL_Rect rec;
+
+	rec.x = 100; rec.y = 100; rec.w = 8; rec.h = 8;
+	SDL_RenderCopy(g, tex, NULL, &rec);
 }
