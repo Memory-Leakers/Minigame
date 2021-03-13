@@ -21,6 +21,7 @@ struct Animation {
 class Player : public Entity {
 	private:
 	Animation anim;
+	AnimState animState;
 
 	using Entity::Entity;
 
