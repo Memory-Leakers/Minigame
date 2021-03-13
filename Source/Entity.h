@@ -39,6 +39,7 @@ class Entity {
 		Animation anim;
 
 	public:
+		
 	
 		Entity(float x, float y, int width, int height, float speed, SDL_Renderer* g) {
 			this->x = x;
@@ -63,6 +64,8 @@ class Entity {
 		/// <param name="width"></param>
 		/// <param name="height"></param>
 		/// <returns></returns>
+		
+
 		SDL_Surface* cropSurface(SDL_Surface* img, int x, int y, int width, int height);
 
 		/// <summary>

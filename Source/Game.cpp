@@ -30,6 +30,12 @@ KeyState keys[MAX_KEYBOARD_KEYS];
 KeyState mouse_buttons[MAX_MOUSE_BUTTONS];
 int mouse_x;
 int mouse_y;
+struct Shoot
+{
+	int x, y;
+	bool alive;
+};
+Shoot shots;
 
 Menu menu;
 
@@ -81,8 +87,21 @@ bool Game::Tick() {
 		if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
 			p->moveX(1);
 		}
-
-
+		//--------Shoot------------------
+		/*if (keys[SDL_SCANCODE_SPACE] == KEY_DOWN)
+		{
+			int x, y, w, h;
+			p->GetRect(&x, &y, &w, &h);
+			Shots.Init(x, y, w, h, 8);
+			
+		}
+		
+		//Shoot Update 
+		if (Shots.IsAlive())
+		{
+			Shots.moveX(1);
+			if (Shots.GetX() > SCREEN_WIDTH)	Shots.die();
+		}*/
 		//Player update
 		//---------------------------------
 		p->tick();

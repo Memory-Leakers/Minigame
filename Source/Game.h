@@ -2,6 +2,7 @@
 
 #include "Display.h"
 #include "Player.h"
+#include "Entity.h"
 #define MAX_KEYBOARD_KEYS 256
 
 class Game {
@@ -13,7 +14,7 @@ class Game {
 			GAMEPLAY,
 			GAME_OVER
 		} currentScreen;
-
+		Entity Shots;
 	public:
 		bool Init(Display Disp);
 		void Draw();
