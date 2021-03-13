@@ -111,23 +111,23 @@ void Game::Draw() {
 
 		SDL_RenderClear(canvas.draw());
 
-		menu.showText(canvas.draw(), 500, 360, "Start Game with <Enter>", 50); //Shows a Text
+		menu.showText(canvas.draw(), 500, 360, "Start Game with <Enter>", canvas.getFonts()); //Shows a Text
 
 		break;
 	case GAMEPLAY:
 		//Rectangle Draw Test
 		SDL_SetRenderDrawColor(canvas.draw(), 0, 0, 0, 255);
-		SDL_RenderClear(canvas.draw()); 
+		SDL_RenderClear(canvas.draw());
 		//MAP
-		
+
 
 		//--------Entities-------
 		p->draw(canvas.draw());
 
 		//-------------
-		// 
+		//
 		//----------HUD--------------
-		menu.showText(canvas.draw(), 500, 360, "Gameplay. Press <L> to lose.", 50);
+		menu.showText(canvas.draw(), 500, 360, "Gameplay. Press <L> to lose.", canvas.getFonts());
 
 		if (debug == true) {
 			if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
@@ -143,7 +143,7 @@ void Game::Draw() {
 				menu.showText(canvas.draw(), 0, 0, "RIGHT!", 10);
 			}
 		}
-		
+
 		//-----------------------------
 
 		break;
@@ -152,8 +152,8 @@ void Game::Draw() {
 
 		SDL_RenderClear(canvas.draw());
 
-		menu.showText(canvas.draw(), 500, 360, "Game Over!", 50);
-		menu.showText(canvas.draw(), 250, 420, "Press <R> to retry. Press <E> to exit to the Main Menu", 25);
+		menu.showText(canvas.draw(), 500, 360, "Game Over!", canvas.getFonts());
+		menu.showText(canvas.draw(), 250, 420, "Press <R> to retry. Press <E> to exit to the Main Menu", canvas.getFonts());
 
 		break;
 	}
@@ -234,5 +234,3 @@ bool Game::Input()
 
 	return true;
 }
-
-

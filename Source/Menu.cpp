@@ -1,7 +1,7 @@
 #include "Menu.h"
 
-void Menu::showText(SDL_Renderer* renderer, int x, int y, const char* message, int fontSize){
-	testFont = TTF_OpenFont("Assets/Fonts/arial.ttf", fontSize);
+void Menu::showText(SDL_Renderer* renderer, int x, int y, const char* message, TTF_Font* testFont){
+	//testFont = TTF_OpenFont("Assets/Fonts/arial.ttf", fontSize);
 
 	textSurface = TTF_RenderText_Solid(testFont, message, { 255,255,255 });
 
