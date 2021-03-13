@@ -25,7 +25,7 @@ private:
 public:
 
 	bool createDisplay(int width, int height);
-	SDL_Renderer* draw();
+	SDL_Renderer* getRenderer();
 
 	TTF_Font* getFonts(int size) { 
 		switch (size) {

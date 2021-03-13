@@ -7,10 +7,6 @@ enum WindowEvent {
 	W_COUNT
 };
 
-void Display() {
-
-}
-
 /// <summary>
 /// Inicializacion
 /// </summary>
@@ -51,6 +47,6 @@ bool Display::createDisplay(int width, int height) {
 	return true;
 }
 
-SDL_Renderer* Display::draw() {
+SDL_Renderer* Display::getRenderer() {
 	return renderer;
 }

@@ -85,8 +85,5 @@ void Player::draw(SDL_Renderer* g) {
 	SDL_SetRenderDrawColor(g, 0, 127, 200, 5);
 	SDL_RenderFillRect(g, &bounds);
 
-	SDL_Rect rec;
-
-	rec.x = x; rec.y = y; rec.w = width; rec.h = height;
-	SDL_RenderCopy(g, anim.dirAnim[down][0], NULL, &rec);
+	SDL_RenderCopy(g, anim.dirAnim[down][0], NULL, &bounds);
 }

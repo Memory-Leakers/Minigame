@@ -2,8 +2,15 @@
 
 #include "Display.h"
 #include "Player.h"
-#include "Entity.h"
 #define MAX_KEYBOARD_KEYS 256
+
+struct Shoot
+{
+	SDL_Texture* tex;
+	SDL_Rect rec;
+	bool alive = false;
+	float speed = 6;
+};
 
 class Game {
 	private:
@@ -14,10 +21,11 @@ class Game {
 			GAMEPLAY,
 			GAME_OVER
 		} currentScreen;
-		Entity Shots;
 	public:
 		bool Init(Display Disp);
 		void Draw();
 		bool Tick();
 		bool Input();
+		Shoot shot[30];
+		int shotCount = 0;
 };

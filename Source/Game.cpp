@@ -30,12 +30,6 @@ KeyState keys[MAX_KEYBOARD_KEYS];
 KeyState mouse_buttons[MAX_MOUSE_BUTTONS];
 int mouse_x;
 int mouse_y;
-struct Shoot
-{
-	int x, y;
-	bool alive;
-};
-Shoot shots;
 
 Menu menu;
 
@@ -44,7 +38,7 @@ bool Game::Init(Display Disp) {
 	canvas = Disp;
 
 	bool result = canvas.createDisplay(SCREEN_WIDTH, SCREEN_HEIGHT);
-	player = new Player(200, 200, 32, 32, 2.5, canvas.draw());
+	player = new Player(200, 200, 32, 32, 2.5, canvas.getRenderer());
 
 	currentScreen = MENU;
 	//dp.draw(canvas.draw());
@@ -57,8 +51,6 @@ bool Game::Init(Display Disp) {
 }
 
 bool Game::Tick() {
-
-
 
 	switch (currentScreen)
 	{
@@ -88,21 +80,15 @@ bool Game::Tick() {
 		if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
 			player->moveX(1);
 		}
-		//--------Shoot------------------
-		/*if (keys[SDL_SCANCODE_SPACE] == KEY_DOWN)
+
+		//--------Shoot------------------		
+		for (int i = 0; i < 30; i++)
 		{
-			int x, y, w, h;
-			p->GetRect(&x, &y, &w, &h);
-			Shots.Init(x, y, w, h, 8);
-			
+			if(shot[i].alive)
+			{
+				shot[i].rec.x += shot[i].speed;
+			}
 		}
-		
-		//Shoot Update 
-		if (Shots.IsAlive())
-		{
-			Shots.moveX(1);
-			if (Shots.GetX() > SCREEN_WIDTH)	Shots.die();
-		}*/
 		//Player update
 		//---------------------------------
 		player->tick();
@@ -123,64 +109,71 @@ bool Game::Tick() {
 
 void Game::Draw() {
 
-	SDL_RenderClear(canvas.draw());
+	SDL_RenderClear(canvas.getRenderer());
 
 	switch (currentScreen) {
 	case MENU:
 
-		SDL_SetRenderDrawColor(canvas.draw(), 0, 255, 0, 255);
+		SDL_SetRenderDrawColor(canvas.getRenderer(), 0, 255, 0, 255);
 
-		SDL_RenderClear(canvas.draw());
+		SDL_RenderClear(canvas.getRenderer());
 
-		menu.showText(canvas.draw(), 500, 360, "Start Game with <Enter>", canvas.getFonts(50)); //Shows a Text
+		menu.showText(canvas.getRenderer(), 500, 360, "Start Game with <Enter>", canvas.getFonts(50)); //Shows a Text
 
 		break;
 	case GAMEPLAY:
 		//Rectangle Draw Test
-		SDL_SetRenderDrawColor(canvas.draw(), 0, 0, 0, 255);
-		SDL_RenderClear(canvas.draw());
+		SDL_SetRenderDrawColor(canvas.getRenderer(), 0, 0, 0, 255);
+		SDL_RenderClear(canvas.getRenderer());
 		//MAP
 
 
 		//--------Entities-------
-		player->draw(canvas.draw());
+		player->draw(canvas.getRenderer());
 
 		//-------------
 		//
+		for (int i = 0; i < 30; i++)
+		{
+			if (shot[i].alive)
+			{
+				SDL_RenderCopy(canvas.getRenderer(), shot[i].tex, NULL, &shot[i].rec);
+			}
+		}
 		//----------HUD--------------
-		menu.showText(canvas.draw(), 500, 360, "Gameplay. Press <L> to lose.", canvas.getFonts(50));
+		menu.showText(canvas.getRenderer(), 500, 360, "Gameplay. Press <L> to lose.", canvas.getFonts(50));
 
 		if (debug == true) {
 			if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
-				menu.showText(canvas.draw(), 0, 0, "UP!", canvas.getFonts(10));
+				menu.showText(canvas.getRenderer(), 0, 0, "UP!", canvas.getFonts(10));
 			}
 			if (keys[SDL_SCANCODE_DOWN] == KEY_REPEAT) {
-				menu.showText(canvas.draw(), 0, 0, "DOWN!", canvas.getFonts(10));
+				menu.showText(canvas.getRenderer(), 0, 0, "DOWN!", canvas.getFonts(10));
 			}
 			if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) {
-				menu.showText(canvas.draw(), 0, 0, "LEFT!", canvas.getFonts(10));
+				menu.showText(canvas.getRenderer(), 0, 0, "LEFT!", canvas.getFonts(10));
 			}
 			if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
-				menu.showText(canvas.draw(), 0, 0, "RIGHT!", canvas.getFonts(10));
+				menu.showText(canvas.getRenderer(), 0, 0, "RIGHT!", canvas.getFonts(10));
 			}
-			menu.showText(canvas.draw(), 500, 0, "60 FPS", canvas.getFonts(10)); //DEBUG FPS
+			menu.showText(canvas.getRenderer(), 500, 0, "60 FPS", canvas.getFonts(10)); //DEBUG FPS
 		}
 
 		//-----------------------------
 
 		break;
 	case GAME_OVER:
-		SDL_SetRenderDrawColor(canvas.draw(), 255, 0, 0, 255);
+		SDL_SetRenderDrawColor(canvas.getRenderer(), 255, 0, 0, 255);
 
-		SDL_RenderClear(canvas.draw());
+		SDL_RenderClear(canvas.getRenderer());
 
-		menu.showText(canvas.draw(), 500, 360, "Game Over!", canvas.getFonts(50));
-		menu.showText(canvas.draw(), 250, 420, "Press <R> to retry. Press <E> to exit to the Main Menu", canvas.getFonts(50));
+		menu.showText(canvas.getRenderer(), 500, 360, "Game Over!", canvas.getFonts(50));
+		menu.showText(canvas.getRenderer(), 250, 420, "Press <R> to retry. Press <E> to exit to the Main Menu", canvas.getFonts(50));
 
 		break;
 	}
 
-	SDL_RenderPresent(canvas.draw());
+	SDL_RenderPresent(canvas.getRenderer());
 
 	SDL_Delay(10);
 }
@@ -248,6 +241,29 @@ bool Game::Input()
 		}
 	}
 
+	// Init Shoot
+	if (keys[SDL_SCANCODE_SPACE] == KEY_DOWN)
+	{
+		int x, y, w, h;
+
+		// Inicializar textura de shot
+		if (shot[shotCount].tex == NULL)
+		{
+			shot[shotCount].tex = SDL_CreateTextureFromSurface(canvas.getRenderer(), IMG_Load("Assets/myAssets/Sprites/shoot.png"));
+			shot[shotCount].rec.w = 8;
+			shot[shotCount].rec.h = 8;
+			cout << shotCount << endl;
+		}
+		// Inicializar restos de valor
+		shot[shotCount].rec.x = player->getX() + player->getW();
+		shot[shotCount].rec.y = player->getY() + (player->getH()/2);
+		shot[shotCount].alive = true;
+		
+		if (++shotCount >= 30)
+		{
+			shotCount = 0;
+		}
+	}
 
 	if (keys[SDL_SCANCODE_ESCAPE] == KEY_DOWN) return false;
 
