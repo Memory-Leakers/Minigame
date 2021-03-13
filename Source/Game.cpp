@@ -3,7 +3,7 @@
 //Game::Game() {}
 //Game::~Game() {}
 
-Player* p;
+Player* player;
 bool debug = false;
 
 #define SCREEN_WIDTH	544
@@ -42,17 +42,18 @@ Menu menu;
 bool Game::Init(Display Disp) {
 
 	canvas = Disp;
-	p = new Player(200, 200, 32, 32, 2.5, canvas.draw());
+
+	bool result = canvas.createDisplay(SCREEN_WIDTH, SCREEN_HEIGHT);
+	player = new Player(200, 200, 32, 32, 2.5, canvas.draw());
 
 	currentScreen = MENU;
 	//dp.draw(canvas.draw());
-
 
 	//Initialize keys array
 	for (int i = 0; i < MAX_KEYBOARD_KEYS; ++i)
 		keys[i] = KEY_IDLE;
 
-	return canvas.createDisplay(SCREEN_WIDTH, SCREEN_HEIGHT);
+	return result;
 }
 
 bool Game::Tick() {
@@ -76,16 +77,16 @@ bool Game::Tick() {
 		//----------Player-------------
 		//position update
 		if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
-			p->moveY(-1);
+			player->moveY(-1);
 		}
 		if (keys[SDL_SCANCODE_DOWN] == KEY_REPEAT) {
-			p->moveY(1);;
+			player->moveY(1);;
 		}
 		if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) {
-			p->moveX(-1);
+			player->moveX(-1);
 		}
 		if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
-			p->moveX(1);
+			player->moveX(1);
 		}
 		//--------Shoot------------------
 		/*if (keys[SDL_SCANCODE_SPACE] == KEY_DOWN)
@@ -104,7 +105,7 @@ bool Game::Tick() {
 		}*/
 		//Player update
 		//---------------------------------
-		p->tick();
+		player->tick();
 
 		break;
 
@@ -142,7 +143,7 @@ void Game::Draw() {
 
 
 		//--------Entities-------
-		p->draw(canvas.draw());
+		player->draw(canvas.draw());
 
 		//-------------
 		//

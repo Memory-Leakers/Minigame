@@ -5,20 +5,7 @@
 #include "SDL_mixer/include/SDL_mixer.h"    // Required for mixer loading functionality
 #include "SDL_ttf/include/SDL_ttf.h"
 	
-struct Animation {
 
-	SDL_Texture* down[3];
-
-	SDL_Texture* up[3];
-
-	SDL_Texture* right[3];
-
-	SDL_Texture* left[3];
-
-	SDL_Texture* idle;
-
-	//SDL_Texture* death;
-};
 
 class Entity {
 	//friend class Player;
@@ -34,9 +21,8 @@ class Entity {
 		int width, height;
 		int health;
 		SDL_Rect bounds; //Collisions box
-		SDL_Texture* tex;
+		//SDL_Texture* tex;
 		float speed;
-		Animation anim;
 
 	public:
 		
@@ -52,8 +38,7 @@ class Entity {
 			this->bounds.x = 0 + x;
 			this->bounds.y = 0 + y;
 			this->bounds.w = width;
-			this->bounds.h = height;
-			texturesSet(g);
+			this->bounds.h = height;			
 		};
 		/// <summary>
 		/// Slice Spirtes
@@ -77,6 +62,8 @@ class Entity {
 		///  Update
 		/// </summary>
 		virtual void tick();
+
+
 		virtual void texturesSet(SDL_Renderer* g);
 
 		/// <summary>

@@ -1,5 +1,8 @@
 #include "Player.h"
+#include <stdio.h>
 
+#include<iostream>;
+using namespace std;
 
 void Player::texturesSet(SDL_Renderer* g) {
 	
@@ -17,8 +20,32 @@ void Player::texturesSet(SDL_Renderer* g) {
 		SDL_Log("IMG_Init: %s\n", IMG_GetError());
 	}
 
-	SDL_Surface* surf = IMG_Load("Assets/myAssets/Sprites/shoot.png");
-	tex = SDL_CreateTextureFromSurface(g, IMG_Load("Assets/myAssets/Sprites/shoot.png"));
+	SDL_Surface* src = IMG_Load("Assets/myAssets/Sprites/player.png");
+	SDL_Surface* dst = NULL;
+	SDL_Rect cut, paste;
+
+	paste.x = 0;
+	paste.y = 0;
+	paste.h = 32;
+	paste.w = 32;
+	cut.x = 0;
+	cut.y = 0;
+	cut.h = 32;
+	cut.w = 32;
+
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			SDL_BlitSurface(src, &cut, dst, &paste);
+			anim.dirAnim[i][j] = SDL_CreateTextureFromSurface(g, dst);
+			cut.x += 32;
+		}
+		cut.y += 32;
+		cut.x = 0;
+	}
+
+	//tex = SDL_CreateTextureFromSurface(g, surf);
 
 	//anim.idle = SDL_CreateTextureFromSurface(g, IMG_Load("Assets/myAssets/Sprites/player.png"));
 	/*
@@ -60,6 +87,6 @@ void Player::draw(SDL_Renderer* g) {
 
 	SDL_Rect rec;
 
-	rec.x = 100; rec.y = 100; rec.w = 8; rec.h = 8;
-	SDL_RenderCopy(g, tex, NULL, &rec);
+	rec.x = x; rec.y = y; rec.w = width; rec.h = height;
+	SDL_RenderCopy(g, anim.dirAnim[down][0], NULL, &rec);
 }

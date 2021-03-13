@@ -26,16 +26,12 @@ public:
 
 	bool createDisplay(int width, int height);
 	SDL_Renderer* draw();
+
 	TTF_Font* getFonts(int size) { 
 		switch (size) {
-		case 50:
-			return Font50;
-			break;
-		case 10:
-			return Font10;
-			break;
-		default:
-			return Font50;
+		case 50: return Font50; break;
+		case 10: return Font10; break;
+		default: return Font50;
 		}
 	}
 };

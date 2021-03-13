@@ -11,6 +11,7 @@ struct Launcher {
 	Display Display;
 };
 Launcher Launch;
+
 void Finish() {
 	SDL_Quit();
 }
@@ -28,8 +29,8 @@ void Start() {
 	Finish();
 }
 
-
 int main(int argc, char* argv[]) {
+
 	Start();
 	
 	return(EXIT_SUCCESS);
