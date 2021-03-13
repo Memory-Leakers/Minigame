@@ -111,7 +111,7 @@ void Game::Draw() {
 
 		SDL_RenderClear(canvas.draw());
 
-		menu.showText(canvas.draw(), 500, 360, "Start Game with <Enter>", canvas.getFonts()); //Shows a Text
+		menu.showText(canvas.draw(), 500, 360, "Start Game with <Enter>", canvas.getFonts(50)); //Shows a Text
 
 		break;
 	case GAMEPLAY:
@@ -127,21 +127,22 @@ void Game::Draw() {
 		//-------------
 		//
 		//----------HUD--------------
-		menu.showText(canvas.draw(), 500, 360, "Gameplay. Press <L> to lose.", canvas.getFonts());
+		menu.showText(canvas.draw(), 500, 360, "Gameplay. Press <L> to lose.", canvas.getFonts(50));
 
 		if (debug == true) {
 			if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
-				menu.showText(canvas.draw(), 0, 0, "UP!", 10);
+				menu.showText(canvas.draw(), 0, 0, "UP!", canvas.getFonts(10));
 			}
 			if (keys[SDL_SCANCODE_DOWN] == KEY_REPEAT) {
-				menu.showText(canvas.draw(), 0, 0, "DOWN!", 10);
+				menu.showText(canvas.draw(), 0, 0, "DOWN!", canvas.getFonts(10));
 			}
 			if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) {
-				menu.showText(canvas.draw(), 0, 0, "LEFT!", 10);
+				menu.showText(canvas.draw(), 0, 0, "LEFT!", canvas.getFonts(10));
 			}
 			if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
-				menu.showText(canvas.draw(), 0, 0, "RIGHT!", 10);
+				menu.showText(canvas.draw(), 0, 0, "RIGHT!", canvas.getFonts(10));
 			}
+			menu.showText(canvas.draw(), 500, 0, "60 FPS", canvas.getFonts(10)); //DEBUG FPS
 		}
 
 		//-----------------------------
@@ -152,12 +153,12 @@ void Game::Draw() {
 
 		SDL_RenderClear(canvas.draw());
 
-		menu.showText(canvas.draw(), 500, 360, "Game Over!", canvas.getFonts());
-		menu.showText(canvas.draw(), 250, 420, "Press <R> to retry. Press <E> to exit to the Main Menu", canvas.getFonts());
+		menu.showText(canvas.draw(), 500, 360, "Game Over!", canvas.getFonts(50));
+		menu.showText(canvas.draw(), 250, 420, "Press <R> to retry. Press <E> to exit to the Main Menu", canvas.getFonts(50));
 
 		break;
 	}
-	menu.showText(canvas.draw(), 500, 0, "100 FPS", 10); //DEBUG FPS
+
 	SDL_RenderPresent(canvas.draw());
 
 	SDL_Delay(10);

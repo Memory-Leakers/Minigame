@@ -21,11 +21,23 @@ private:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	SDL_Surface* surface;
-	TTF_Font* testFont;
+	TTF_Font* Font50;
+	TTF_Font* Font10;
 
 public:
 
 	bool createDisplay(int width, int height);
 	SDL_Renderer* draw();
-	TTF_Font* getFonts()const { return testFont; }
+	TTF_Font* getFonts(int size) { 
+		switch (size) {
+		case 50:
+			return Font50;
+			break;
+		case 10:
+			return Font10;
+			break;
+		default:
+			return Font50;
+		}
+	}
 };
