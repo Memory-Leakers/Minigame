@@ -9,7 +9,6 @@ private:
 	SDL_Rect textRect;
 	SDL_Rect blackRc;
 
-
 public: 
 
 	void showText(SDL_Renderer* renderer, int x, int y, const char* message, TTF_Font* testFont, SDL_Color color);

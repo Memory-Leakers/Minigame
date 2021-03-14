@@ -11,7 +11,7 @@ bool Game::Init(Display Disp) {
 	bool result = canvas.createDisplay(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	player = new Player(200, 200, 32, 32, 2.5, canvas.getRenderer());
-	enemy = new Enemy(200, 200, 32, 32, 2.5, canvas.getRenderer());
+	enemy = new Enemy(200, 200, 32, 32, 1, canvas.getRenderer(), &player->getCollsionBounds(0, 0));
 
 	currentScreen = MENU;
 	//dp.draw(canvas.draw());

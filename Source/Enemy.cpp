@@ -39,6 +39,11 @@ void Enemy::tick()
 {
 	// Utiliza el que tiene escrito en Entity
 	Entity::tick();	
+
+	float disX, disY,dis;
+	disX = targetPos->x - x;
+	disY = targetPos->y - y;
+	dis = sqrt(pow(disX, 2) + pow(disY, 2));
 }
 
 /// <summary>
