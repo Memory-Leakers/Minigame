@@ -1,9 +1,13 @@
 #include "Game.h"
 #include "Menu.h"
+#define MAX_ENTITIES 1
 //Game::Game() {}
 //Game::~Game() {}
 
 Player* p;
+Box* test;
+Entity* ent[MAX_ENTITIES];
+
 bool debug = false;
 
 #define SCREEN_WIDTH	544
@@ -37,8 +41,13 @@ bool Game::Init(Display Disp) {
 
 	canvas = Disp;
 
-	p = new Player(200, 200, 32, 32, 2.5, canvas.draw());
-
+	p = new Player(200, 200, 32, 32, 2, canvas.draw());
+	ent[0] = new Box(300, 300, 32, 32, 2.5, canvas.draw());
+	/*ent[1] = new Box(300, 332, 32, 32, 2.5, canvas.draw());
+	ent[2] = new Box(300, 364, 32, 32, 2.5, canvas.draw());
+	ent[3] = new Box(332, 332, 32, 32, 2.5, canvas.draw());
+	ent[4] = new Box(364, 364, 32, 32, 2.5, canvas.draw());
+	ent[5] = new Box(100, 100, 32, 32, 2.5, canvas.draw());*/
 	currentScreen = MENU;
 	//dp.draw(canvas.draw());
 
@@ -66,25 +75,52 @@ bool Game::Tick() {
 		if (keys[SDL_SCANCODE_F10] == KEY_DOWN) {
 			debug = !debug;
 		}
-		//----------Player-------------
+		//----------Entities-------------
 		//position update
+
+		int yMove;
+		int xMove;
+		yMove = 0;
+		xMove = 0;
+
 		if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
-			p->moveY(-1);
+			//p->moveY(-1);
+			yMove = -1;
 		}
 		if (keys[SDL_SCANCODE_DOWN] == KEY_REPEAT) {
-			p->moveY(1);;
+			//p->moveY(1);;
+			yMove = 1;
 		}
 		if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) {
-			p->moveX(-1);
+			//p->moveX(-1);
+			xMove = -1;
 		}
 		if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
-			p->moveX(1);
+			//p->moveX(1);
+			xMove = 1;
+		}
+		
+		for (int i = 0; i < MAX_ENTITIES; i++) {
+			if (!p->checkCollisions(xMove * -2 + ent[i]->getX(), ent[i]->getY())) {
+				p->moveX(xMove);
+				
+			}
+			if (!p->checkCollisions(ent[i]->getX(), yMove * -2 + ent[i]->getY())) {
+				p->moveY(yMove);
+			}
+		}
+
+		
+		//Entities update
+		//---------------------------------
+		p->tick();
+		for (int i = 0; i < MAX_ENTITIES; i++) {
+			ent[i]->tick();
 		}
 
 
-		//Player update
-		//---------------------------------
-		p->tick();
+
+		
 
 		break;
 
@@ -124,8 +160,13 @@ void Game::Draw() {
 		//--------Entities-------
 		p->draw(canvas.draw());
 
+		for (int i = 0; i < MAX_ENTITIES; i++) {
+			ent[i]->draw(canvas.draw());
+		}
+		
+		
 		//-------------
-		//
+		// 
 		//----------HUD--------------
 		menu.showText(canvas.draw(), 500, 360, "Gameplay. Press <L> to lose.", canvas.getFonts(50));
 

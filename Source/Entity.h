@@ -17,20 +17,12 @@ class Entity {
 		SDL_Rect bounds; //Collisions box
 		float speed;
 		struct Animation {
-			SDL_Texture* down;
-			SDL_Texture* down2;
-			SDL_Texture* down3;
-			SDL_Texture* up;
-			SDL_Texture* up2;
-			SDL_Texture* up3;
-			SDL_Texture* right;
-			SDL_Texture* right2;
-			SDL_Texture* right3;
-			SDL_Texture* left;
-			SDL_Texture* left2;
-			SDL_Texture* left3;
+			SDL_Texture* down[3];
+			SDL_Texture* up[3];
+			SDL_Texture* right[3];
+			SDL_Texture* left[3];
 			SDL_Texture* idle;
-			SDL_Texture* death;
+			//SDL_Texture* death;
 		};
 		Animation anim;
 	public:
@@ -56,13 +48,19 @@ class Entity {
 		virtual void tick(); // ==Update
 		void die(); //  Triggered when it dies
 		void hurt(int dmg);  //Triggered when it recives damage
-		bool checkCollisions(float xOffset, float yOffset);  //Checks Coll
-		SDL_Rect getCollsionBounds(float xOffset, float yOffset);  //Returns collision box
+		bool checkCollisions(int xOffset, int yOffset);  //Checks Coll
+		SDL_Rect getCollsionBounds();  //Returns collision box
 		virtual void texturesSet(SDL_Renderer* g);
-		void moveY(int direction) {
+		virtual void moveY(int direction) {
 			this->y += speed*direction;
 		}
-		void moveX(int direction) {
+		virtual void moveX(int direction) {
 			this->x += speed * direction;
+		}
+		float getX() {
+			return x;
+		}
+		float getY() {
+			return y;
 		}
 };

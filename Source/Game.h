@@ -2,6 +2,7 @@
 
 #include "Display.h"
 #include "Player.h"
+#include "Box.h"
 #define MAX_KEYBOARD_KEYS 256
 
 class Game {
