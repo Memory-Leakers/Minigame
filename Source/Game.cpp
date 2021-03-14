@@ -38,7 +38,6 @@ bool Game::Init(Display Disp) {
 }
 
 bool Game::Tick() {
-	cerr << "Ticks -> " << SDL_GetTicks() << " \n";
 
 	// Tiempo que ha pasado durante ejecuto
 	double currentTime = SDL_GetPerformanceCounter();
@@ -101,6 +100,9 @@ bool Game::Tick() {
 		}
 		//enemy->tick();
 
+
+
+
 		break;
 
 	case Game::GAME_OVER:
@@ -126,7 +128,9 @@ void Game::Draw() {
 
 		SDL_RenderClear(canvas.getRenderer());
 
-		menu.showText(canvas.getRenderer(), 100, 272, "Start Game with <Enter>", canvas.getFonts(35), canvas.getColors(0)); //Shows a Text
+		menu.menuHUD(canvas.getRenderer());
+
+		menu.showText(canvas.getRenderer(), 90, 272, "Start Game with <Enter>", canvas.getFonts(50), canvas.getColors(0)); //Shows a Text
 
 		break;
 	case GAMEPLAY:
@@ -157,7 +161,7 @@ void Game::Draw() {
 			}
 		}
 		//----------HUD--------------
-		menu.renderBlackRc(canvas.getRenderer());
+		menu.gameplayHUD(canvas.getRenderer());
 		menu.showText(canvas.getRenderer(), 65, 25, "x1", canvas.getFonts(50), canvas.getColors(2));
 		menu.showText(canvas.getRenderer(), 65, 60, "0", canvas.getFonts(50), canvas.getColors(2));
 

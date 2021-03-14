@@ -6,6 +6,7 @@ Menu::Menu() {
 	gameplayHud = IMG_Load("Assets/myAssets/Sprites/GameplayHUD.png");
 	coinHud = IMG_Load("Assets/myAssets/Sprites/Coin1.png");
 	playerlifeHud = IMG_Load("Assets/myAssets/Sprites/lifeHUD.png");
+	menuSurface = IMG_Load("Assets/myAssets/Sprites/Map.png");
 }
 
 void Menu::showText(SDL_Renderer* renderer, int x, int y, const char* message, TTF_Font* testFont, SDL_Color color){
@@ -23,7 +24,7 @@ void Menu::showText(SDL_Renderer* renderer, int x, int y, const char* message, T
 	SDL_RenderCopy(renderer, text, NULL, &textRect);
 }
 
-void Menu::renderBlackRc(SDL_Renderer* renderer) {
+void Menu::gameplayHUD(SDL_Renderer* renderer) {
 
 	blackRc.x = 5;
 	blackRc.y = 10;
@@ -48,4 +49,17 @@ void Menu::renderBlackRc(SDL_Renderer* renderer) {
 	SDL_RenderCopy(renderer, blackRcTexture, NULL, &blackRc);
 	SDL_RenderCopy(renderer, coinTexture, NULL, &coinHudRc);
 	SDL_RenderCopy(renderer, playerlifeTexture, NULL, &playerlifeHudRc);
+}
+
+void Menu::menuHUD(SDL_Renderer* renderer) {
+
+	menuRect.x = 0;
+	menuRect.y = 0;
+	menuRect.h = 544;
+	menuRect.w = 544;
+
+	SDL_Texture* menuTexture = SDL_CreateTextureFromSurface(renderer, menuSurface);
+
+	SDL_RenderCopy(renderer, menuTexture, NULL, &menuRect);
+
 }

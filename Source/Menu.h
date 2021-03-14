@@ -3,11 +3,16 @@
 class Menu
 {
 private:
+
+	SDL_Surface* menuSurface;
+	SDL_Rect menuRect;
+
+
 	//TTF_Font* testFont;
-	SDL_Surface* textSurface;
-	SDL_Surface* gameplayHud;
-	SDL_Surface* coinHud;
-	SDL_Surface* playerlifeHud;
+	SDL_Surface* textSurface;	// for text
+	SDL_Surface* gameplayHud;	// for gameplay HUD
+	SDL_Surface* coinHud;		// for coin HUD
+	SDL_Surface* playerlifeHud; // for player's lifes HUD
 	SDL_Texture* text;
 	SDL_Rect textRect;
 	SDL_Rect blackRc;
@@ -17,7 +22,8 @@ private:
 public: 
 	Menu();
 	void showText(SDL_Renderer* renderer, int x, int y, const char* message, TTF_Font* testFont, SDL_Color color);
-	void renderBlackRc(SDL_Renderer* renderer);
+	void gameplayHUD(SDL_Renderer* renderer);
+	void menuHUD(SDL_Renderer* renderer);
 
 };
 
