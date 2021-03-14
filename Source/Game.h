@@ -61,8 +61,9 @@ class Game {
 
 		Player* player;
 		Enemy* enemy;
-	
 
+		SDL_Texture* BackTex;
+	
 		// Funciones
 		bool Init(Display Disp);
 		void Draw();

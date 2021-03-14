@@ -17,7 +17,7 @@ class Entity {
 		int DEFAULT_HEALTH = 1;
 		float DEFAULT_SPEED = 2.5f;
 		int id;
-		int x, y; //Position
+		float x, y; //Position
 		int width, height;
 		int health;
 		SDL_Rect bounds; //Collisions box
@@ -97,8 +97,10 @@ class Entity {
 
 		void moveY(int direction) {
 			this->y += speed*direction;
+			cout << speed * direction << endl;
 		}
 		void moveX(int direction) {
 			this->x += speed * direction;
+			cout << x << endl;
 		}
 };

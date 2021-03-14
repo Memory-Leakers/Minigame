@@ -3,14 +3,6 @@
 //Game::Game() {}
 //Game::~Game() {}
 
-<<<<<<< Updated upstream
-Player* player;
-bool debug = false;
-SDL_Texture* BackTex;
-=======
->>>>>>> Stashed changes
-
-
 bool Game::Init(Display Disp) {
 
 	canvas = Disp;
@@ -25,10 +17,10 @@ bool Game::Init(Display Disp) {
 	//Initialize keys array
 	for (int i = 0; i < MAX_KEYBOARD_KEYS; ++i)
 		keys[i] = KEY_IDLE;
-	IMG_Init;
-	//Initialize Sprites
 	
-
+	//Initialize Sprites
+	IMG_Init;
+		
 	BackTex = SDL_CreateTextureFromSurface(canvas.getRenderer(), IMG_Load("Assets/myAssets/Sprites/map.png"));
 	return result;
 }
@@ -105,13 +97,12 @@ void Game::Draw() {
 
 		break;
 	case GAMEPLAY:
-		
-		
+			
 		//Rectangle Draw Test
 		SDL_SetRenderDrawColor(canvas.getRenderer(), 0, 0, 234, 0);
 		SDL_RenderClear(canvas.getRenderer());
+		
 		//MAP
-
 		SDL_RenderCopy(canvas.getRenderer(), BackTex, NULL, NULL);
 		
 		//--------Entities-------
@@ -209,7 +200,6 @@ bool Game::Input()
 
 	}
 	const Uint8* Keys = SDL_GetKeyboardState(NULL);
-
 
 	// Consider previous keys states for KEY_DOWN and KEY_UP
 	for (int i = 0; i < MAX_KEYBOARD_KEYS; ++i)
