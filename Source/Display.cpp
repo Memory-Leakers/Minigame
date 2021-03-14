@@ -50,8 +50,16 @@ bool Display::createDisplay(int width, int height) {
 		SDL_Log("Unable to initialize TTF: %s", TTF_GetError());
 		return false;
 	}
-	Font50 = TTF_OpenFont("Assets/Fonts/arial.ttf", 50);
-	Font10 = TTF_OpenFont("Assets/Fonts/arial.ttf", 10);
+
+	// Define Fonts
+
+	Font50 = TTF_OpenFont("Assets/Fonts/advanced_pixel.ttf", 50);
+	Font35 = TTF_OpenFont("Assets/Fonts/advanced_pixel.ttf", 35);
+	Font10 = TTF_OpenFont("Assets/Fonts/advanced_pixel.ttf", 10);
+
+	blackC = { 0,0,0 };
+	whiteC = { 255, 255, 255 };
+	redC = { 255, 0, 0 };
 
 	//SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	//SDL_RenderClear(renderer); //NO BORRAR
