@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include<iostream>;
 using namespace std;
-	
+
 
 class Entity {
 	protected:
@@ -24,14 +24,13 @@ class Entity {
 		//SDL_Texture* tex;
 		float speed;
 		SDL_Texture* currentAnim;
-
 	public:
-		
+
 		int getX() { return x; }
 		int getY() { return y; }
 		int getW() { return width; }
 		int getH() { return height; }
-	
+
 		Entity(float x, float y, int width, int height, float speed, SDL_Renderer* g) {
 			this->x = x;
 			this->y = y;
@@ -43,9 +42,9 @@ class Entity {
 			this->bounds.x = 0 + x;
 			this->bounds.y = 0 + y;
 			this->bounds.w = width;
-			this->bounds.h = height;		
+			this->bounds.h = height;
 		};
-		 
+
 		/*
 		 <summary>
 		 Slice Spirtes
@@ -74,26 +73,26 @@ class Entity {
 		/// <summary>
 		/// Triggered when it dies
 		/// </summary>
-		void die(); 
+		void die();
 		/// <summary>
 		/// Triggered when it recives damage
 		/// </summary>
 		/// <param name="dmg"></param>
-		void hurt(int dmg);  
+		void hurt(int dmg);
 		/// <summary>
 		/// Checks Coll
 		/// </summary>
 		/// <param name="xOffset"></param>
 		/// <param name="yOffset"></param>
 		/// <returns></returns>
-		bool checkCollisions(float xOffset, float yOffset);  
+		bool checkCollisions(float xOffset, float yOffset);
 		/// <summary>
 		/// Returns collision box
 		/// </summary>
 		/// <param name="xOffset"></param>
 		/// <param name="yOffset"></param>
 		/// <returns></returns>
-		SDL_Rect getCollsionBounds(float xOffset, float yOffset);  
+		SDL_Rect getCollsionBounds();
 
 		void moveY(int direction);
 

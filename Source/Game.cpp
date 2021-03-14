@@ -1,5 +1,6 @@
 #include "Game.h"
-
+#include "Menu.h"
+#define MAX_ENTITIES 1
 //Game::Game() {}
 //Game::~Game() {}
 
@@ -10,22 +11,27 @@ bool Game::Init(Display Disp) {
 
 	bool result = canvas.createDisplay(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	player = new Player(200, 200, 32, 32, 2.5, canvas.getRenderer());
-	enemy = new Enemy(200, 200, 32, 32, 1, canvas.getRenderer(), &player->getCollsionBounds(0, 0));
-
+	player = new Player(200, 200, 32, 32, 2, canvas.getRenderer());
+	ent[0] = new Box(300, 300, 32, 32, 2.5, canvas.getRenderer());
+	/*ent[1] = new Box(300, 332, 32, 32, 2.5, canvas.draw());
+	ent[2] = new Box(300, 364, 32, 32, 2.5, canvas.draw());
+	ent[3] = new Box(332, 332, 32, 32, 2.5, canvas.draw());
+	ent[4] = new Box(364, 364, 32, 32, 2.5, canvas.draw());
+	ent[5] = new Box(100, 100, 32, 32, 2.5, canvas.draw());*/
+	enemy = new Enemy(200, 200, 32, 32, 2.5, canvas.getRenderer(), &player->getCollsionBounds(0, 0));
 	currentScreen = MENU;
 	//dp.draw(canvas.draw());
 
 	//Initialize keys array
 	for (int i = 0; i < MAX_KEYBOARD_KEYS; ++i)
 		keys[i] = KEY_IDLE;
-	
+
 	// Initialize Sprites
 	IMG_Init;
-		
+
 	// Init map sprite
 	BackTex = SDL_CreateTextureFromSurface(canvas.getRenderer(), IMG_Load("Assets/myAssets/Sprites/map.png"));
-	
+
 	// Init Time
 	TestTime = SDL_GetPerformanceCounter();
 
@@ -52,25 +58,45 @@ bool Game::Tick() {
 		if (keys[SDL_SCANCODE_F10] == KEY_DOWN) {
 			debug = !debug;
 		}
-		//----------Player-------------
+		//----------Entities-------------
 		//position update
+
+		int yMove;
+		int xMove;
+		yMove = 0;
+		xMove = 0;
+
 		if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
-			player->moveY(-1);
+			//p->moveY(-1);
+			yMove = -1;
 		}
 		if (keys[SDL_SCANCODE_DOWN] == KEY_REPEAT) {
-			player->moveY(1);;
+			//p->moveY(1);;
+			yMove = 1;
 		}
 		if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) {
-			player->moveX(-1);
+			//p->moveX(-1);
+			xMove = -1;
 		}
 		if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
-			player->moveX(1);
+			//p->moveX(1);
+			xMove = 1;
 		}
 		//collision box update
 		player->tick();
 		enemy->tick();
 
-		//--------Shoot------------------		
+		for (int i = 0; i < MAX_ENTITIES; i++) {
+			if (!player->checkCollisions(xMove * -2 + ent[i]->getX(), ent[i]->getY())) {
+				player->moveX(xMove);
+
+			}
+			if (!player->checkCollisions(ent[i]->getX(), yMove * -2 + ent[i]->getY())) {
+				player->moveY(yMove);
+			}
+		}
+
+		//--------Shoot------------------
 		for (int i = 0; i < 30; i++)
 		{
 			if(shot[i].alive)
@@ -78,6 +104,17 @@ bool Game::Tick() {
 				shot[i].rec.x += shot[i].speed;
 			}
 		}
+
+		//Entities update
+		//---------------------------------
+		player->tick();
+		for (int i = 0; i < MAX_ENTITIES; i++) {
+			ent[i]->tick();
+		}
+
+
+
+
 
 		break;
 
@@ -108,17 +145,22 @@ void Game::Draw() {
 
 		break;
 	case GAMEPLAY:
-			
+
 		//Rectangle Draw Test
 		SDL_SetRenderDrawColor(canvas.getRenderer(), 0, 0, 234, 0);
 		SDL_RenderClear(canvas.getRenderer());
-		
+
 		//MAP
 		SDL_RenderCopy(canvas.getRenderer(), BackTex, NULL, NULL);
-		
+
 		//--------Entities-------
 		player->draw(canvas.getRenderer());
 		enemy->draw(canvas.getRenderer());
+
+		for (int i = 0; i < MAX_ENTITIES; i++) {
+			ent[i]->draw(canvas.getRenderer());
+		}
+
 
 		//-------------
 		//
@@ -235,7 +277,6 @@ bool Game::Input()
 	if (keys[SDL_SCANCODE_SPACE] == KEY_DOWN)
 	{
 		int x, y, w, h;
-
 		// Inicializar textura de shot
 		if (shot[shotCount].tex == NULL)
 		{
@@ -248,7 +289,7 @@ bool Game::Input()
 		shot[shotCount].rec.x = player->getX() + player->getW();
 		shot[shotCount].rec.y = player->getY() + (player->getH()/2);
 		shot[shotCount].alive = true;
-		
+
 		if (++shotCount >= 30)
 		{
 			shotCount = 0;

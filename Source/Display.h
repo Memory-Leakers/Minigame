@@ -4,8 +4,7 @@
 #include <stdlib.h>			// Required for: EXIT_SUCCESS
 #include <math.h>			// Required for: sinf(), cosf()
 #include <iostream>
-#include <string>
-#include <sstream>
+
 using namespace std;
 
 // Include SDL libraries
@@ -30,7 +29,7 @@ public:
 	bool createDisplay(int width, int height);
 	SDL_Renderer* getRenderer();
 
-	TTF_Font* getFonts(int size) { 
+	TTF_Font* getFonts(int size) {
 		switch (size) {
 		case 50: return Font50; break;
 		case 35: return Font35; break;
