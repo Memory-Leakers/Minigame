@@ -18,7 +18,7 @@ bool Game::Init(Display Disp) {
 	ent[3] = new Box(332, 332, 32, 32, 2.5, canvas.draw());
 	ent[4] = new Box(364, 364, 32, 32, 2.5, canvas.draw());
 	ent[5] = new Box(100, 100, 32, 32, 2.5, canvas.draw());*/
-	enemy = new Enemy(200, 200, 32, 32, 2.5, canvas.getRenderer(), &player->getCollsionBounds());
+	//enemy = new Enemy(200, 200, 32, 32, 2.5, canvas.getRenderer(), &player->getCollsionBounds());
 	currentScreen = MENU;
 	//dp.draw(canvas.draw());
 
@@ -84,7 +84,7 @@ bool Game::Tick() {
 		}
 		//collision box update
 		player->tick();
-		enemy->tick();
+		//enemy->tick();
 
 		for (int i = 0; i < MAX_ENTITIES; i++) {
 			if (!player->checkCollisions(xMove * -2 + ent[i]->getX(), ent[i]->getY())) {
@@ -155,7 +155,7 @@ void Game::Draw() {
 
 		//--------Entities-------
 		player->draw(canvas.getRenderer());
-		enemy->draw(canvas.getRenderer());
+		//enemy->draw(canvas.getRenderer());
 
 		for (int i = 0; i < MAX_ENTITIES; i++) {
 			ent[i]->draw(canvas.getRenderer());
