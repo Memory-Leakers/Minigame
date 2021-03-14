@@ -36,7 +36,7 @@ bool Game::Tick() {
 
 	// Tiempo que ha pasado durante ejecuto
 	double currentTime = SDL_GetPerformanceCounter();
-	//cout << (t1-TestTime) / SDL_GetPerformanceFrequency() << endl;
+	cout << (currentTime -TestTime) / SDL_GetPerformanceFrequency() << endl;
 
 	switch (currentScreen)
 	{

@@ -96,5 +96,6 @@ class Entity {
 		SDL_Rect getCollsionBounds(float xOffset, float yOffset);  
 
 		void moveY(int direction);
+
 		void moveX(int direction);
 };
