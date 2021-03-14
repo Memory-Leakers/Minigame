@@ -93,7 +93,7 @@ void Game::Draw() {
 
 		SDL_RenderClear(canvas.getRenderer());
 
-		menu.showText(canvas.getRenderer(), 500, 360, "Start Game with <Enter>", canvas.getFonts(50)); //Shows a Text
+		menu.showText(canvas.getRenderer(), 100, 272, "Start Game with <Enter>", canvas.getFonts(35), canvas.getColors(0)); //Shows a Text
 
 		break;
 	case GAMEPLAY:
@@ -118,22 +118,24 @@ void Game::Draw() {
 			}
 		}
 		//----------HUD--------------
-		menu.showText(canvas.getRenderer(), 500, 360, "Gameplay. Press <L> to lose.", canvas.getFonts(50));
+		menu.renderBlackRc(canvas.getRenderer());
+		menu.showText(canvas.getRenderer(), 20, 30, "Lifes: x1", canvas.getFonts(35), canvas.getColors(2));
+		menu.showText(canvas.getRenderer(), 20, 70, "Score: 0", canvas.getFonts(35), canvas.getColors(2));
 
 		if (debug == true) {
 			if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
-				menu.showText(canvas.getRenderer(), 0, 0, "UP!", canvas.getFonts(10));
+				menu.showText(canvas.getRenderer(), 0, 0, "UP!", canvas.getFonts(10), canvas.getColors(1));
 			}
 			if (keys[SDL_SCANCODE_DOWN] == KEY_REPEAT) {
-				menu.showText(canvas.getRenderer(), 0, 0, "DOWN!", canvas.getFonts(10));
+				menu.showText(canvas.getRenderer(), 0, 0, "DOWN!", canvas.getFonts(10), canvas.getColors(1));
 			}
 			if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) {
-				menu.showText(canvas.getRenderer(), 0, 0, "LEFT!", canvas.getFonts(10));
+				menu.showText(canvas.getRenderer(), 0, 0, "LEFT!", canvas.getFonts(10), canvas.getColors(1));
 			}
 			if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
-				menu.showText(canvas.getRenderer(), 0, 0, "RIGHT!", canvas.getFonts(10));
+				menu.showText(canvas.getRenderer(), 0, 0, "RIGHT!", canvas.getFonts(10), canvas.getColors(1));
 			}
-			menu.showText(canvas.getRenderer(), 500, 0, "60 FPS", canvas.getFonts(10)); //DEBUG FPS
+			menu.showText(canvas.getRenderer(), 500, 0, "60 FPS", canvas.getFonts(10), canvas.getColors(1)); //DEBUG FPS
 		}
 
 		//-----------------------------
@@ -144,8 +146,8 @@ void Game::Draw() {
 
 		SDL_RenderClear(canvas.getRenderer());
 
-		menu.showText(canvas.getRenderer(), 500, 360, "Game Over!", canvas.getFonts(50));
-		menu.showText(canvas.getRenderer(), 250, 420, "Press <R> to retry. Press <E> to exit to the Main Menu", canvas.getFonts(50));
+		menu.showText(canvas.getRenderer(), 100, 360, "Game Over!", canvas.getFonts(50), canvas.getColors(0));
+		menu.showText(canvas.getRenderer(), 50, 420, "Press <R> to retry. Press <E> to exit to the Main Menu", canvas.getFonts(35), canvas.getColors(1));
 
 		break;
 	}

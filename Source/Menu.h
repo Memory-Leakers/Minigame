@@ -7,10 +7,13 @@ private:
 	SDL_Surface* textSurface;
 	SDL_Texture* text;
 	SDL_Rect textRect;
+	SDL_Rect blackRc;
+
 
 public: 
 
-	void showText(SDL_Renderer* renderer, int x, int y, const char* message, TTF_Font* testFont);
+	void showText(SDL_Renderer* renderer, int x, int y, const char* message, TTF_Font* testFont, SDL_Color color);
+	void renderBlackRc(SDL_Renderer*);
 
 };
 
