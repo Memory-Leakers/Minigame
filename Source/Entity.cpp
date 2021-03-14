@@ -24,7 +24,21 @@ SDL_Rect Entity::getCollsionBounds() {
     return bounds;
 }
 
-bool Entity::checkCollisions(float xOffset, float yOffset) {
+//direction false == X
+//direction true == Y
+bool Entity::checkCollisions(float otherX, float otherY, bool direction) { 
+    float xOffset;
+    float yOffset;
+
+    if (direction) {
+        yOffset = yMove * -speed + otherY;
+        xOffset = otherX;
+    }
+    else {
+        xOffset = xMove * -speed + otherX;
+        yOffset = otherY;
+    }
+
     int tw = this->bounds.w;
     int th = this->bounds.h;
     int rw = 32;
@@ -58,10 +72,10 @@ void Entity::tick()
 
 void Entity::draw(SDL_Renderer* g) {}
 
-void Entity::moveY(int direction) {
-	y += speed * direction;
+void Entity::moveY() {
+	y += speed * yMove;
 }
 
-void Entity::moveX(int direction) {
-	x += speed * direction;
+void Entity::moveX() {
+	x += speed * xMove;
 }

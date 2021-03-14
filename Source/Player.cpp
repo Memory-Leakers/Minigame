@@ -41,6 +41,7 @@ void Player::tick() {
 	// Utiliza el que tiene escrito en Entity
 	Entity::tick();
 	// Puede añadir mas cosas abajo
+
 }
 
 void Player::draw(SDL_Renderer* g) {

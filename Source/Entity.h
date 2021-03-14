@@ -18,6 +18,7 @@ class Entity {
 		float DEFAULT_SPEED = 2.5f;
 		int id;
 		float x, y; //Position
+		int xMove, yMove; //For movement direction
 		int width, height;
 		int health;
 		SDL_Rect bounds; //Collisions box
@@ -26,10 +27,14 @@ class Entity {
 		SDL_Texture* currentAnim;
 	public:
 
+		//GETTERS
 		int getX() { return x; }
 		int getY() { return y; }
 		int getW() { return width; }
 		int getH() { return height; }
+		//SETTERS
+		void setXmove(int xMove) { this->xMove = xMove; }
+		void setYmove(int yMove) { this->yMove = yMove; }
 
 		Entity(float x, float y, int width, int height, float speed, SDL_Renderer* g) {
 			this->x = x;
@@ -84,8 +89,9 @@ class Entity {
 		/// </summary>
 		/// <param name="xOffset"></param>
 		/// <param name="yOffset"></param>
+		/// <param name="direction"></param>
 		/// <returns></returns>
-		bool checkCollisions(float xOffset, float yOffset);
+		bool checkCollisions(float xOffset, float yOffset, bool direction);
 		/// <summary>
 		/// Returns collision box
 		/// </summary>
@@ -94,7 +100,7 @@ class Entity {
 		/// <returns></returns>
 		SDL_Rect getCollsionBounds();
 
-		void moveY(int direction);
+		void moveY();
 
-		void moveX(int direction);
+		void moveX();
 };

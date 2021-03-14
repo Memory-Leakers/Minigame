@@ -60,46 +60,28 @@ bool Game::Tick() {
 		//----------Entities-------------
 		//position update
 
-		int yMove;
-		int xMove;
 		bool bx, by;
-		yMove = 0;
-		xMove = 0;
 		bx = true;
 		by = true;
-
-		if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
-			//p->moveY(-1);
-			yMove = -1;
-		}
-		if (keys[SDL_SCANCODE_DOWN] == KEY_REPEAT) {
-			//p->moveY(1);;
-			yMove = 1;
-		}
-		if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) {
-			//p->moveX(-1);
-			xMove = -1;
-		}
-		if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
-			//p->moveX(1);
-			xMove = 1;
-		}
-		//collision box update
-		player->tick();
-		//enemy->tick();
+		player->setYmove(0);
+			player->setXmove(0);
+		if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) { player->setYmove(-1);}
+		if (keys[SDL_SCANCODE_DOWN] == KEY_REPEAT) {player->setYmove(1);}
+		if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) {player->setXmove(-1);}
+		if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {player->setXmove(1);}
 
 		for (int i = 0; i < MAX_ENTITIES; i++) {
-			if (player->checkCollisions(xMove * -2 + ent[i]->getX(), ent[i]->getY())) {
+			if (player->checkCollisions(ent[i]->getX(), ent[i]->getY(), false)) {
 				bx = false;
 				
 			}
-			if (player->checkCollisions(ent[i]->getX(), yMove * -2 + ent[i]->getY())) {
+			if (player->checkCollisions(ent[i]->getX(), ent[i]->getY(), true)) {
 				by = false;
 				
 			}
 		}
-		if(bx) player->moveX(xMove);
-		if(by) player->moveY(yMove);
+		if(bx) player->moveX();
+		if(by) player->moveY();
 
 		//--------Shoot------------------
 		for (int i = 0; i < 30; i++)
@@ -116,7 +98,7 @@ bool Game::Tick() {
 		for (int i = 0; i < MAX_ENTITIES; i++) {
 			ent[i]->tick();
 		}
-
+		//enemy->tick();
 
 
 
