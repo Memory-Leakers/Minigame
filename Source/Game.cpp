@@ -153,7 +153,6 @@ void Game::Draw() {
 			ent[i]->draw(canvas.getRenderer());
 		}
 
-
 		//-------------
 		//
 		for (int i = 0; i < 30; i++)
