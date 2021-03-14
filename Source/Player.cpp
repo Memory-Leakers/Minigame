@@ -50,31 +50,6 @@ void Player::texturesSet(SDL_Renderer* g) {
 		cut.y += 32;
 		cut.x = 0;
 	}
-
-	//tex = SDL_CreateTextureFromSurface(g, surf);
-
-	//anim.idle = SDL_CreateTextureFromSurface(g, IMG_Load("Assets/myAssets/Sprites/player.png"));
-	/*
-	SDL_Surface* surf = IMG_Load("\Assets\myAssets\Sprites\player.png");
-	anim.down = SDL_CreateTextureFromSurface(g, cropSurface(IMG_Load("\Assets\myAssets\Sprites\player.png"), 0, 0, 32, 32));
-	anim.down2 = SDL_CreateTextureFromSurface(g, cropSurface(IMG_Load("\Assets\myAssets\Sprites\player.png"), 32, 0, 32, 32));
-	anim.down3 = SDL_CreateTextureFromSurface(g, cropSurface(IMG_Load("\Assets\myAssets\Sprites\player.png"), 64, 0, 32, 32));
-
-	anim.left = SDL_CreateTextureFromSurface(g, cropSurface(IMG_Load("\Assets\myAssets\Sprites\player.png"), 0, 32, 32, 32));
-	anim.left2 = SDL_CreateTextureFromSurface(g, cropSurface(IMG_Load("\Assets\myAssets\Sprites\player.png"), 32, 32, 32, 32));
-	anim.left3 = SDL_CreateTextureFromSurface(g, cropSurface(IMG_Load("\Assets\myAssets\Sprites\player.png"), 64, 32, 32, 32));
-
-	anim.left = SDL_CreateTextureFromSurface(g, cropSurface(IMG_Load("\Assets\myAssets\Sprites\player.png"), 0, 32, 32, 32));
-	anim.right2 = SDL_CreateTextureFromSurface(g, cropSurface(IMG_Load("\Assets\myAssets\Sprites\player.png"), 32, 32, 32, 32));
-	anim.right3 = SDL_CreateTextureFromSurface(g, cropSurface(IMG_Load("\Assets\myAssets\Sprites\player.png"), 64, 32, 32, 32));
-
-
-	anim.up = SDL_CreateTextureFromSurface(g, cropSurface(IMG_Load("\Assets\myAssets\Sprites\player.png"), 0, 64, 32, 32));
-	anim.up2 = SDL_CreateTextureFromSurface(g, cropSurface(IMG_Load("\Assets\myAssets\Sprites\player.png"), 32, 64, 32, 32));
-	anim.up3 = SDL_CreateTextureFromSurface(g, cropSurface(IMG_Load("\Assets\myAssets\Sprites\player.png"), 64, 64, 32, 32));
-	
-	anim.idle = SDL_CreateTextureFromSurface(g, cropSurface(IMG_Load("\Assets\myAssets\Sprites\player.png"), 0, 0, 32, 32));
-	*/
 }
 
 void Player::tick() {
@@ -83,11 +58,8 @@ void Player::tick() {
 }
 
 void Player::draw(SDL_Renderer* g) {
-	//bounds.x = 100;
-	//bounds.y = 100;
-	//bounds.w = 32;
-	//bounds.h = 32;
 
+	//Dibujar cuadrado
 	//SDL_SetRenderDrawColor(g, 0, 127, 200, 5);
 	//SDL_RenderFillRect(g, &bounds);
 
