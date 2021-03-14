@@ -24,14 +24,16 @@ private:
 	AnimState animState;
 
 	using Entity::Entity;
+
+
 	public:
 		void texturesSet(SDL_Renderer* g) override;
 		void draw(SDL_Renderer* g) override;
 		void tick() override;
-		void moveY(int direction) override;
-		void moveX(int direction) override;
 
-		Player(float x, float y, int width, int height, float speed, SDL_Renderer* g) :Entity(x, y, width, height, speed, g) { texturesSet(g); };
-	//friend class Entity;
+		Player(float x, float y, int width, int height, float speed, SDL_Renderer* g) :Entity(x, y, width, height, speed, g)
+		{
+			texturesSet(g);
+		};
 
 };

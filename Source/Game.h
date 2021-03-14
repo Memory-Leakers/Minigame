@@ -11,6 +11,8 @@
 #define MAX_KEYBOARD_KEYS 256
 #define MAX_MOUSE_BUTTONS 5
 
+#define MAX_ENTITIES 1
+
 struct Shoot
 {
 	SDL_Texture* tex;
@@ -60,10 +62,19 @@ class Game {
 		Shoot shot[30];
 		int shotCount = 0;
 
+		// Player
 		Player* player;
-		Enemy* enemy;
 
+		// Enemigo
+		Enemy* enemy;
+		Box* test;
+		Entity* ent[MAX_ENTITIES];
+
+		// Mapa
 		SDL_Texture* BackTex;
+
+		// Tiempo
+		double TestTime = 0;
 
 		// Funciones
 		bool Init(Display Disp);
