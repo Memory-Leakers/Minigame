@@ -1,5 +1,12 @@
 #include "Menu.h"
 
+
+Menu::Menu() {
+
+	gameplayHud = IMG_Load("Assets/myAssets/Sprites/GameplayHUD.png");
+
+}
+
 void Menu::showText(SDL_Renderer* renderer, int x, int y, const char* message, TTF_Font* testFont, SDL_Color color){
 	//testFont = TTF_OpenFont("Assets/Fonts/arial.ttf", fontSize);
 
@@ -21,8 +28,8 @@ void Menu::renderBlackRc(SDL_Renderer* renderer) {
 	blackRc.y = 10;
 	blackRc.h = 120;
 	blackRc.w = 120;
-	SDL_Surface* blackRcSurface = SDL_CreateRGBSurface(0, blackRc.w, blackRc.h, 32, 0, 0, 0, 255);
-	SDL_Texture* blackRcTexture = SDL_CreateTextureFromSurface(renderer, blackRcSurface);
+	//SDL_Surface* blackRcSurface = SDL_CreateRGBSurface(0, blackRc.w, blackRc.h, 32, 0, 0, 0, 255);
+	SDL_Texture* blackRcTexture = SDL_CreateTextureFromSurface(renderer, gameplayHud);
 	
 	SDL_RenderCopy(renderer, blackRcTexture, NULL, &blackRc);
 }
