@@ -25,7 +25,7 @@ class Entity {
 		//SDL_Texture* tex;
 		float speed;
 		SDL_Texture* currentAnim;
-		void animationController();
+		virtual void animationController();
 		int spX, spY;
 	public:
 

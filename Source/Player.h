@@ -15,6 +15,8 @@ struct PlayerAnim {
 
 	SDL_Texture* idle;
 
+	double startTime;
+	float changeTime;
 	//SDL_Texture* death;
 };
 
@@ -24,7 +26,7 @@ private:
 	AnimState animState;
 
 	using Entity::Entity;
-
+	void animationController() override;
 
 	public:
 		void texturesSet(SDL_Renderer* g) override;
@@ -34,6 +36,7 @@ private:
 		Player(float x, float y, int width, int height, float speed, SDL_Renderer* g) :Entity(x, y, width, height, speed, g)
 		{
 			texturesSet(g);
+			anim.changeTime = 0.5f;
 		};
 
 };
