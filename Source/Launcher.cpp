@@ -11,8 +11,11 @@ struct Launcher {
 	Display Display;
 };
 Launcher Launch;
+
 void Finish() {
+	//SDL_DestroyTexture(TxtBackground);
 	SDL_Quit();
+	IMG_Quit;
 }
 
 void Start() {
@@ -28,8 +31,8 @@ void Start() {
 	Finish();
 }
 
-
 int main(int argc, char* argv[]) {
+
 	Start();
 	
 	return(EXIT_SUCCESS);

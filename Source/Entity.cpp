@@ -1,9 +1,6 @@
 #include "Entity.h"
 
 
-
-
-
 SDL_Surface* Entity::cropSurface(SDL_Surface* img, int x, int y, int width, int height) {
 	SDL_Surface* surface = SDL_CreateRGBSurface(img->flags, width, height, img->format->BitsPerPixel, img->format->Rmask, img->format->Gmask, img->format->Bmask, img->format->Amask);
 	SDL_Rect rect = { x, y, width, height };
@@ -22,17 +19,12 @@ void Entity::hurt(int dmg) {
 	}
 }
 
+
 SDL_Rect Entity::getCollsionBounds() {
-	//SDL_Rect bounds;
-	//ounds.x = this->bounds.x + this->x + xOffset;
-	//bounds.y = this->bounds.y + this->y + yOffset;
-	//bounds.w = this->bounds.w;
-	//bounds.h = this->bounds.h;
-	//return bounds;
-	return bounds;
+    return bounds;
 }
 
-bool Entity::checkCollisions(int xOffset,int yOffset) {
+bool Entity::checkCollisions(float xOffset, float yOffset) {
     int tw = this->bounds.w;
     int th = this->bounds.h;
     int rw = 32;
@@ -55,15 +47,13 @@ bool Entity::checkCollisions(int xOffset,int yOffset) {
         (th < ty || th > ry));
 }
 
+void Entity::texturesSet(SDL_Renderer* g) {}
 
-void Entity::texturesSet(SDL_Renderer* g) {
-
+void Entity::tick()
+{
+	// Actualizar la caja de colision, para que se cuadre con la posicion de la entidad
+	bounds.x = x;
+	bounds.y = y;
 }
 
-void Entity::tick() {
-
-}
-
-void Entity::draw(SDL_Renderer* g) {
-	
-}
+void Entity::draw(SDL_Renderer* g) {}
