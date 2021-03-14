@@ -1,6 +1,5 @@
 #include "Game.h"
 #include "Menu.h"
-#define MAX_ENTITIES 1
 //Game::Game() {}
 //Game::~Game() {}
 
@@ -13,11 +12,11 @@ bool Game::Init(Display Disp) {
 
 	player = new Player(200, 200, 32, 32, 2, canvas.getRenderer());
 	ent[0] = new Box(300, 300, 32, 32, 2.5, canvas.getRenderer());
-	/*ent[1] = new Box(300, 332, 32, 32, 2.5, canvas.draw());
-	ent[2] = new Box(300, 364, 32, 32, 2.5, canvas.draw());
-	ent[3] = new Box(332, 332, 32, 32, 2.5, canvas.draw());
-	ent[4] = new Box(364, 364, 32, 32, 2.5, canvas.draw());
-	ent[5] = new Box(100, 100, 32, 32, 2.5, canvas.draw());*/
+	ent[1] = new Box(300, 332, 32, 32, 2.5, canvas.getRenderer());
+	ent[2] = new Box(300, 364, 32, 32, 2.5, canvas.getRenderer());
+	ent[3] = new Box(332, 332, 32, 32, 2.5, canvas.getRenderer());
+	ent[4] = new Box(364, 364, 32, 32, 2.5, canvas.getRenderer());
+	ent[5] = new Box(100, 100, 32, 32, 2.5, canvas.getRenderer());
 	//enemy = new Enemy(200, 200, 32, 32, 2.5, canvas.getRenderer(), &player->getCollsionBounds());
 	currentScreen = MENU;
 	//dp.draw(canvas.draw());
@@ -63,8 +62,11 @@ bool Game::Tick() {
 
 		int yMove;
 		int xMove;
+		bool bx, by;
 		yMove = 0;
 		xMove = 0;
+		bx = true;
+		by = true;
 
 		if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
 			//p->moveY(-1);
@@ -87,14 +89,17 @@ bool Game::Tick() {
 		//enemy->tick();
 
 		for (int i = 0; i < MAX_ENTITIES; i++) {
-			if (!player->checkCollisions(xMove * -2 + ent[i]->getX(), ent[i]->getY())) {
-				player->moveX(xMove);
-
+			if (player->checkCollisions(xMove * -2 + ent[i]->getX(), ent[i]->getY())) {
+				bx = false;
+				
 			}
-			if (!player->checkCollisions(ent[i]->getX(), yMove * -2 + ent[i]->getY())) {
-				player->moveY(yMove);
+			if (player->checkCollisions(ent[i]->getX(), yMove * -2 + ent[i]->getY())) {
+				by = false;
+				
 			}
 		}
+		if(bx) player->moveX(xMove);
+		if(by) player->moveY(yMove);
 
 		//--------Shoot------------------
 		for (int i = 0; i < 30; i++)
