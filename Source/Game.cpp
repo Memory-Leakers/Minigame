@@ -38,6 +38,7 @@ bool Game::Init(Display Disp) {
 }
 
 bool Game::Tick() {
+	cerr << "Ticks -> " << SDL_GetTicks() << " \n";
 
 	// Tiempo que ha pasado durante ejecuto
 	double currentTime = SDL_GetPerformanceCounter();

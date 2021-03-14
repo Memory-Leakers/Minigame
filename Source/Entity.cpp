@@ -79,3 +79,36 @@ void Entity::moveY() {
 void Entity::moveX() {
 	x += speed * xMove;
 }
+
+void Entity::animationController() {
+    if (xMove == 1) {//Right
+        if (spX == 0 ) {
+
+            spX = 1;
+        }
+        else if (spX == 1 && SDL_GetTicks() % 150 == 0) {
+ 
+            spX = 2;
+        }
+        else if (spX == 2 && SDL_GetTicks() % 150 == 0) {
+
+            spX = 0;
+        }
+        
+        
+        spY = 3;
+    }
+    else if (xMove == -1) { //Left
+        spX = 0;
+        spY = 1;
+    }
+    else if (yMove == 1) { //Down
+        spX = 0;
+        spY = 0;
+    }
+    else if (yMove == -1) { //UP
+        spX = 0;
+        spY = 2;
+    }
+
+}
