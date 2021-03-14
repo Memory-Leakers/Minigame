@@ -18,7 +18,7 @@ bool Game::Init(Display Disp) {
 	ent[3] = new Box(332, 332, 32, 32, 2.5, canvas.draw());
 	ent[4] = new Box(364, 364, 32, 32, 2.5, canvas.draw());
 	ent[5] = new Box(100, 100, 32, 32, 2.5, canvas.draw());*/
-	enemy = new Enemy(200, 200, 32, 32, 2.5, canvas.getRenderer(), &player->getCollsionBounds(0, 0));
+	enemy = new Enemy(200, 200, 32, 32, 2.5, canvas.getRenderer(), &player->getCollsionBounds());
 	currentScreen = MENU;
 	//dp.draw(canvas.draw());
 
