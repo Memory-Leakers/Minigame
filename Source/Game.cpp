@@ -5,6 +5,7 @@
 
 Player* player;
 bool debug = false;
+SDL_Texture* BackTex;
 
 #define SCREEN_WIDTH	544
 #define SCREEN_HEIGHT	544
@@ -46,7 +47,11 @@ bool Game::Init(Display Disp) {
 	//Initialize keys array
 	for (int i = 0; i < MAX_KEYBOARD_KEYS; ++i)
 		keys[i] = KEY_IDLE;
+	IMG_Init;
+	//Initialize Sprites
+	
 
+	BackTex = SDL_CreateTextureFromSurface(canvas.getRenderer(), IMG_Load("Assets/myAssets/Sprites/map.png"));
 	return result;
 }
 
@@ -122,12 +127,15 @@ void Game::Draw() {
 
 		break;
 	case GAMEPLAY:
+		
+		
 		//Rectangle Draw Test
-		SDL_SetRenderDrawColor(canvas.getRenderer(), 0, 0, 0, 255);
+		SDL_SetRenderDrawColor(canvas.getRenderer(), 0, 0, 234, 0);
 		SDL_RenderClear(canvas.getRenderer());
 		//MAP
 
-
+		SDL_RenderCopy(canvas.getRenderer(), BackTex, NULL, NULL);
+		
 		//--------Entities-------
 		player->draw(canvas.getRenderer());
 

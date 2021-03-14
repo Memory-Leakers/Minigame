@@ -43,6 +43,8 @@ bool Display::createDisplay(int width, int height) {
 	//SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	//SDL_RenderClear(renderer); //NO BORRAR
 	//SDL_RenderPresent(renderer);
+	
+	
 
 	return true;
 }

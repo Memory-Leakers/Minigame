@@ -13,7 +13,9 @@ struct Launcher {
 Launcher Launch;
 
 void Finish() {
+	//SDL_DestroyTexture(TxtBackground);
 	SDL_Quit();
+	IMG_Quit;
 }
 
 void Start() {

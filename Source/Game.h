@@ -16,6 +16,10 @@ class Game {
 	private:
 		Display canvas;
 		SDL_Window* window;
+		
+		SDL_Texture* TxtBackground;
+		
+		
 		enum GameState {
 			MENU,
 			GAMEPLAY,

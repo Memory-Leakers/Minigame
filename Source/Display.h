@@ -21,7 +21,7 @@ private:
 	SDL_Surface* surface;
 	TTF_Font* Font50;
 	TTF_Font* Font10;
-
+	
 public:
 
 	bool createDisplay(int width, int height);
