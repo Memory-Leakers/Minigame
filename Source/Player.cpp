@@ -1,25 +1,7 @@
-#include "Player.h"
-#include <stdio.h>
-
-#include<iostream>;
-using namespace std;
+﻿#include "Player.h"
 
 void Player::texturesSet(SDL_Renderer* g) {
 	
-	SDL_Rect crop;
-	crop.x = 0;
-	crop.y = 0;
-	crop.w = 32;
-	crop.y = 32;
-
-	int flags = IMG_INIT_JPG | IMG_INIT_PNG;
-	int initted = IMG_Init(flags);
-
-	if ((initted & flags) != flags) {
-		SDL_Log("IMG_Init: Failed to init required jpg and png support!\n");
-		SDL_Log("IMG_Init: %s\n", IMG_GetError());
-	}
-
 	// Init sprites
 	SDL_Surface* src = IMG_Load("Assets/myAssets/Sprites/player.png");
 	// Si no inicializa con un imagen, NO FUNCIONA!!!!!!!!!!!!!
@@ -53,8 +35,9 @@ void Player::texturesSet(SDL_Renderer* g) {
 }
 
 void Player::tick() {
-	bounds.x = 0 + x;
-	bounds.y = 0 + y;
+	// Utiliza el que tiene escrito en Entity
+	Entity::tick();
+	// Puede añadir mas cosas abajo
 }
 
 void Player::draw(SDL_Renderer* g) {

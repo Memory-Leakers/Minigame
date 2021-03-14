@@ -19,7 +19,6 @@ void Entity::hurt(int dmg) {
 	}
 }
 
-
 bool checkEntityCollsions(float xOffset, float yOffset) {
 	return false;
 }
@@ -33,14 +32,13 @@ SDL_Rect Entity::getCollsionBounds(float xOffset, float yOffset) {
 	return bounds;
 }
 
-void Entity::texturesSet(SDL_Renderer* g) {
+void Entity::texturesSet(SDL_Renderer* g) {}
 
+void Entity::tick() 
+{
+	// Actualizar la caja de colision, para que se cuadre con la posicion de la entidad
+	bounds.x = x;
+	bounds.y = y;
 }
 
-void Entity::tick() {
-
-}
-
-void Entity::draw(SDL_Renderer* g) {
-	
-}
+void Entity::draw(SDL_Renderer* g) {}

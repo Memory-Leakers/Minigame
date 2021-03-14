@@ -9,7 +9,7 @@ enum AnimState {
 	idle
 };
 
-struct Animation {
+struct PlayerAnim {
 
 	SDL_Texture* dirAnim[4][3];
 
@@ -19,20 +19,18 @@ struct Animation {
 };
 
 class Player : public Entity {
-	private:
-	Animation anim;
+private:
+	PlayerAnim anim;
 	AnimState animState;
 
 	using Entity::Entity;
 
-	public:
-		void texturesSet(SDL_Renderer* g) override;
-		void draw(SDL_Renderer* g) override;
-		void tick() override;
+public:
+	void texturesSet(SDL_Renderer* g) override;
+	void draw(SDL_Renderer* g) override;
+	void tick() override;
 
-		Player(float x, float y, int width, int height, float speed, SDL_Renderer* g) :Entity(x, y, width, height, speed, g) { texturesSet(g); };
-
-	//friend class Entity;
+	Player(float x, float y, int width, int height, float speed, SDL_Renderer* g) :Entity(x, y, width, height, speed, g) { texturesSet(g); };
 
 };
 

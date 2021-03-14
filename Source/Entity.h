@@ -4,12 +4,13 @@
 #include "SDL_image/include/SDL_image.h"	// Required for image loading functionality
 #include "SDL_mixer/include/SDL_mixer.h"    // Required for mixer loading functionality
 #include "SDL_ttf/include/SDL_ttf.h"
+
+#include <stdio.h>
+#include<iostream>;
+using namespace std;
 	
 
 class Entity {
-	//friend class Player;
-	private:
-
 	protected:
 		const int ENTITY_WIDTH = 32, ENTITY_HEIGHT = 32;
 
@@ -22,6 +23,7 @@ class Entity {
 		SDL_Rect bounds; //Collisions box
 		//SDL_Texture* tex;
 		float speed;
+		SDL_Texture* currentAnim;
 
 	public:
 		
@@ -29,7 +31,6 @@ class Entity {
 		int getY() { return y; }
 		int getW() { return width; }
 		int getH() { return height; }
-
 	
 		Entity(float x, float y, int width, int height, float speed, SDL_Renderer* g) {
 			this->x = x;
@@ -42,9 +43,10 @@ class Entity {
 			this->bounds.x = 0 + x;
 			this->bounds.y = 0 + y;
 			this->bounds.w = width;
-			this->bounds.h = height;			
+			this->bounds.h = height;		
 		};
-		 /*
+		 
+		/*
 		 <summary>
 		 Slice Spirtes
 		 </summary>
@@ -55,7 +57,6 @@ class Entity {
 		 <param name="height"></param>
 		 <returns></returns>
 		 */
-
 		SDL_Surface* cropSurface(SDL_Surface* img, int x, int y, int width, int height);
 
 		/// <summary>

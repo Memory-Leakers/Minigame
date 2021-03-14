@@ -1,44 +1,22 @@
 #include "Game.h"
-#include "Menu.h"
+
 //Game::Game() {}
 //Game::~Game() {}
 
+<<<<<<< Updated upstream
 Player* player;
 bool debug = false;
 SDL_Texture* BackTex;
+=======
+>>>>>>> Stashed changes
 
-#define SCREEN_WIDTH	544
-#define SCREEN_HEIGHT	544
-
-#define MAX_KEYBOARD_KEYS 256
-#define MAX_MOUSE_BUTTONS 5
-enum WindowEvent
-{
-	WE_QUIT = 0,
-	WE_HIDE,
-	WE_SHOW,
-	WE_COUNT
-};
-bool window_events[WE_COUNT];
-enum KeyState
-{
-	KEY_IDLE = 0,		// DEFAULT
-	KEY_DOWN,			// PRESSED (DEFAULT->DOWN)
-	KEY_REPEAT,			// KEEP DOWN (sustained)
-	KEY_UP				// RELEASED (DOWN->DEFAULT)
-};
-KeyState keys[MAX_KEYBOARD_KEYS];
-KeyState mouse_buttons[MAX_MOUSE_BUTTONS];
-int mouse_x;
-int mouse_y;
-
-Menu menu;
 
 bool Game::Init(Display Disp) {
 
 	canvas = Disp;
 
 	bool result = canvas.createDisplay(SCREEN_WIDTH, SCREEN_HEIGHT);
+
 	player = new Player(200, 200, 32, 32, 2.5, canvas.getRenderer());
 
 	currentScreen = MENU;
