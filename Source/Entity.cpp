@@ -20,8 +20,8 @@ void Entity::hurt(int dmg) {
 }
 
 
-SDL_Rect Entity::getCollsionBounds() {
-    return bounds;
+SDL_Rect* Entity::getCollsionBounds() {
+    return &bounds;
 }
 
 //direction false == X

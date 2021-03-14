@@ -1,4 +1,5 @@
 ﻿#include "Enemy.h"
+# define PI 3.14159265358979323846
 
 /// <summary>
 /// Inicializar textura de enemigo
@@ -44,6 +45,11 @@ void Enemy::tick()
 	disX = targetPos->x - x;
 	disY = targetPos->y - y;
 	dis = sqrt(pow(disX, 2) + pow(disY, 2));
+	float angle = (asin(abs(disY / dis)) * 180) / PI;
+	cout << angle << endl;;
+
+
+
 }
 
 /// <summary>

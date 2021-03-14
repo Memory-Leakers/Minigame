@@ -17,7 +17,7 @@ bool Game::Init(Display Disp) {
 	ent[3] = new Box(332, 332, 32, 32, 2.5, canvas.getRenderer());
 	ent[4] = new Box(364, 364, 32, 32, 2.5, canvas.getRenderer());
 	ent[5] = new Box(100, 100, 32, 32, 2.5, canvas.getRenderer());
-	//enemy = new Enemy(200, 200, 32, 32, 2.5, canvas.getRenderer(), &player->getCollsionBounds());
+	enemy = new Enemy(200, 200, 32, 32, 2.5, canvas.getRenderer(), player->getCollsionBounds());
 	currentScreen = MENU;
 	//dp.draw(canvas.draw());
 
@@ -38,11 +38,11 @@ bool Game::Init(Display Disp) {
 }
 
 bool Game::Tick() {
-	cerr << "Ticks -> " << SDL_GetTicks() << " \n";
+	//cerr << "Ticks -> " << SDL_GetTicks() << " \n";
 
 	// Tiempo que ha pasado durante ejecuto
 	double currentTime = SDL_GetPerformanceCounter();
-	cout << (currentTime -TestTime) / SDL_GetPerformanceFrequency() << endl;
+	//cout << (currentTime -TestTime) / SDL_GetPerformanceFrequency() << endl;
 
 	switch (currentScreen)
 	{
@@ -99,7 +99,7 @@ bool Game::Tick() {
 		for (int i = 0; i < MAX_ENTITIES; i++) {
 			ent[i]->tick();
 		}
-		//enemy->tick();
+		enemy->tick();
 
 		break;
 
@@ -140,7 +140,7 @@ void Game::Draw() {
 
 		//--------Entities-------
 		player->draw(canvas.getRenderer());
-		//enemy->draw(canvas.getRenderer());
+		enemy->draw(canvas.getRenderer());
 
 		for (int i = 0; i < MAX_ENTITIES; i++) {
 			ent[i]->draw(canvas.getRenderer());

@@ -100,7 +100,7 @@ class Entity {
 		/// <param name="xOffset"></param>
 		/// <param name="yOffset"></param>
 		/// <returns></returns>
-		SDL_Rect getCollsionBounds();
+		SDL_Rect* getCollsionBounds();
 
 		void moveY();
 
