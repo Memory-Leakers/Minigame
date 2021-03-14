@@ -6,9 +6,13 @@ private:
 	//TTF_Font* testFont;
 	SDL_Surface* textSurface;
 	SDL_Surface* gameplayHud;
+	SDL_Surface* coinHud;
+	SDL_Surface* playerlifeHud;
 	SDL_Texture* text;
 	SDL_Rect textRect;
 	SDL_Rect blackRc;
+	SDL_Rect coinHudRc;
+	SDL_Rect playerlifeHudRc;
 
 public: 
 	Menu();
