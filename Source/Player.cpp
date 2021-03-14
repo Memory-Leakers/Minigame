@@ -37,11 +37,10 @@ void Player::texturesSet(SDL_Renderer* g) {
 void Player::tick() {
 	bounds.x = 0 + x;
 	bounds.y = 0 + y;
-
+	animationController();
 	// Utiliza el que tiene escrito en Entity
 	Entity::tick();
 	// Puede añadir mas cosas abajo
-
 }
 
 void Player::draw(SDL_Renderer* g) {
@@ -50,5 +49,5 @@ void Player::draw(SDL_Renderer* g) {
 	//SDL_SetRenderDrawColor(g, 0, 127, 200, 5);
 	//SDL_RenderFillRect(g, &bounds);
 
-	SDL_RenderCopy(g, anim.dirAnim[3][0], NULL, &bounds);
+	SDL_RenderCopy(g, anim.dirAnim[spY][spX], NULL, &bounds);
 }
