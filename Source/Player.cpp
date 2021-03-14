@@ -1,7 +1,7 @@
 ﻿#include "Player.h"
 
 void Player::texturesSet(SDL_Renderer* g) {
-	
+
 	// Init sprites
 	SDL_Surface* src = IMG_Load("Assets/myAssets/Sprites/player.png");
 	// Si no inicializa con un imagen, NO FUNCIONA!!!!!!!!!!!!!
@@ -25,7 +25,7 @@ void Player::texturesSet(SDL_Renderer* g) {
 			{
 				cerr << SDL_GetError() << " 275 \n";
 			}
-			
+
 			anim.dirAnim[i][j] = SDL_CreateTextureFromSurface(g, dst);
 			cut.x += 32;
 		}
@@ -35,6 +35,9 @@ void Player::texturesSet(SDL_Renderer* g) {
 }
 
 void Player::tick() {
+	bounds.x = 0 + x;
+	bounds.y = 0 + y;
+
 	// Utiliza el que tiene escrito en Entity
 	Entity::tick();
 	// Puede añadir mas cosas abajo

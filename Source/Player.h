@@ -25,15 +25,15 @@ private:
 
 	using Entity::Entity;
 
-public:
-	void texturesSet(SDL_Renderer* g) override;
-	void draw(SDL_Renderer* g) override;
-	void tick() override;
 
-	Player(float x, float y, int width, int height, float speed, SDL_Renderer* g) :Entity(x, y, width, height, speed, g) 
-	{
-		texturesSet(g); 
-	};
+	public:
+		void texturesSet(SDL_Renderer* g) override;
+		void draw(SDL_Renderer* g) override;
+		void tick() override;
+
+		Player(float x, float y, int width, int height, float speed, SDL_Renderer* g) :Entity(x, y, width, height, speed, g)
+		{
+			texturesSet(g);
+		};
 
 };
-

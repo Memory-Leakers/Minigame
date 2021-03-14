@@ -4,11 +4,14 @@
 #include "Menu.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Box.h"
 
 #define SCREEN_WIDTH	544
 #define SCREEN_HEIGHT	544
 #define MAX_KEYBOARD_KEYS 256
 #define MAX_MOUSE_BUTTONS 5
+
+#define MAX_ENTITIES 1
 
 struct Shoot
 {
@@ -22,10 +25,10 @@ class Game {
 	private:
 		Display canvas;
 		SDL_Window* window;
-		
+
 		SDL_Texture* TxtBackground;
-		
-		
+
+
 		enum GameState {
 			MENU,
 			GAMEPLAY,
@@ -64,14 +67,15 @@ class Game {
 
 		// Enemigo
 		Enemy* enemy;
-
+		Box* test;
+		Entity* ent[MAX_ENTITIES];
 
 		// Mapa
 		SDL_Texture* BackTex;
 
 		// Tiempo
 		double TestTime = 0;
-	
+
 		// Funciones
 		bool Init(Display Disp);
 		void Draw();

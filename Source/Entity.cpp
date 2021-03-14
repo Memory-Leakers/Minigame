@@ -19,22 +19,37 @@ void Entity::hurt(int dmg) {
 	}
 }
 
-bool checkEntityCollsions(float xOffset, float yOffset) {
-	return false;
+
+SDL_Rect Entity::getCollsionBounds() {
+    return bounds;
 }
 
-SDL_Rect Entity::getCollsionBounds(float xOffset, float yOffset) {
-	SDL_Rect bounds;
-	bounds.x = this->bounds.x + this->x + xOffset;
-	bounds.y = this->bounds.y + this->y + yOffset;
-	bounds.w = this->bounds.w;
-	bounds.h = this->bounds.h;
-	return bounds;
+bool Entity::checkCollisions(float xOffset, float yOffset) {
+    int tw = this->bounds.w;
+    int th = this->bounds.h;
+    int rw = 32;
+    int rh = 32;
+    if (rw <= 0 || rh <= 0 || tw <= 0 || th <= 0) {
+        return false;
+    }
+    int tx = this->bounds.x;
+    int ty = this->bounds.y;
+    int rx = xOffset;
+    int ry = yOffset;
+    rw += rx;
+    rh += ry;
+    tw += tx;
+    th += ty;
+    //      overflow || intersect
+    return ((rw < rx || rw > tx) &&
+        (rh < ry || rh > ty) &&
+        (tw < tx || tw > rx) &&
+        (th < ty || th > ry));
 }
 
 void Entity::texturesSet(SDL_Renderer* g) {}
 
-void Entity::tick() 
+void Entity::tick()
 {
 	// Actualizar la caja de colision, para que se cuadre con la posicion de la entidad
 	bounds.x = x;
