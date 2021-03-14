@@ -42,3 +42,11 @@ void Entity::tick()
 }
 
 void Entity::draw(SDL_Renderer* g) {}
+
+void Entity::moveY(int direction) {
+	y += speed * direction;
+}
+
+void Entity::moveX(int direction) {
+	x += speed * direction;
+}

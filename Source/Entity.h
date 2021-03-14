@@ -95,12 +95,6 @@ class Entity {
 		/// <returns></returns>
 		SDL_Rect getCollsionBounds(float xOffset, float yOffset);  
 
-		void moveY(int direction) {
-			this->y += speed*direction;
-			cout << speed * direction << endl;
-		}
-		void moveX(int direction) {
-			this->x += speed * direction;
-			cout << x << endl;
-		}
+		void moveY(int direction);
+		void moveX(int direction);
 };

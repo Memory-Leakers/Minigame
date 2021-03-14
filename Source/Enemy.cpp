@@ -30,7 +30,6 @@ void Enemy::texturesSet(SDL_Renderer* g)
 		cut.x += 32;
 	}
 	currentAnim = anim.walk[0];
-
 }
 
 /// <summary>
@@ -40,15 +39,26 @@ void Enemy::tick()
 {
 	// Utiliza el que tiene escrito en Entity
 	Entity::tick();
+
+	double endTime = SDL_GetPerformanceCounter();
+	double timeOffset = SDL_GetPerformanceFrequency();
 	// Puede añadir mas cosas abajo
-	if(currentAnim == anim.walk[0])
+
+	if (((endTime - anim.startTime) / timeOffset) >= anim.changeTime)
 	{
-		currentAnim = anim.walk[1];
+		anim.startTime = SDL_GetPerformanceCounter();
+		if (currentAnim == anim.walk[0])
+		{
+			//cout << "a" << endl;
+			currentAnim = anim.walk[1];
+		}
+		else
+		{
+			//cout << "b" << endl;
+			currentAnim = anim.walk[0];
+		}
 	}
-	else
-	{
-		currentAnim = anim.walk[0];
-	}
+	
 
 }
 

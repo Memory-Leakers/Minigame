@@ -3,6 +3,7 @@
 //Game::Game() {}
 //Game::~Game() {}
 
+
 bool Game::Init(Display Disp) {
 
 	canvas = Disp;
@@ -10,6 +11,7 @@ bool Game::Init(Display Disp) {
 	bool result = canvas.createDisplay(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	player = new Player(200, 200, 32, 32, 2.5, canvas.getRenderer());
+	enemy = new Enemy(200, 200, 32, 32, 2.5, canvas.getRenderer());
 
 	currentScreen = MENU;
 	//dp.draw(canvas.draw());
@@ -18,14 +20,23 @@ bool Game::Init(Display Disp) {
 	for (int i = 0; i < MAX_KEYBOARD_KEYS; ++i)
 		keys[i] = KEY_IDLE;
 	
-	//Initialize Sprites
+	// Initialize Sprites
 	IMG_Init;
 		
+	// Init map sprite
 	BackTex = SDL_CreateTextureFromSurface(canvas.getRenderer(), IMG_Load("Assets/myAssets/Sprites/map.png"));
+	
+	// Init Time
+	TestTime = SDL_GetPerformanceCounter();
+
 	return result;
 }
 
 bool Game::Tick() {
+
+	// Tiempo que ha pasado durante ejecuto
+	double currentTime = SDL_GetPerformanceCounter();
+	//cout << (t1-TestTime) / SDL_GetPerformanceFrequency() << endl;
 
 	switch (currentScreen)
 	{
@@ -55,6 +66,9 @@ bool Game::Tick() {
 		if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
 			player->moveX(1);
 		}
+		//collision box update
+		player->tick();
+		enemy->tick();
 
 		//--------Shoot------------------		
 		for (int i = 0; i < 30; i++)
@@ -64,9 +78,6 @@ bool Game::Tick() {
 				shot[i].rec.x += shot[i].speed;
 			}
 		}
-		//Player update
-		//---------------------------------
-		player->tick();
 
 		break;
 
@@ -107,6 +118,7 @@ void Game::Draw() {
 		
 		//--------Entities-------
 		player->draw(canvas.getRenderer());
+		enemy->draw(canvas.getRenderer());
 
 		//-------------
 		//

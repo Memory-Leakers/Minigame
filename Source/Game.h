@@ -59,10 +59,18 @@ class Game {
 		Shoot shot[30];
 		int shotCount = 0;
 
+		// Player
 		Player* player;
+
+		// Enemigo
 		Enemy* enemy;
 
+
+		// Mapa
 		SDL_Texture* BackTex;
+
+		// Tiempo
+		double TestTime = 0;
 	
 		// Funciones
 		bool Init(Display Disp);
