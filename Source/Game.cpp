@@ -178,8 +178,8 @@ void Game::Draw() {
 		}
 		//----------HUD--------------
 		menu.renderBlackRc(canvas.getRenderer());
-		menu.showText(canvas.getRenderer(), 20, 30, "Lifes: x1", canvas.getFonts(35), canvas.getColors(2));
-		menu.showText(canvas.getRenderer(), 20, 70, "Score: 0", canvas.getFonts(35), canvas.getColors(2));
+		menu.showText(canvas.getRenderer(), 65, 25, "x1", canvas.getFonts(50), canvas.getColors(2));
+		menu.showText(canvas.getRenderer(), 65, 60, "0", canvas.getFonts(50), canvas.getColors(2));
 
 		if (debug == true) {
 			if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {

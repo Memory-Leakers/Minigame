@@ -5,14 +5,15 @@ class Menu
 private:
 	//TTF_Font* testFont;
 	SDL_Surface* textSurface;
+	SDL_Surface* gameplayHud;
 	SDL_Texture* text;
 	SDL_Rect textRect;
 	SDL_Rect blackRc;
 
 public: 
-
+	Menu();
 	void showText(SDL_Renderer* renderer, int x, int y, const char* message, TTF_Font* testFont, SDL_Color color);
-	void renderBlackRc(SDL_Renderer*);
+	void renderBlackRc(SDL_Renderer* renderer);
 
 };
 
