@@ -34,14 +34,6 @@ void Player::texturesSet(SDL_Renderer* g) {
 	}
 }
 
-void Player::moveX(int direction) {
-	this->x += speed * direction;
-}
-
-void Player::moveY(int direction) {
-	this->y += speed * direction;
-}
-
 void Player::tick() {
 	bounds.x = 0 + x;
 	bounds.y = 0 + y;
