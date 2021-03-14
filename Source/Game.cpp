@@ -100,9 +100,6 @@ bool Game::Tick() {
 		}
 		//enemy->tick();
 
-
-
-
 		break;
 
 	case Game::GAME_OVER:
