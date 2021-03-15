@@ -151,12 +151,21 @@ bool Game::Tick() {
 		endTime = SDL_GetPerformanceCounter();
 		timeOffset = SDL_GetPerformanceFrequency();
 
+		
+
 		// Cada 1.5s ejecuta una vez para recalcular la posicion del jugador
-		if (((endTime - enemySpawunTime) / timeOffset) >= 1.5f)
+		if (((endTime - enemySpawunTime) / timeOffset) >= spawnTime)
 		{
-			//cout<< timeOffset <<endl;
+			cout << "Spawn Time ->"<< spawnTime <<endl;
 			enemySpawunTime = SDL_GetPerformanceCounter();
 			CreateEnemy();
+			if (tenScores == 4 && spawnTime >= spawnTimeLimit) {
+				//spawnTime *= (1 - (((float)score / 100)));
+				spawnTime -= 0.10;
+				tenScores = 0;
+			}
+			tenScores++;
+			
 		}
 
 		//----------Shoot----------------
@@ -204,7 +213,7 @@ bool Game::Tick() {
 
 			}
 			if (player->checkCollisions(ent[i]->getX(), ent[i]->getY(), false) &&
-				player->checkCollisions(ent[i]->getX(), ent[i]->getY(), false)) {//Player death
+				player->checkCollisions(ent[i]->getX(), ent[i]->getY(), true)) {//Player death
 				Mix_PlayChannel(-1, fx_lose, 0); currentScreen = GAME_OVER;
 				for (int j = 0; j < MAX_ENTITIES; j++) {//Entities
 					if (ent[j] != NULL && ent[j]->getID() == 1) {
@@ -357,21 +366,21 @@ void Game::Draw() {
 
 		if (debug == true) {
 			if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
-				menu.showText(canvas.getRenderer(), 0, 0, "UP!", canvas.getFonts(10), canvas.getColors(1));
+				menu.showText(canvas.getRenderer(), 0, -10, "UP!", canvas.getFonts(35), canvas.getColors(1));
 			}
 			if (keys[SDL_SCANCODE_DOWN] == KEY_REPEAT) {
-				menu.showText(canvas.getRenderer(), 0, 0, "DOWN!", canvas.getFonts(10), canvas.getColors(1));
+				menu.showText(canvas.getRenderer(), 0, -10, "DOWN!", canvas.getFonts(35), canvas.getColors(1));
 			}
 			if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) {
-				menu.showText(canvas.getRenderer(), 0, 0, "LEFT!", canvas.getFonts(10), canvas.getColors(1));
+				menu.showText(canvas.getRenderer(), 0, -10, "LEFT!", canvas.getFonts(35), canvas.getColors(1));
 			}
 			if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
-				menu.showText(canvas.getRenderer(), 0, 0, "RIGHT!", canvas.getFonts(10), canvas.getColors(1));
+				menu.showText(canvas.getRenderer(), 0, -10, "RIGHT!", canvas.getFonts(35), canvas.getColors(1));
 			}
-			menu.showText(canvas.getRenderer(), 500, 0, "60 FPS", canvas.getFonts(10), canvas.getColors(1)); //DEBUG FPS
+			menu.showText(canvas.getRenderer(), 750, -10, "60 FPS", canvas.getFonts(35), canvas.getColors(1)); //DEBUG FPS
 
 			// Posicion de spawn zombie
-			SDL_SetRenderDrawColor(canvas.getRenderer(), 255, 255, 255, 255);
+			SDL_SetRenderDrawColor(canvas.getRenderer(), 255, 255, 255, -255);
 
 			SDL_Rect r;
 			r.w = 32;
@@ -380,7 +389,8 @@ void Game::Draw() {
 			{
 				r.x = enemyPoints[i].x;
 				r.y = enemyPoints[i].y;
-				SDL_RenderFillRect(canvas.getRenderer(), &r);
+				SDL_RenderDrawRect(canvas.getRenderer(), &r);
+				
 			}
 		}
 		//-----------------------------

@@ -15,7 +15,7 @@
 #define MAX_KEYBOARD_KEYS 256
 #define MAX_MOUSE_BUTTONS 5
 
-#define MAX_ENTITIES 200
+#define MAX_ENTITIES 1000
 
 struct Shoot
 {
@@ -37,7 +37,8 @@ class Game {
 		Display canvas;
 		SDL_Window* window;
 		SDL_Texture* TxtBackground;
-
+		float spawnTime = 1.3f;
+		float spawnTimeLimit = 0.3f;
 		int lifes; //Para cuando tengamos sistema de vidas
 		 //Para cuando tengamos sistema de puntos
 
@@ -58,6 +59,7 @@ class Game {
 	public:
 
 		int score = 0;
+		int tenScores = 0;
 		string scoreS;
 
 		bool debug = false;
