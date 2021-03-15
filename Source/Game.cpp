@@ -2,13 +2,16 @@
 #include "Menu.h"
 //Game::Game() {}
 //Game::~Game() {}
-
+Menu menu;
 
 bool Game::Init(Display Disp) {
 
 	canvas = Disp;
 
+
 	bool result = canvas.createDisplay(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+	menu.initMap(canvas.getRenderer());
 
 	player = new Player(200, 200, 32, 32, 2, canvas.getRenderer());
 	ent[0] = new Box(300, 300, 32, 32, 2.5, canvas.getRenderer());
@@ -21,6 +24,8 @@ bool Game::Init(Display Disp) {
 	currentScreen = MENU;
 	//dp.draw(canvas.draw());
 
+
+
 	//Initialize keys array
 	for (int i = 0; i < MAX_KEYBOARD_KEYS; ++i)
 		keys[i] = KEY_IDLE;
@@ -29,8 +34,8 @@ bool Game::Init(Display Disp) {
 	IMG_Init;
 
 	// Init map sprite
-	BackTex = SDL_CreateTextureFromSurface(canvas.getRenderer(), IMG_Load("Assets/myAssets/Sprites/map.png"));
-
+	
+	BackTex = SDL_CreateTextureFromSurface(canvas.getRenderer(), IMG_Load("Assets/myAssets/Sprites/Map.png"));
 	// Init Time
 	TestTime = SDL_GetPerformanceCounter();
 

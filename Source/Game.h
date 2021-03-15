@@ -34,9 +34,9 @@ class Game {
 			GAMEPLAY,
 			GAME_OVER
 		} currentScreen;
+
 	public:
 
-		Menu menu;
 		bool debug = false;
 		enum WindowEvent
 		{
@@ -72,7 +72,7 @@ class Game {
 
 		// Mapa
 		SDL_Texture* BackTex;
-
+		
 		// Tiempo
 		double TestTime = 0;
 
@@ -81,6 +81,9 @@ class Game {
 		void Draw();
 		bool Tick();
 		bool Input();
+
+
+		
 
 		// Destructor
 		~Game()
