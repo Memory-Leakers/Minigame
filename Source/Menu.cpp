@@ -5,12 +5,12 @@ Menu::Menu() {
 	text = nullptr;
 	textSurface = nullptr;
 
-	blackRc.x = 5;
+	blackRc.x = 15;
 	blackRc.y = 20;
 	blackRc.h = 80;
 	blackRc.w = 120;
 
-	coinHudRc.x = 28;
+	coinHudRc.x = 38;
 	coinHudRc.y = 45;
 	coinHudRc.h = 32;
 	coinHudRc.w = 32;
@@ -34,6 +34,11 @@ Menu::Menu() {
 	teamLogoRC.y = 500;
 	teamLogoRC.h = 50;
 	teamLogoRC.w= 300;
+
+	controlsRc.x = 15;
+	controlsRc.y = 120;
+	controlsRc.h = 80;
+	controlsRc.w = 120;
 }
 
 
@@ -56,6 +61,7 @@ void Menu::gameplayHUD(SDL_Renderer* renderer) {
 
 	SDL_RenderCopy(renderer, blackRcTexture, NULL, &blackRc);
 	SDL_RenderCopy(renderer, coinTexture, NULL, &coinHudRc);
+	SDL_RenderCopy(renderer, controlsTexture, NULL, &controlsRc);
 	//SDL_RenderCopy(renderer, playerlifeTexture, NULL, &playerlifeHudRc);
 
 }
@@ -67,6 +73,8 @@ void Menu::menuHUD(SDL_Renderer* renderer) {
 	SDL_RenderCopy(renderer, logoTexture, NULL, &logoRC);
 
 	SDL_RenderCopy(renderer, teamLogoTexture, NULL, &teamLogoRC);
+
+	SDL_RenderCopy(renderer, controlsTexture, NULL, &controlsRc);
 }
 
 void Menu::initSurfaces(SDL_Renderer* renderer) {
@@ -75,7 +83,7 @@ void Menu::initSurfaces(SDL_Renderer* renderer) {
 
 	blackRcTexture = SDL_CreateTextureFromSurface(renderer, gameplayHud);
 	coinTexture = SDL_CreateTextureFromSurface(renderer, coinHud);
-	playerlifeTexture = SDL_CreateTextureFromSurface(renderer, playerlifeHud);
+	controlsTexture = SDL_CreateTextureFromSurface(renderer, controlsSurface);
 
 	logoTexture = SDL_CreateTextureFromSurface(renderer, logoSurface);
 	teamLogoTexture = SDL_CreateTextureFromSurface(renderer, teamLogoSurface);
@@ -97,6 +105,8 @@ void Menu::freeMemory() {
 	SDL_FreeSurface(teamLogoSurface);
 	textSurface = nullptr;
 	SDL_FreeSurface(textSurface);
+	controlsSurface = nullptr;
+	SDL_FreeSurface(controlsSurface);
 }
 
 Menu::~Menu() {

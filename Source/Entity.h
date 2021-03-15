@@ -42,6 +42,7 @@ class Entity {
 		int getAlive() { return alive; }
 		bool getBX() { return bx; }
 		bool getBY() { return by; }
+		int getID() { return id; }
 		//SETTERS
 		void setX(float x) { this->x = x; }
 		void setY(float y) { this->y = y; }

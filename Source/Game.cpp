@@ -119,6 +119,7 @@ bool Game::Init(Display Disp) {
 	fx_win = Mix_LoadWAV("Assets/myAssets/Sounds/win.wav"); 
 	// -1 para que la musica suene para siempre
 	Mix_PlayMusic(music, -1);
+
 	Mix_Volume(-1, 5);
 	Mix_VolumeMusic(40);
 	return result;
@@ -162,15 +163,6 @@ bool Game::Tick() {
 		//----------Shoot----------------
 		for (int i = 0; i < 20; i++) 
 		{
-			// Limitar rango de vala
-			if (shot[i].rec.x + 4 >= OFFSET_SCREEN_WIDTH + 544 ||
-				shot[i].rec.x + 4 <= OFFSET_SCREEN_WIDTH ||
-				shot[i].rec.y + 4 >= OFFSET_SCREEN_HEIGHT + 544 ||
-				shot[i].rec.y + 4 <= OFFSET_SCREEN_HEIGHT)
-			{	
-				shot[i].alive = false;	
-			}
-
 			// Modificar posicion de bala
 			if (shot[i].alive == false) continue;
 			if (shot[i].direction == LEFT)  //shoot left
@@ -218,6 +210,9 @@ bool Game::Tick() {
 					shot[j].rec.x = 554;
 					shot[j].rec.y = 554;
 					ent[i]->setAlive(false);
+					if (ent[i]->getID() == 1) {
+						score++;
+					}
 				}
 			}
 
@@ -233,6 +228,7 @@ bool Game::Tick() {
 				if (ent[i]->checkCollisions(ent[j]->getX(), ent[j]->getY(), true)) {
 					ent[i]->setBY(false);
 				}
+
 			}
 		}
 		if(player->getBX()) player->moveX();
@@ -256,8 +252,13 @@ bool Game::Tick() {
 		if (keys[SDL_SCANCODE_R] == KEY_DOWN) {
 			Mix_PlayMusic(music, -1); currentScreen = GAMEPLAY;
 			player->setX(SCREEN_WIDTH / 2); player->setY(SCREEN_HEIGHT / 2);
+			score = 0;
 		}
-		else if (keys[SDL_SCANCODE_E] == KEY_DOWN) { Mix_PlayMusic(music, -1); currentScreen = MENU; }
+		else if (keys[SDL_SCANCODE_E] == KEY_DOWN) { 
+			Mix_PlayMusic(music, -1); 
+			currentScreen = MENU; 
+			score = 0;
+		}
 
 		break;
 	}
@@ -321,9 +322,14 @@ void Game::Draw() {
 
 		//-------------
 		for (int i = 0; i < 20; i++)
+
+		//-------------SHOT----------
+		for (int i = 0; i < 30; i++)
 		{
-			if (shot[i].alive)
-			{
+			if (shot[i].alive && shot[i].rec.x > OFFSET_SCREEN_WIDTH && shot[i].alive 
+				&& shot[i].rec.x < SCREEN_WIDTH - OFFSET_SCREEN_WIDTH
+				&& shot[i].rec.y < SCREEN_HEIGHT - OFFSET_SCREEN_HEIGHT
+				&& shot[i].rec.y > OFFSET_SCREEN_HEIGHT) {
 				SDL_RenderCopy(canvas.getRenderer(), shot[i].tex, NULL, &shot[i].rec);
 			}
 		}
@@ -331,7 +337,7 @@ void Game::Draw() {
 		menu.gameplayHUD(canvas.getRenderer());	
 		scoreS = to_string(score);		//Converts Score to String
 		
-		menu.showText(canvas.getRenderer(), 65, 40, scoreS.c_str(), canvas.getFonts(35), canvas.getColors(2));
+		menu.showText(canvas.getRenderer(), 75, 40, scoreS.c_str(), canvas.getFonts(35), canvas.getColors(2));
 
 		// ---------DEBUG-------------
 

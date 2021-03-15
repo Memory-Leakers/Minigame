@@ -33,6 +33,7 @@ public:
 		texturesSet(g); 
 		anim.changeTime = 0.5f;
 		targetPos = target;
+		id = 1;
 	};
 };
 

@@ -26,6 +26,7 @@ class Box : public Entity {
 		{
 			texturesSet(g);
 			anim.changeTime = 0.5f;
+			id = 2;
 		}
 };
 
