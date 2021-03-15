@@ -94,7 +94,7 @@ class Game {
 		double TestTime = 0;
 		// Music 
 		Mix_Music* music;
-		Mix_Chunk* fx_shoot,*fx_lose;
+		Mix_Chunk* fx_shoot,*fx_lose,*fx_win;
 		// Funciones
 		bool Init(Display Disp);
 		void Draw();
