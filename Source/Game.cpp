@@ -10,7 +10,7 @@ bool Game::Init(Display Disp) {
 
 	bool result = canvas.createDisplay(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	menu.initMap(canvas.getRenderer());
+	menu.initSurfaces(canvas.getRenderer());
 
 	player = new Player(400, 300, 32, 32, 2, canvas.getRenderer());
 
@@ -213,16 +213,19 @@ void Game::Draw() {
 		SDL_RenderClear(canvas.getRenderer());
 
 		menu.menuHUD(canvas.getRenderer());
-
-		menu.showText(canvas.getRenderer(), 230, 272, "Start Game with <Enter>", canvas.getFonts(50), canvas.getColors(0)); 
-		menu.showText(canvas.getRenderer(), 215, 360, "Zhida", canvas.getFonts(50), canvas.getColors(1));
-		menu.showText(canvas.getRenderer(), 215, 400, "Chen", canvas.getFonts(50), canvas.getColors(1));
-		menu.showText(canvas.getRenderer(), 310, 360, "Robert", canvas.getFonts(50), canvas.getColors(0));
-		menu.showText(canvas.getRenderer(), 310, 400, "Recordà", canvas.getFonts(50), canvas.getColors(0));
-		menu.showText(canvas.getRenderer(), 430, 360, "Pol", canvas.getFonts(50), canvas.getColors(1));
-		menu.showText(canvas.getRenderer(), 430, 400, "Rius", canvas.getFonts(50), canvas.getColors(1));
-		menu.showText(canvas.getRenderer(), 500, 360, "Adrià", canvas.getFonts(50), canvas.getColors(0));
-		menu.showText(canvas.getRenderer(), 500, 400, "Sellarés", canvas.getFonts(50), canvas.getColors(0));
+		
+		//MENU TEXT ////////////////////////////////////////////////////////////////////////////////////////
+		menu.showText(canvas.getRenderer(), 230, 272, "Start Game with <Enter>", canvas.getFonts(50), canvas.getColors(0));
+		menu.showText(canvas.getRenderer(), 230, 340, "Exit Game with <Esc>", canvas.getFonts(50), canvas.getColors(0));
+		menu.showText(canvas.getRenderer(), 215, 400, "Zhida", canvas.getFonts(50), canvas.getColors(1));
+		menu.showText(canvas.getRenderer(), 215, 440, "Chen", canvas.getFonts(50), canvas.getColors(1));
+		menu.showText(canvas.getRenderer(), 310, 400, "Robert", canvas.getFonts(50), canvas.getColors(0));
+		menu.showText(canvas.getRenderer(), 310, 440, "Recordà", canvas.getFonts(50), canvas.getColors(0));
+		menu.showText(canvas.getRenderer(), 430, 400, "Pol", canvas.getFonts(50), canvas.getColors(1));
+		menu.showText(canvas.getRenderer(), 430, 440, "Rius", canvas.getFonts(50), canvas.getColors(1));
+		menu.showText(canvas.getRenderer(), 500, 400, "Adrià", canvas.getFonts(50), canvas.getColors(0));
+		menu.showText(canvas.getRenderer(), 500, 440, "Sellarés", canvas.getFonts(50), canvas.getColors(0));
+		//-------------------------------------------------------------------------------------------------------------------//
 
 		break;
 	case GAMEPLAY:
@@ -285,13 +288,13 @@ void Game::Draw() {
 
 		break;
 	case GAME_OVER:
-		SDL_SetRenderDrawColor(canvas.getRenderer(), 255, 0, 0, 255);
+		SDL_SetRenderDrawColor(canvas.getRenderer(), 0, 0, 0, 255);
 
 		SDL_RenderClear(canvas.getRenderer());
 
-		menu.showText(canvas.getRenderer(), 150, 200, "Game Over!", canvas.getFonts(80), canvas.getColors(0));
-		menu.showText(canvas.getRenderer(), 50, 320, "Press <R> to retry.", canvas.getFonts(35), canvas.getColors(1));
-		menu.showText(canvas.getRenderer(), 50, 380, "Press <E> to exit to the Main Menu", canvas.getFonts(35), canvas.getColors(1));
+		menu.showText(canvas.getRenderer(), 250, 200, "Game Over!", canvas.getFonts(80), canvas.getColors(2));
+		menu.showText(canvas.getRenderer(), 250, 320, "Press <R> to retry.", canvas.getFonts(35), canvas.getColors(1));
+		menu.showText(canvas.getRenderer(), 250, 380, "Press <E> to exit to the Main Menu", canvas.getFonts(35), canvas.getColors(1));
 
 		break;
 	}
@@ -407,10 +410,10 @@ bool Game::Input()
 		}
 	}
 
-	if (keys[SDL_SCANCODE_ESCAPE] == KEY_DOWN) return false;
+	if (keys[SDL_SCANCODE_ESCAPE] == KEY_DOWN) { menu.freeMemory(); return false; }
 
 	// Check QUIT window event to finish the game
-	if (window_events[WE_QUIT] == true) return false;
+	if (window_events[WE_QUIT] == true) { menu.freeMemory(); return false; }
 
 	return true;
 }

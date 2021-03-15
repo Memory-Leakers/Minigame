@@ -57,6 +57,7 @@ void Menu::gameplayHUD(SDL_Renderer* renderer) {
 	SDL_RenderCopy(renderer, blackRcTexture, NULL, &blackRc);
 	SDL_RenderCopy(renderer, coinTexture, NULL, &coinHudRc);
 	SDL_RenderCopy(renderer, playerlifeTexture, NULL, &playerlifeHudRc);
+
 }
 
 void Menu::menuHUD(SDL_Renderer* renderer) {
@@ -68,7 +69,7 @@ void Menu::menuHUD(SDL_Renderer* renderer) {
 	SDL_RenderCopy(renderer, teamLogoTexture, NULL, &teamLogoRC);
 }
 
-void Menu::initMap(SDL_Renderer* renderer) {
+void Menu::initSurfaces(SDL_Renderer* renderer) {
 
 	menuTexture = SDL_CreateTextureFromSurface(renderer, IMG_Load("Assets/myAssets/Sprites/Map.png"));
 
@@ -78,5 +79,35 @@ void Menu::initMap(SDL_Renderer* renderer) {
 
 	logoTexture = SDL_CreateTextureFromSurface(renderer, logoSurface);
 	teamLogoTexture = SDL_CreateTextureFromSurface(renderer, teamLogoSurface);
+
+}
+
+
+void Menu::freeMemory() {
+
+	gameplayHud = nullptr;
+	SDL_FreeSurface(gameplayHud);
+	coinHud = nullptr;
+	SDL_FreeSurface(coinHud);
+	playerlifeHud = nullptr;
+	SDL_FreeSurface(playerlifeHud);
+	logoSurface = nullptr;
+	SDL_FreeSurface(logoSurface);
+	teamLogoSurface = nullptr;
+	SDL_FreeSurface(teamLogoSurface);
+	textSurface = nullptr;
+	SDL_FreeSurface(textSurface);
+
+	delete blackRcTexture;
+	delete menuTexture;
+	delete logoTexture;
+	delete teamLogoTexture;
+	delete playerlifeTexture;
+	delete coinTexture;
+	delete text;
+
+}
+
+Menu::~Menu() {
 
 }
