@@ -123,7 +123,7 @@ void Enemy::draw(SDL_Renderer* g) {
 	}
 
 	// Debug Line
-	SDL_RenderDrawLine(g, x, y, targetPos->x, targetPos->y);
+	//SDL_RenderDrawLine(g, x, y, targetPos->x, targetPos->y);
 
 	SDL_RenderCopy(g, currentAnim, NULL, &bounds);
 }

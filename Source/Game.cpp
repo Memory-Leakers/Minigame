@@ -68,6 +68,9 @@ bool Game::Init(Display Disp) {
 
 	// Test zombie
 	ent[96] = new Enemy(0, 200, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
+	ent[97] = new Enemy(0, 232, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
+	ent[98] = new Enemy(700, 250, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
+	ent[99] = new Enemy(700, 290, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
 	currentScreen = MENU;
 
 	//dp.draw(canvas.draw());
@@ -169,10 +172,12 @@ bool Game::Tick() {
 					ent[i]->setAlive(false);
 				}
 			}
+
 			//Entities collision
 			ent[i]->setBX(true);
 			ent[i]->setBY(true);
 			for (int j = 0; j < MAX_ENTITIES; j++) {
+			if (ent[j] == NULL) break;
 				if (ent[j] == ent[i]) { continue; }
 				if (ent[i]->checkCollisions(ent[j]->getX(), ent[j]->getY(), false)) {
 					ent[i]->setBX(false);
@@ -183,6 +188,7 @@ bool Game::Tick() {
 
 				}
 			}
+
 			
 		}
 		if(player->getBX()) player->moveX();
