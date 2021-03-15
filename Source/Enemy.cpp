@@ -25,7 +25,7 @@ void Enemy::texturesSet(SDL_Renderer* g)
 	{
 		if (SDL_BlitSurface(src, &cut, dst, &paste) != 0)
 		{
-			cerr << SDL_GetError() << " 275 \n";
+			//cerr << SDL_GetError() << " 275 \n";
 		}
 		anim.walk[i]= SDL_CreateTextureFromSurface(g, dst);
 		cut.x += 32;
@@ -46,7 +46,7 @@ void Enemy::tick()
 	disY = targetPos->y - y;
 	dis = sqrt(pow(disX, 2) + pow(disY, 2));
 	float angle = (asin(abs(disY / dis)) * 180) / PI;
-	cout << angle << endl;;
+	//cout << angle << endl;;
 
 
 

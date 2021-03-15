@@ -66,6 +66,22 @@ bool Game::Tick() {
 			debug = !debug;
 		}
 		//----------Entities-------------
+		//--------Shoot------------------
+		for (int i = 0; i < 30; i++) {
+			if (shot[i].alive == false) continue;
+			if (shot[i].direction == LEFT) { //shoot left
+				shot[i].rec.x -= shot[i].speed;
+			}
+			else if (shot[i].direction == RIGHT) { //shoot right
+				shot[i].rec.x += shot[i].speed;
+			}
+			else if (shot[i].direction == UP) { //shoot up
+				shot[i].rec.y += shot[i].speed;
+			}
+			else if (shot[i].direction == DOWN) { //shoot down
+				shot[i].rec.y -= shot[i].speed;
+			}
+		}
 		//position update
 
 		bool bx, by;
@@ -87,29 +103,16 @@ bool Game::Tick() {
 				by = false;
 
 			}
+			for (int j = 0; j < 30; j++) {
+				if (SDL_HasIntersection(&shot[j].rec, ent[i]->getCollsionBounds())) {
+					shot[j].alive = false;
+				}
+			}
 		}
 		if(bx) player->moveX();
 		if(by) player->moveY();
 
-		//--------Shoot------------------
-		for (int i = 0; i < 30; i++)
-		{
-			if(shot[i].alive) {
-				if (shot[i].direction == LEFT) { //shoot left
-					shot[i].rec.x -= shot[i].speed;
-				}
-				else if (shot[i].direction == RIGHT) { //shoot right
-					shot[i].rec.x += shot[i].speed;
-				}
-				else if (shot[i].direction == UP) { //shoot up
-					shot[i].rec.y += shot[i].speed;
-				}
-				else if (shot[i].direction == DOWN) { //shoot down
-					shot[i].rec.y -= shot[i].speed;
-				}
-				
-			}
-		}
+		
 
 		//Entities update
 		//---------------------------------
@@ -168,7 +171,6 @@ void Game::Draw() {
 		for (int i = 0; i < MAX_ENTITIES; i++) {
 			ent[i]->draw(canvas.getRenderer());
 		}
-
 
 		//-------------
 		//
