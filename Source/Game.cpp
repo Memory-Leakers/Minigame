@@ -8,23 +8,20 @@ bool Game::Init(Display Disp) {
 
 	canvas = Disp;
 
-
 	bool result = canvas.createDisplay(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	menu.initMap(canvas.getRenderer());
 
 	player = new Player(200, 200, 32, 32, 2, canvas.getRenderer());
-	ent[0] = new Box(300, 300, 32, 32, 2.5, canvas.getRenderer());
-	ent[1] = new Box(300, 332, 32, 32, 2.5, canvas.getRenderer());
-	ent[2] = new Box(300, 364, 32, 32, 2.5, canvas.getRenderer());
-	ent[3] = new Box(332, 332, 32, 32, 2.5, canvas.getRenderer());
-	ent[4] = new Box(364, 364, 32, 32, 2.5, canvas.getRenderer());
-	ent[5] = new Box(100, 100, 32, 32, 2.5, canvas.getRenderer());
-	enemy = new Enemy(200, 200, 32, 32, 2.5, canvas.getRenderer(), player->getCollsionBounds());
+	ent[0] = new Box(300, 300, 32, 32, 0, canvas.getRenderer());
+	ent[1] = new Box(300, 332, 32, 32, 0, canvas.getRenderer());
+	ent[2] = new Box(300, 364, 32, 32, 0, canvas.getRenderer());
+	ent[3] = new Box(332, 332, 32, 32, 0, canvas.getRenderer());
+	ent[4] = new Box(364, 364, 32, 32, 0, canvas.getRenderer());
+	ent[5] = new Box(100, 100, 32, 32, 0, canvas.getRenderer());
+	enemy = new Enemy(400, 200, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
 	currentScreen = MENU;
 	//dp.draw(canvas.draw());
-
-
 
 	//Initialize keys array
 	for (int i = 0; i < MAX_KEYBOARD_KEYS; ++i)
