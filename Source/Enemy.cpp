@@ -63,21 +63,36 @@ void Enemy::tick() {
 	}
 
 	// Modificar la velocidad (x,y) y el sentido segun la posicion del player
-	if (disX < 0)
-	{
-		x -= speed * abs(cos(angle));
+	
+	if (disX < 0) {
+		xMove = -1;	
 	}
-	else
-	{
-		x += speed * abs(cos(angle));
+	else {
+		xMove = 1;
 	}
-	if (disY < 0)
-	{
-		y -= speed * abs(sin(angle));
+	
+	if (disY < 0){
+		yMove = -1;
 	}
-	else
-	{
-		y += speed * abs(sin(angle));
+	else {
+		yMove = 1;
+	}
+	
+	if (bx) {
+		if (disX < 0) {
+			x -= speed * abs(cos(angle) * xMove);
+		}
+		else {
+			x += speed * abs(cos(angle) * xMove);
+		}
+	}
+	if (by) {
+		if (disY < 0) {
+			y -= speed * abs(sin(angle) * yMove);
+		}
+		else {
+			y += speed * abs(sin(angle) * yMove);
+		}
 	}
 }
 
@@ -108,7 +123,7 @@ void Enemy::draw(SDL_Renderer* g) {
 	}
 
 	// Debug Line
-	//SDL_RenderDrawLine(g, x, y, targetPos->x, targetPos->y);
+	SDL_RenderDrawLine(g, x, y, targetPos->x, targetPos->y);
 
 	SDL_RenderCopy(g, currentAnim, NULL, &bounds);
 }

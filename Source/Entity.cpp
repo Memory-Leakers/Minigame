@@ -29,7 +29,7 @@ SDL_Rect* Entity::getCollsionBounds() {
 bool Entity::checkCollisions(float otherX, float otherY, bool direction) { 
     float xOffset;
     float yOffset;
-
+   
     if (direction) {
         yOffset = yMove * -speed + otherY;
         xOffset = otherX;

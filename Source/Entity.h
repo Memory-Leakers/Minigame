@@ -27,23 +27,30 @@ class Entity {
 		SDL_Texture* currentAnim;
 		virtual void animationController();
 		int spX, spY;
+		bool bx, by;
 		bool alive;
 	public:
 
 		//GETTERS
-		int getX() { return x; }
-		int getY() { return y; }
+		float getX() { return x; }
+		float getY() { return y; }
 		int getW() { return width; }
 		int getH() { return height; }
 		int getXmove() { return xMove; }
 		int getYmove() { return yMove; }
 		int getLastMove() { return lastMove; }
 		int getAlive() { return alive; }
+		bool getBX() { return bx; }
+		bool getBY() { return by; }
 		//SETTERS
+		void setX(float x) { this->x = x; }
+		void setY(float y) { this->y = y; }
 		void setXmove(int xMove) { this->xMove = xMove; }
 		void setYmove(int yMove) { this->yMove = yMove; }
 		void setLastMove(int lastMove) { this->lastMove = lastMove; }
 		void setAlive(bool b) { alive = b; }
+		void setBX(bool bx) { this->bx = bx; }
+		void setBY(bool by) { this->by = by; }
 
 		Entity(float x, float y, int width, int height, float speed, SDL_Renderer* g) {
 			this->x = x;

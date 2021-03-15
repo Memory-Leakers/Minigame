@@ -13,11 +13,11 @@ bool Game::Init(Display Disp) {
 	menu.initMap(canvas.getRenderer());
 
 	player = new Player(200, 200, 32, 32, 2, canvas.getRenderer());
-	ent[0] = new Box(300, 300, 32, 32, 0, canvas.getRenderer());
-	ent[1] = new Box(300, 332, 32, 32, 0, canvas.getRenderer());
-	ent[2] = new Box(300, 364, 32, 32, 0, canvas.getRenderer());
-	ent[3] = new Box(332, 332, 32, 32, 0, canvas.getRenderer());
-	ent[4] = new Box(364, 364, 32, 32, 0, canvas.getRenderer());
+	ent[0] = new Enemy(300, 300, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
+	ent[1] = new Enemy(300, 332, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
+	ent[2] = new Enemy(300, 364, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
+	ent[3] = new Enemy(332, 333, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
+	ent[4] = new Enemy(350, 200, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
 	ent[5] = new Enemy(400, 200, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
 	currentScreen = MENU;
 	//dp.draw(canvas.draw());
@@ -80,9 +80,9 @@ bool Game::Tick() {
 		}
 		//position update
 
-		bool bx, by;
-		bx = true;
-		by = true;
+		//bool bx, by, ex, ey;
+		player->setBX(true);
+		player->setBY(true);
 		player->setYmove(0);
 		player->setXmove(0);
 		if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) { player->setYmove(-1);}
@@ -92,27 +92,38 @@ bool Game::Tick() {
 
 		for (int i = 0; i < MAX_ENTITIES; i++) {
 			if (player->checkCollisions(ent[i]->getX(), ent[i]->getY(), false)) {
-				bx = false;
+				player->setBX(false);
 
 			}
 			if (player->checkCollisions(ent[i]->getX(), ent[i]->getY(), true)) {
-				by = false;
+				player->setBY(false);
 
 			}
 			for (int j = 0; j < 30; j++) {
 				if (SDL_HasIntersection(&shot[j].rec, ent[i]->getCollsionBounds())) {
 					shot[j].alive = false;
+					shot[j].rec.x = 554;
+					shot[j].rec.y = 554;
 					ent[i]->setAlive(false);
 				}
 			}
+			//Entities collision
+			ent[i]->setBX(true);
+			ent[i]->setBY(true);
 			for (int j = 0; j < MAX_ENTITIES; j++) {
-				if (SDL_HasIntersection(ent[j]->getCollsionBounds(), ent[i]->getCollsionBounds())) {
-					ent[j]->setXmove(-10);
+				if (ent[j] == ent[i]) { continue; }
+				if (ent[i]->checkCollisions(ent[j]->getX(), ent[j]->getY(), false)) {
+					ent[i]->setBX(false);
+
+				}
+				if (ent[i]->checkCollisions(ent[j]->getX(), ent[j]->getY(), true)) {
+					ent[i]->setBY(false);
+
 				}
 			}
 		}
-		if(bx) player->moveX();
-		if(by) player->moveY();
+		if(player->getBX()) player->moveX();
+		if(player->getBY()) player->moveY();
 
 		
 
