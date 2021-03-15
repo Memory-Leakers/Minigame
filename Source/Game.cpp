@@ -151,14 +151,13 @@ bool Game::Tick() {
 		endTime = SDL_GetPerformanceCounter();
 		timeOffset = SDL_GetPerformanceFrequency();
 
-		// Cada 2.5s ejecuta una vez para recalcular la posicion del jugador
-		if (((endTime - enemySpawunTime) / timeOffset) >= 2.5f)
+		// Cada 1.5s ejecuta una vez para recalcular la posicion del jugador
+		if (((endTime - enemySpawunTime) / timeOffset) >= 1.5f)
 		{
 			//cout<< timeOffset <<endl;
 			enemySpawunTime = SDL_GetPerformanceCounter();
 			CreateEnemy();
 		}
-
 
 		//----------Shoot----------------
 		for (int i = 0; i < 20; i++) 
@@ -222,8 +221,11 @@ bool Game::Tick() {
 			for (int j = 0; j < MAX_ENTITIES; j++) {
 			if (ent[j] == NULL) break;
 				if (ent[j] == ent[i]) { continue; }
-				if (ent[i]->checkCollisions(ent[j]->getX(), ent[j]->getY(), false)) {
+				if (ent[i]->checkCollisions(ent[j]->getX(), ent[j]->getY(), false)) 
+				{
 					ent[i]->setBX(false);
+
+
 				}
 				if (ent[i]->checkCollisions(ent[j]->getX(), ent[j]->getY(), true)) {
 					ent[i]->setBY(false);
@@ -341,18 +343,6 @@ void Game::Draw() {
 
 		// ---------DEBUG-------------
 
-		SDL_SetRenderDrawColor(canvas.getRenderer(), 255, 255, 255, 255);
-
-		SDL_Rect r;
-		r.w = 32;
-		r.h = 32;
-		for (int i = 0; i < 12; i++)
-		{
-			r.x = enemyPoints[i].x;
-			r.y = enemyPoints[i].y;
-			SDL_RenderFillRect(canvas.getRenderer(), &r);
-		}
-
 		if (debug == true) {
 			if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
 				menu.showText(canvas.getRenderer(), 0, 0, "UP!", canvas.getFonts(10), canvas.getColors(1));
@@ -367,6 +357,19 @@ void Game::Draw() {
 				menu.showText(canvas.getRenderer(), 0, 0, "RIGHT!", canvas.getFonts(10), canvas.getColors(1));
 			}
 			menu.showText(canvas.getRenderer(), 500, 0, "60 FPS", canvas.getFonts(10), canvas.getColors(1)); //DEBUG FPS
+
+			// Posicion de spawn zombie
+			SDL_SetRenderDrawColor(canvas.getRenderer(), 255, 255, 255, 255);
+
+			SDL_Rect r;
+			r.w = 32;
+			r.h = 32;
+			for (int i = 0; i < 12; i++)
+			{
+				r.x = enemyPoints[i].x;
+				r.y = enemyPoints[i].y;
+				SDL_RenderFillRect(canvas.getRenderer(), &r);
+			}
 		}
 		//-----------------------------
 
