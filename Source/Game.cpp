@@ -117,7 +117,7 @@ bool Game::Tick() {
 	case Game::GAMEPLAY:
 
 
-		if (keys[SDL_SCANCODE_L] == KEY_DOWN) currentScreen = GAME_OVER;
+		if (keys[SDL_SCANCODE_L] == KEY_DOWN) { Mix_PlayChannel(-1, fx_lose, 0); currentScreen = GAME_OVER; }
 
 		//------Debug-------
 		if (keys[SDL_SCANCODE_F10] == KEY_DOWN) {
@@ -209,6 +209,8 @@ bool Game::Tick() {
 	case Game::GAME_OVER:
 
 		Mix_PauseMusic();
+
+		
 
 		if (keys[SDL_SCANCODE_R] == KEY_DOWN){ Mix_PlayMusic(music, -1); currentScreen = GAMEPLAY; }
 		else if (keys[SDL_SCANCODE_E] == KEY_DOWN) { Mix_PlayMusic(music, -1); currentScreen = MENU; }
