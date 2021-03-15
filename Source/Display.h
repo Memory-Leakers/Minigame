@@ -4,6 +4,7 @@
 #include <stdlib.h>			// Required for: EXIT_SUCCESS
 #include <math.h>			// Required for: sinf(), cosf()
 #include <iostream>
+#include <string>
 
 using namespace std;
 

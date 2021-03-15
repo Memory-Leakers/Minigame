@@ -6,12 +6,12 @@ Menu::Menu() {
 	textSurface = nullptr;
 
 	blackRc.x = 5;
-	blackRc.y = 10;
-	blackRc.h = 120;
+	blackRc.y = 20;
+	blackRc.h = 80;
 	blackRc.w = 120;
 
 	coinHudRc.x = 28;
-	coinHudRc.y = 72;
+	coinHudRc.y = 45;
 	coinHudRc.h = 32;
 	coinHudRc.w = 32;
 
@@ -56,7 +56,7 @@ void Menu::gameplayHUD(SDL_Renderer* renderer) {
 
 	SDL_RenderCopy(renderer, blackRcTexture, NULL, &blackRc);
 	SDL_RenderCopy(renderer, coinTexture, NULL, &coinHudRc);
-	SDL_RenderCopy(renderer, playerlifeTexture, NULL, &playerlifeHudRc);
+	//SDL_RenderCopy(renderer, playerlifeTexture, NULL, &playerlifeHudRc);
 
 }
 
