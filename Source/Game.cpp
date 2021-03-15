@@ -14,6 +14,17 @@ bool Game::Init(Display Disp) {
 
 	player = new Player(400, 300, 32, 32, 2, canvas.getRenderer());
 
+	// Init enemyBornPoint
+
+	for (int i = 0, int k = 0; i < 2; i++)
+	{
+		for (int j = 0; j < 3; j++, k += 2)
+		{
+			//enemyPoints[k].x = i * 
+		}
+	}
+
+
 	// Posicion de arboles, 1 significa que existe un arbol
 	int treePos[17][17]
 	{

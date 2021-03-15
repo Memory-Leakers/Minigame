@@ -25,6 +25,11 @@ struct Shoot
 	int toX, toY;//toX -1 right, 1 left || toY -1 up, 1 down
 };
 
+struct EnemyBornPoint
+{
+	int x, y;
+};
+
 class Game {
 	private:
 		Display canvas;
@@ -78,10 +83,9 @@ class Game {
 		// Player
 		Player* player;
 
-		// Enemigo
-		//Enemy* enemy;
-		//Box* test;
+		// Box & enemy
 		Entity* ent[MAX_ENTITIES];
+		EnemyBornPoint enemyPoints[12];
 
 		// Mapa
 		SDL_Texture* BackTex;
