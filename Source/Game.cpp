@@ -95,6 +95,7 @@ bool Game::Init(Display Disp) {
 
 	fx_shoot = Mix_LoadWAV("Assets/myAssets/Sounds/shoot.wav");
 	fx_lose = Mix_LoadWAV("Assets/myAssets/Sounds/lose.wav");
+	fx_win = Mix_LoadWAV("Assets/myAssets/Sounds/win.wav"); 
 	// -1 para que la musica suene para siempre
 	Mix_PlayMusic(music, -1);
 	Mix_Volume(-1, 5);
@@ -212,7 +213,10 @@ bool Game::Tick() {
 
 		Mix_PauseMusic();	
 
-		if (keys[SDL_SCANCODE_R] == KEY_DOWN){ Mix_PlayMusic(music, -1); currentScreen = GAMEPLAY; }
+		if (keys[SDL_SCANCODE_R] == KEY_DOWN) {
+			Mix_PlayMusic(music, -1); currentScreen = GAMEPLAY;
+			player->setX(SCREEN_WIDTH / 2); player->setY(SCREEN_HEIGHT / 2);
+		}
 		else if (keys[SDL_SCANCODE_E] == KEY_DOWN) { Mix_PlayMusic(music, -1); currentScreen = MENU; }
 
 		break;
