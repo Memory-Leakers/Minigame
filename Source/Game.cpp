@@ -195,6 +195,9 @@ bool Game::Tick() {
 					shot[j].rec.x = 554;
 					shot[j].rec.y = 554;
 					ent[i]->setAlive(false);
+					if (ent[i]->getID() == 1) {
+						score++;
+					}
 				}
 			}
 
@@ -235,8 +238,13 @@ bool Game::Tick() {
 		if (keys[SDL_SCANCODE_R] == KEY_DOWN) {
 			Mix_PlayMusic(music, -1); currentScreen = GAMEPLAY;
 			player->setX(SCREEN_WIDTH / 2); player->setY(SCREEN_HEIGHT / 2);
+			score = 0;
 		}
-		else if (keys[SDL_SCANCODE_E] == KEY_DOWN) { Mix_PlayMusic(music, -1); currentScreen = MENU; }
+		else if (keys[SDL_SCANCODE_E] == KEY_DOWN) { 
+			Mix_PlayMusic(music, -1); 
+			currentScreen = MENU; 
+			score = 0;
+		}
 
 		break;
 	}
