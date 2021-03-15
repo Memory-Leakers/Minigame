@@ -1,6 +1,5 @@
 #include "Game.h"
-#include "Menu.h"
-#include <time.h>
+
 //Game::Game() {}
 //Game::~Game() {}
 Menu menu;
@@ -140,19 +139,42 @@ bool Game::Tick() {
 		break;
 
 	case Game::GAMEPLAY:
-
-
 		if (keys[SDL_SCANCODE_L] == KEY_DOWN) { Mix_PlayChannel(-1, fx_lose, 0); currentScreen = GAME_OVER; } //Esto cambiará cuando se pueda perder
 
-		//------Debug-------
+		//--------------Debug------------
 		if (keys[SDL_SCANCODE_F10] == KEY_DOWN) {
 			debug = !debug;
 		}
 		//----------Entities-------------
-		//--------Shoot------------------
-		for (int i = 0; i < 30; i++) {
+
+		endTime = SDL_GetPerformanceCounter();
+		timeOffset = SDL_GetPerformanceFrequency();
+
+		// Cada 2.5s ejecuta una vez para recalcular la posicion del jugador
+		if (((endTime - enemySpawunTime) / timeOffset) >= 2.5f)
+		{
+			//cout<< timeOffset <<endl;
+			enemySpawunTime = SDL_GetPerformanceCounter();
+			CreateEnemy();
+		}
+
+
+		//----------Shoot----------------
+		for (int i = 0; i < 20; i++) 
+		{
+			// Limitar rango de vala
+			if (shot[i].rec.x + 4 >= OFFSET_SCREEN_WIDTH + 544 ||
+				shot[i].rec.x + 4 <= OFFSET_SCREEN_WIDTH ||
+				shot[i].rec.y + 4 >= OFFSET_SCREEN_HEIGHT + 544 ||
+				shot[i].rec.y + 4 <= OFFSET_SCREEN_HEIGHT)
+			{	
+				shot[i].alive = false;	
+			}
+
+			// Modificar posicion de bala
 			if (shot[i].alive == false) continue;
-			if (shot[i].direction == LEFT) { //shoot left
+			if (shot[i].direction == LEFT)  //shoot left
+			{
 				shot[i].rec.x -= shot[i].speed;
 			}
 			else if (shot[i].direction == RIGHT) { //shoot right
@@ -166,6 +188,7 @@ bool Game::Tick() {
 			}
 		}
 
+		//----------Player---------------
 		//bool bx, by, ex, ey;
 		player->setBX(true);
 		player->setBY(true);
@@ -206,21 +229,19 @@ bool Game::Tick() {
 				if (ent[j] == ent[i]) { continue; }
 				if (ent[i]->checkCollisions(ent[j]->getX(), ent[j]->getY(), false)) {
 					ent[i]->setBX(false);
-
 				}
 				if (ent[i]->checkCollisions(ent[j]->getX(), ent[j]->getY(), true)) {
 					ent[i]->setBY(false);
-
 				}
 			}
-	
 		}
 		if(player->getBX()) player->moveX();
 		if(player->getBY()) player->moveY();
 
-		//Entities update
-		//---------------------------------
+		//Player Update
 		player->tick();
+
+		//Entities update
 		for (int i = 0; i < MAX_ENTITIES; i++) {
 			if (ent[i] == NULL) break;
 			ent[i]->tick();
@@ -299,7 +320,7 @@ void Game::Draw() {
 		//cout <<"x: "<< ent[68]->getCollsionBounds()->x << "\t y: "<<ent[68]->getCollsionBounds()->y << endl;
 
 		//-------------
-		for (int i = 0; i < 30; i++)
+		for (int i = 0; i < 20; i++)
 		{
 			if (shot[i].alive)
 			{
@@ -468,15 +489,15 @@ bool Game::Input()
 		}
 		shot[shotCount].alive = true;
 
-		if (++shotCount >= 30)
+		// Repetir el bucle
+		if (++shotCount >= 20)
 		{
 			shotCount = 0;
 		}
 		Mix_PlayChannel(-1, fx_shoot, 0);
 	}
 
-
-
+	// Salir del juego
 	if (keys[SDL_SCANCODE_ESCAPE] == KEY_DOWN) { menu.freeMemory(); return false; }
 
 	// Check QUIT window event to finish the game
@@ -489,7 +510,7 @@ void Game::CreateEnemy()
 {
 	int temp = rand() % 12;
 
-	ent[zombieCount] = new Enemy(enemyPoints[temp].x, enemyPoints[temp].y, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
+	ent[zombieCount++] = new Enemy(enemyPoints[temp].x, enemyPoints[temp].y, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
 	if (zombieCount == MAX_ENTITIES)
 	{
 		zombieCount = 96;

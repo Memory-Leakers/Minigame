@@ -5,6 +5,8 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Box.h"
+#include <time.h>
+#include <string>
 
 #define SCREEN_WIDTH	840
 #define SCREEN_HEIGHT	600
@@ -80,7 +82,7 @@ class Game {
 		int mouse_y;
 
 		// Bala
-		Shoot shot[30];
+		Shoot shot[20];
 		int shotCount = 0;
 
 		// Player
@@ -90,6 +92,9 @@ class Game {
 		Entity* ent[MAX_ENTITIES];
 		EnemyBornPoint enemyPoints[12];
 		int zombieCount = 96;
+		float enemySpawunTime = 0;
+		double endTime = SDL_GetPerformanceCounter();
+		double timeOffset = SDL_GetPerformanceFrequency();
 
 		// Mapa
 		SDL_Texture* BackTex;
