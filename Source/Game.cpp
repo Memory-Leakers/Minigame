@@ -119,10 +119,11 @@ bool Game::Tick() {
 		by = true;
 		player->setYmove(0);
 		player->setXmove(0);
-		if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) { player->setYmove(-1); }
-		if (keys[SDL_SCANCODE_DOWN] == KEY_REPEAT) { player->setYmove(1); }
-		if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) { player->setXmove(-1); }
-		if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) { player->setXmove(1); }
+		// Limitar rango de movimiento
+		if (keys[SDL_SCANCODE_UP] == KEY_REPEAT && player->getY() > OFFSET_SCREEN_HEIGHT) { player->setYmove(-1); };
+		if (keys[SDL_SCANCODE_DOWN] == KEY_REPEAT && player->getY() < SCREEN_HEIGHT - OFFSET_SCREEN_HEIGHT - 32) { player->setYmove(1); }
+		if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT && player->getX() > OFFSET_SCREEN_WIDTH) { player->setXmove(-1); }
+		if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT && player->getX() < SCREEN_WIDTH - OFFSET_SCREEN_WIDTH - 32) { player->setXmove(1); }
 
 		for (int i = 0; i < MAX_ENTITIES; i++) {
 
