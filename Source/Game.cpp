@@ -13,12 +13,45 @@ bool Game::Init(Display Disp) {
 	menu.initMap(canvas.getRenderer());
 
 	player = new Player(200, 200, 32, 32, 2, canvas.getRenderer());
-	ent[0] = new Box(300, 300, 32, 32, 0, canvas.getRenderer());
-	ent[1] = new Box(300, 332, 32, 32, 0, canvas.getRenderer());
-	ent[2] = new Box(300, 364, 32, 32, 0, canvas.getRenderer());
-	ent[3] = new Box(332, 332, 32, 32, 0, canvas.getRenderer());
-	ent[4] = new Box(364, 364, 32, 32, 0, canvas.getRenderer());
-	ent[5] = new Enemy(400, 200, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
+
+	// Posicion de arboles, 1 significa que existe un arbol
+	int treePos[17][17]
+	{
+		{1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1},
+	};
+
+	// Init arboles
+	for (int i = 0, k = 0; i < 17; i++)
+	{
+		for (int j = 0; j < 17; j++)
+		{
+			if (treePos[i][j] == 1)
+			{
+				ent[k] = new Box(i * 32, j * 32, 32, 32, 0, canvas.getRenderer());
+				k++;
+				cout << i*32 << endl;
+			}
+		}
+	}
+	ent[12] = new Box(512, 0, 32, 32, 0, canvas.getRenderer());
+
+	ent[68] = new Enemy(400, 200, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
 	currentScreen = MENU;
 	//dp.draw(canvas.draw());
 
@@ -91,6 +124,9 @@ bool Game::Tick() {
 		if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {player->setXmove(1);}
 
 		for (int i = 0; i < MAX_ENTITIES; i++) {
+
+			if (ent[i] == NULL) break;
+			
 			if (player->checkCollisions(ent[i]->getX(), ent[i]->getY(), false)) {
 				bx = false;
 
@@ -105,26 +141,29 @@ bool Game::Tick() {
 					ent[i]->setAlive(false);
 				}
 			}
-			for (int j = 0; j < MAX_ENTITIES; j++) {
-				if (SDL_HasIntersection(ent[j]->getCollsionBounds(), ent[i]->getCollsionBounds())) {
-					ent[j]->setXmove(-10);
-				}
-			}
-		}
-		if(bx) player->moveX();
-		if(by) player->moveY();
 
 		
+			/*
+			for (int j = 0; j < MAX_ENTITIES; j++) {
+				if (ent[j] != NULL)
+				{
+					if (SDL_HasIntersection(ent[j]->getCollsionBounds(), ent[i]->getCollsionBounds())) {
+						ent[j]->setXmove(-10);
+					}
+				}			
+			}
+			*/
+		}
+		if(bx) player->moveX();
+		if(by) player->moveY();	
 
 		//Entities update
 		//---------------------------------
 		player->tick();
 		for (int i = 0; i < MAX_ENTITIES; i++) {
+			if (ent[i] == NULL) break;
 			ent[i]->tick();
 		}
-
-
-
 
 		break;
 
@@ -169,7 +208,10 @@ void Game::Draw() {
 		player->draw(canvas.getRenderer());
 
 		for (int i = 0; i < MAX_ENTITIES; i++) {
+			if (ent[i] == NULL) break;
+			
 			ent[i]->draw(canvas.getRenderer());
+			
 		}
 
 		//-------------

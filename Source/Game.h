@@ -11,7 +11,7 @@
 #define MAX_KEYBOARD_KEYS 256
 #define MAX_MOUSE_BUTTONS 5
 
-#define MAX_ENTITIES 6
+#define MAX_ENTITIES 200
 
 struct Shoot
 {
@@ -91,10 +91,7 @@ class Game {
 		bool Init(Display Disp);
 		void Draw();
 		bool Tick();
-		bool Input();
-
-
-		
+		bool Input();	
 
 		// Destructor
 		~Game()
