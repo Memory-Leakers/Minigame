@@ -5,13 +5,14 @@ void Box::tick() {
 	bounds.y = 0 + y;
 
 }
-
+int  a = 0;
 void Box::draw(SDL_Renderer* g) {
 	//bounds.x = 100;
 	//bounds.y = 100;
 	//bounds.w = 32;
 	//bounds.h = 32;
 
+	//cout << ++a << endl;
 	//SDL_SetRenderDrawColor(g, 0, 150, 80, 50);
 	//SDL_RenderFillRect(g, &this->bounds);
 

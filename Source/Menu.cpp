@@ -1,11 +1,9 @@
 #include "Menu.h"
 
-
 Menu::Menu() {
 
 	text = nullptr;
 	textSurface = nullptr;
-
 
 	blackRc.x = 5;
 	blackRc.y = 10;
@@ -22,8 +20,8 @@ Menu::Menu() {
 	playerlifeHudRc.h = 22;
 	playerlifeHudRc.w = 26;
 	
-	menuRect.x = 0;
-	menuRect.y = 0;
+	menuRect.x = OFFSET_SCREEN_WIDTH;
+	menuRect.y = OFFSET_SCREEN_HEIGHT;
 	menuRect.h = 544;
 	menuRect.w = 544;	
 }

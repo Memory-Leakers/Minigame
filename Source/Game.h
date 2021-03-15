@@ -6,8 +6,10 @@
 #include "Enemy.h"
 #include "Box.h"
 
-#define SCREEN_WIDTH	544
-#define SCREEN_HEIGHT	544
+#define SCREEN_WIDTH	840
+#define SCREEN_HEIGHT	600
+#define OFFSET_SCREEN_WIDTH 148
+#define OFFSET_SCREEN_HEIGHT 28
 #define MAX_KEYBOARD_KEYS 256
 #define MAX_MOUSE_BUTTONS 5
 
@@ -77,8 +79,8 @@ class Game {
 		Player* player;
 
 		// Enemigo
-		Enemy* enemy;
-		Box* test;
+		//Enemy* enemy;
+		//Box* test;
 		Entity* ent[MAX_ENTITIES];
 
 		// Mapa
@@ -97,8 +99,8 @@ class Game {
 		~Game()
 		{
 			delete player;
-			delete enemy;
-			
+			//delete enemy;
+			delete[] ent;			
 		}
 
 };

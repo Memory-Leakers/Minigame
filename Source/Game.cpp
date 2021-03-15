@@ -12,7 +12,7 @@ bool Game::Init(Display Disp) {
 
 	menu.initMap(canvas.getRenderer());
 
-	player = new Player(200, 200, 32, 32, 2, canvas.getRenderer());
+	player = new Player(400, 300, 32, 32, 2, canvas.getRenderer());
 
 	// Posicion de arboles, 1 significa que existe un arbol
 	int treePos[17][17]
@@ -43,16 +43,19 @@ bool Game::Init(Display Disp) {
 		{
 			if (treePos[i][j] == 1)
 			{
-				ent[k] = new Box(i * 32, j * 32, 32, 32, 0, canvas.getRenderer());
+				ent[k] = new Box(j * 32 + OFFSET_SCREEN_WIDTH, i * 32 + OFFSET_SCREEN_HEIGHT, 32, 32, 0, canvas.getRenderer());
 				k++;
-				cout << i*32 << endl;
+				//cout << i*32 << endl;
 			}
 		}
 	}
-	ent[12] = new Box(512, 0, 32, 32, 0, canvas.getRenderer());
+	//ent[12] = new Box(512, 0, 32, 32, 0, canvas.getRenderer());
+	//cout << ent[12]->getH() << endl;
 
-	ent[68] = new Enemy(400, 200, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
+	// Test zombie
+	ent[96] = new Enemy(0, 200, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
 	currentScreen = MENU;
+
 	//dp.draw(canvas.draw());
 
 	//Initialize keys array
@@ -75,14 +78,12 @@ bool Game::Tick() {
 
 	//cerr << "Ticks -> " << SDL_GetTicks() << " \n";
 
-
 	// Tiempo que ha pasado durante ejecuto
 	double currentTime = SDL_GetPerformanceCounter();
 	//cout << (currentTime -TestTime) / SDL_GetPerformanceFrequency() << endl;
 
 	switch (currentScreen)
 	{
-
 	case Game::MENU:
 		if (keys[SDL_SCANCODE_RETURN] == KEY_DOWN) currentScreen = GAMEPLAY;
 		break;
@@ -111,22 +112,22 @@ bool Game::Tick() {
 				shot[i].rec.y -= shot[i].speed;
 			}
 		}
-		//position update
 
+		//position player update
 		bool bx, by;
 		bx = true;
 		by = true;
 		player->setYmove(0);
 		player->setXmove(0);
-		if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) { player->setYmove(-1);}
-		if (keys[SDL_SCANCODE_DOWN] == KEY_REPEAT) {player->setYmove(1);}
-		if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) {player->setXmove(-1);}
-		if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {player->setXmove(1);}
+		if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) { player->setYmove(-1); }
+		if (keys[SDL_SCANCODE_DOWN] == KEY_REPEAT) { player->setYmove(1); }
+		if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) { player->setXmove(-1); }
+		if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) { player->setXmove(1); }
 
 		for (int i = 0; i < MAX_ENTITIES; i++) {
 
 			if (ent[i] == NULL) break;
-			
+
 			if (player->checkCollisions(ent[i]->getX(), ent[i]->getY(), false)) {
 				bx = false;
 
@@ -142,7 +143,6 @@ bool Game::Tick() {
 				}
 			}
 
-		
 			/*
 			for (int j = 0; j < MAX_ENTITIES; j++) {
 				if (ent[j] != NULL)
@@ -150,12 +150,12 @@ bool Game::Tick() {
 					if (SDL_HasIntersection(ent[j]->getCollsionBounds(), ent[i]->getCollsionBounds())) {
 						ent[j]->setXmove(-10);
 					}
-				}			
+				}
 			}
 			*/
 		}
-		if(bx) player->moveX();
-		if(by) player->moveY();	
+		if (bx) player->moveX();
+		if (by) player->moveY();
 
 		//Entities update
 		//---------------------------------
@@ -186,7 +186,7 @@ void Game::Draw() {
 	switch (currentScreen) {
 	case MENU:
 
-		SDL_SetRenderDrawColor(canvas.getRenderer(), 0, 255, 0, 255);
+		SDL_SetRenderDrawColor(canvas.getRenderer(), 0, 0, 0, 0);
 
 		SDL_RenderClear(canvas.getRenderer());
 
@@ -198,24 +198,30 @@ void Game::Draw() {
 	case GAMEPLAY:
 
 		//Rectangle Draw Test
-		SDL_SetRenderDrawColor(canvas.getRenderer(), 0, 0, 234, 0);
+		SDL_SetRenderDrawColor(canvas.getRenderer(), 0, 0, 0, 0);
 		SDL_RenderClear(canvas.getRenderer());
 
+		SDL_Rect mapRect;
+		mapRect.x = 148;
+		mapRect.y = 28;
+		mapRect.w = 544;
+		mapRect.h = 544;
 		//MAP
-		SDL_RenderCopy(canvas.getRenderer(), BackTex, NULL, NULL);
+		SDL_RenderCopy(canvas.getRenderer(), BackTex, NULL, &mapRect);
 
 		//--------Entities-------
 		player->draw(canvas.getRenderer());
 
+
 		for (int i = 0; i < MAX_ENTITIES; i++) {
 			if (ent[i] == NULL) break;
 			
-			ent[i]->draw(canvas.getRenderer());
-			
+			ent[i]->draw(canvas.getRenderer());	
 		}
+		ent[68]->draw(canvas.getRenderer());
+		cout <<"x: "<< ent[68]->getCollsionBounds()->x << "\t y: "<<ent[68]->getCollsionBounds()->y << endl;
 
 		//-------------
-		//
 		for (int i = 0; i < 30; i++)
 		{
 			if (shot[i].alive)
@@ -228,6 +234,8 @@ void Game::Draw() {
 		menu.showText(canvas.getRenderer(), 65, 25, "x1", canvas.getFonts(50), canvas.getColors(2));
 		menu.showText(canvas.getRenderer(), 65, 60, "0", canvas.getFonts(50), canvas.getColors(2));
 
+
+		// ---------DEBUG-------------
 		if (debug == true) {
 			if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
 				menu.showText(canvas.getRenderer(), 0, 0, "UP!", canvas.getFonts(10), canvas.getColors(1));
@@ -341,7 +349,6 @@ bool Game::Input()
 		//shot[shotCount].rec.x = player->getX() + player->getW();
 		//shot[shotCount].rec.y = player->getY() + (player->getH()/2);
 		
-
 		if (player->getXmove() == -1 || player->getLastMove() == LEFT) { //shoot left
 			shot[shotCount].rec.x = player->getX();
 			shot[shotCount].rec.y = player->getY() + (player->getH() / 2);
