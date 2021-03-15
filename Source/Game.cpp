@@ -319,7 +319,7 @@ void Game::Draw() {
 		menu.gameplayHUD(canvas.getRenderer());	
 		scoreS = to_string(score);		//Converts Score to String
 		
-		menu.showText(canvas.getRenderer(), 65, 40, scoreS.c_str(), canvas.getFonts(35), canvas.getColors(2));
+		menu.showText(canvas.getRenderer(), 75, 40, scoreS.c_str(), canvas.getFonts(35), canvas.getColors(2));
 
 		// ---------DEBUG-------------
 

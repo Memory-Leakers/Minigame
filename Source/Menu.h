@@ -14,6 +14,7 @@ private:
 	SDL_Surface* logoSurface = IMG_Load("Assets/myAssets/Sprites/logo.png");
 	SDL_Surface* teamLogoSurface = IMG_Load("Assets/myAssets/Sprites/TeamLogo.png");
 	SDL_Surface* textSurface;
+	SDL_Surface* controlsSurface = IMG_Load("Assets/myAssets/Sprites/Controls.png");
 
 	SDL_Texture* menuTexture;
 	SDL_Texture* playerlifeTexture;
@@ -22,6 +23,7 @@ private:
 	SDL_Texture* logoTexture;
 	SDL_Texture* teamLogoTexture;
 	SDL_Texture* text;
+	SDL_Texture* controlsTexture;
 
 	SDL_Rect textRect;
 	SDL_Rect blackRc;
@@ -30,6 +32,7 @@ private:
 	SDL_Rect menuRect;
 	SDL_Rect logoRC;
 	SDL_Rect teamLogoRC;
+	SDL_Rect controlsRc;
 
 public: 
 	Menu();
