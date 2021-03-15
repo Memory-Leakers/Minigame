@@ -97,15 +97,6 @@ void Menu::freeMemory() {
 	SDL_FreeSurface(teamLogoSurface);
 	textSurface = nullptr;
 	SDL_FreeSurface(textSurface);
-
-	delete blackRcTexture;
-	delete menuTexture;
-	delete logoTexture;
-	delete teamLogoTexture;
-	delete playerlifeTexture;
-	delete coinTexture;
-	delete text;
-
 }
 
 Menu::~Menu() {
