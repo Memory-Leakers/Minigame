@@ -36,8 +36,12 @@ void Enemy::texturesSet(SDL_Renderer* g)
 /// <summary>
 /// Actualizar datos del enemigo
 /// </summary>
-void Enemy::tick()
-{
+void Enemy::tick() {
+	if (!alive) {
+		x = 0;
+		y = 0;
+		return;
+	}
 	// Utiliza el que tiene escrito en Entity
 	Entity::tick();
 	double endTime = SDL_GetPerformanceCounter();
@@ -77,8 +81,10 @@ void Enemy::tick()
 /// Dibujar enemigo
 /// </summary>
 /// <param name="g">: render del juego</param>
-void Enemy::draw(SDL_Renderer* g)
-{
+void Enemy::draw(SDL_Renderer* g) {
+	if (!alive) {
+		return;
+	}
 	double endTime = SDL_GetPerformanceCounter();
 	double timeOffset = SDL_GetPerformanceFrequency();
 	// Puede añadir mas cosas abajo

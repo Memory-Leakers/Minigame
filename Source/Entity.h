@@ -27,6 +27,7 @@ class Entity {
 		SDL_Texture* currentAnim;
 		virtual void animationController();
 		int spX, spY;
+		bool alive;
 	public:
 
 		//GETTERS
@@ -37,10 +38,12 @@ class Entity {
 		int getXmove() { return xMove; }
 		int getYmove() { return yMove; }
 		int getLastMove() { return lastMove; }
+		int getAlive() { return alive; }
 		//SETTERS
 		void setXmove(int xMove) { this->xMove = xMove; }
 		void setYmove(int yMove) { this->yMove = yMove; }
 		void setLastMove(int lastMove) { this->lastMove = lastMove; }
+		void setAlive(bool b) { alive = b; }
 
 		Entity(float x, float y, int width, int height, float speed, SDL_Renderer* g) {
 			this->x = x;
@@ -49,6 +52,7 @@ class Entity {
 			this->height = height;
 			this->health = DEFAULT_HEALTH;
 			this->speed = speed;
+			alive = true;
 
 			this->bounds.x = 0 + x;
 			this->bounds.y = 0 + y;

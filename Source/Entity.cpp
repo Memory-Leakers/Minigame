@@ -63,14 +63,21 @@ bool Entity::checkCollisions(float otherX, float otherY, bool direction) {
 
 void Entity::texturesSet(SDL_Renderer* g) {}
 
-void Entity::tick()
-{
+void Entity::tick() {
+    if (!alive) {
+        return;
+    }
+
 	// Actualizar la caja de colision, para que se cuadre con la posicion de la entidad
 	bounds.x = x;
 	bounds.y = y;
 }
 
-void Entity::draw(SDL_Renderer* g) {}
+void Entity::draw(SDL_Renderer* g) {
+    if (!alive) {
+        return;
+    }
+}
 
 void Entity::moveY() {
 	y += speed * yMove;

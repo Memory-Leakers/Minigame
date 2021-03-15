@@ -18,8 +18,7 @@ bool Game::Init(Display Disp) {
 	ent[2] = new Box(300, 364, 32, 32, 0, canvas.getRenderer());
 	ent[3] = new Box(332, 332, 32, 32, 0, canvas.getRenderer());
 	ent[4] = new Box(364, 364, 32, 32, 0, canvas.getRenderer());
-	ent[5] = new Box(100, 100, 32, 32, 0, canvas.getRenderer());
-	enemy = new Enemy(400, 200, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
+	ent[5] = new Enemy(400, 200, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
 	currentScreen = MENU;
 	//dp.draw(canvas.draw());
 
@@ -103,6 +102,12 @@ bool Game::Tick() {
 			for (int j = 0; j < 30; j++) {
 				if (SDL_HasIntersection(&shot[j].rec, ent[i]->getCollsionBounds())) {
 					shot[j].alive = false;
+					ent[i]->setAlive(false);
+				}
+			}
+			for (int j = 0; j < MAX_ENTITIES; j++) {
+				if (SDL_HasIntersection(ent[j]->getCollsionBounds(), ent[i]->getCollsionBounds())) {
+					ent[j]->setXmove(-10);
 				}
 			}
 		}
@@ -117,7 +122,6 @@ bool Game::Tick() {
 		for (int i = 0; i < MAX_ENTITIES; i++) {
 			ent[i]->tick();
 		}
-		enemy->tick();
 
 
 
@@ -163,7 +167,6 @@ void Game::Draw() {
 
 		//--------Entities-------
 		player->draw(canvas.getRenderer());
-		enemy->draw(canvas.getRenderer());
 
 		for (int i = 0; i < MAX_ENTITIES; i++) {
 			ent[i]->draw(canvas.getRenderer());
