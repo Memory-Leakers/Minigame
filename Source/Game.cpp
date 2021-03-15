@@ -215,6 +215,7 @@ bool Game::Tick() {
 					ent[i]->setBY(false);
 
 				}
+
 			}
 	
 		}
@@ -306,11 +307,13 @@ void Game::Draw() {
 		//ent[68]->draw(canvas.getRenderer());
 		//cout <<"x: "<< ent[68]->getCollsionBounds()->x << "\t y: "<<ent[68]->getCollsionBounds()->y << endl;
 
-		//-------------
+		//-------------SHOT
 		for (int i = 0; i < 30; i++)
 		{
-			if (shot[i].alive)
-			{
+			if (shot[i].alive && shot[i].rec.x > OFFSET_SCREEN_WIDTH && shot[i].alive 
+				&& shot[i].rec.x < SCREEN_WIDTH - OFFSET_SCREEN_WIDTH
+				&& shot[i].rec.y < SCREEN_HEIGHT - OFFSET_SCREEN_HEIGHT
+				&& shot[i].rec.y > OFFSET_SCREEN_HEIGHT) {
 				SDL_RenderCopy(canvas.getRenderer(), shot[i].tex, NULL, &shot[i].rec);
 			}
 		}
