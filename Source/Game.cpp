@@ -117,7 +117,7 @@ bool Game::Tick() {
 	case Game::GAMEPLAY:
 
 
-		if (keys[SDL_SCANCODE_L] == KEY_DOWN) currentScreen = GAME_OVER;
+		if (keys[SDL_SCANCODE_L] == KEY_DOWN) { Mix_PlayChannel(-1, fx_lose, 0); currentScreen = GAME_OVER; }
 
 		//------Debug-------
 		if (keys[SDL_SCANCODE_F10] == KEY_DOWN) {
@@ -208,11 +208,12 @@ bool Game::Tick() {
 
 	case Game::GAME_OVER:
 
+		Mix_PauseMusic();
 
-		if (keys[SDL_SCANCODE_R] == KEY_DOWN) currentScreen = GAMEPLAY;
+		
 
-
-		else if (keys[SDL_SCANCODE_E] == KEY_DOWN) currentScreen = MENU;
+		if (keys[SDL_SCANCODE_R] == KEY_DOWN){ Mix_PlayMusic(music, -1); currentScreen = GAMEPLAY; }
+		else if (keys[SDL_SCANCODE_E] == KEY_DOWN) { Mix_PlayMusic(music, -1); currentScreen = MENU; }
 
 		break;
 	}
@@ -237,7 +238,7 @@ void Game::Draw() {
 
 		//MENU TEXT ////////////////////////////////////////////////////////////////////////////////////////
 		menu.showText(canvas.getRenderer(), 230, 272, "Start Game with <Enter>", canvas.getFonts(50), canvas.getColors(0));
-		menu.showText(canvas.getRenderer(), 230, 340, "Exit Game with <Esc>", canvas.getFonts(50), canvas.getColors(0));
+		menu.showText(canvas.getRenderer(), 250, 340, "Exit Game with <Esc>", canvas.getFonts(50), canvas.getColors(0));
 		menu.showText(canvas.getRenderer(), 215, 400, "Zhida", canvas.getFonts(50), canvas.getColors(1));
 		menu.showText(canvas.getRenderer(), 215, 440, "Chen", canvas.getFonts(50), canvas.getColors(1));
 		menu.showText(canvas.getRenderer(), 310, 400, "Robert", canvas.getFonts(50), canvas.getColors(0));
