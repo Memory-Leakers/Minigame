@@ -25,8 +25,9 @@ void Player::texturesSet(SDL_Renderer* g) {
 			{
 				cerr << SDL_GetError() << " 275 \n";
 			}
-
 			anim.dirAnim[i][j] = SDL_CreateTextureFromSurface(g, dst);
+			// Limpiar dst
+			dst = IMG_Load("Assets/myAssets/Sprites/Invisible.png");
 			cut.x += 32;
 		}
 		cut.y += 32;
