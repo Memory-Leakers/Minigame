@@ -42,6 +42,8 @@ void Enemy::tick() {
 	if (!alive) {
 		x = 0;
 		y = 0;
+		bounds.x = 0;
+		bounds.y = 0;
 		return;
 	}
 	// Utiliza el que tiene escrito en Entity
