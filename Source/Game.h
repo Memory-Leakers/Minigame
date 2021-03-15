@@ -19,6 +19,8 @@ struct Shoot
 	SDL_Rect rec;
 	bool alive = false;
 	float speed = 6;
+	int direction;
+	int toX, toY;//toX -1 right, 1 left || toY -1 up, 1 down
 };
 
 class Game {
@@ -28,6 +30,13 @@ class Game {
 
 		SDL_Texture* TxtBackground;
 
+		enum shootDirection
+		{
+			UP = 0,
+			LEFT,
+			DOWN,
+			RIGHT
+		};
 
 		enum GameState {
 			MENU,
