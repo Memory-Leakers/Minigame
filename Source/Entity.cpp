@@ -67,7 +67,6 @@ void Entity::tick() {
     if (!alive) {
         return;
     }
-
 	// Actualizar la caja de colision, para que se cuadre con la posicion de la entidad
 	bounds.x = x;
 	bounds.y = y;

@@ -10,16 +10,66 @@ bool Game::Init(Display Disp) {
 
 	bool result = canvas.createDisplay(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	menu.initMap(canvas.getRenderer());
+	menu.initSurfaces(canvas.getRenderer());
 
-	player = new Player(200, 200, 32, 32, 2, canvas.getRenderer());
-	ent[0] = new Enemy(300, 300, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
-	ent[1] = new Enemy(300, 332, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
-	ent[2] = new Enemy(300, 364, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
-	ent[3] = new Enemy(332, 333, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
-	ent[4] = new Enemy(350, 200, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
-	ent[5] = new Enemy(400, 200, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
+	player = new Player(400, 300, 32, 32, 2, canvas.getRenderer());
+
+	// Init enemyBornPoint
+
+	for (int i = 0, k = 0; i < 2; i++)
+	{
+		for (int j = 0; j < 3; j++, k += 2)
+		{
+			enemyPoints[k].x = j * 32 + 224;
+			enemyPoints[k].y = i * 32 + OFFSET_SCREEN_HEIGHT;
+
+			enemyPoints[k + 1].x = i * 32 + 224;
+			enemyPoints[k + 1].y = j * 32 + OFFSET_SCREEN_HEIGHT;
+		}
+	}
+
+	// Posicion de arboles, 1 significa que existe un arbol
+	int treePos[17][17]
+	{
+		{1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1},
+	};
+
+	// Init arboles
+	for (int i = 0, k = 0; i < 17; i++)
+	{
+		for (int j = 0; j < 17; j++)
+		{
+			if (treePos[i][j] == 1)
+			{
+				ent[k] = new Box(j * 32 + OFFSET_SCREEN_WIDTH, i * 32 + OFFSET_SCREEN_HEIGHT, 32, 32, 0, canvas.getRenderer());
+				k++;
+				//cout << i*32 << endl;
+			}
+		}
+	}
+	//ent[12] = new Box(512, 0, 32, 32, 0, canvas.getRenderer());
+	//cout << ent[12]->getH() << endl;
+
+	// Test zombie
+	ent[96] = new Enemy(0, 200, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
 	currentScreen = MENU;
+
 	//dp.draw(canvas.draw());
 
 	//Initialize keys array
@@ -30,11 +80,20 @@ bool Game::Init(Display Disp) {
 	IMG_Init;
 
 	// Init map sprite
-	
 	BackTex = SDL_CreateTextureFromSurface(canvas.getRenderer(), IMG_Load("Assets/myAssets/Sprites/Map.png"));
 	// Init Time
 	TestTime = SDL_GetPerformanceCounter();
+	// Init Music
+	Mix_Init(MIX_INIT_MP3);
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
+		printf("Mix_OpenAudio: %s\n", Mix_GetError());
+	}
+	music = Mix_LoadMUS("Assets/myAssets/Sounds/BGM.mp3");
 
+	fx_shoot = Mix_LoadWAV("Assets/myAssets/Sounds/shoot.wav");
+	fx_lose = Mix_LoadWAV("Assets/myAssets/Sounds/lose.wav");
+	// -1 para que la musica suene para siempre
+	Mix_PlayMusic(music, -1);
 	return result;
 }
 
@@ -42,19 +101,19 @@ bool Game::Tick() {
 
 	//cerr << "Ticks -> " << SDL_GetTicks() << " \n";
 
-
 	// Tiempo que ha pasado durante ejecuto
 	double currentTime = SDL_GetPerformanceCounter();
 	//cout << (currentTime -TestTime) / SDL_GetPerformanceFrequency() << endl;
 
 	switch (currentScreen)
 	{
-
 	case Game::MENU:
 		if (keys[SDL_SCANCODE_RETURN] == KEY_DOWN) currentScreen = GAMEPLAY;
 		break;
 
 	case Game::GAMEPLAY:
+
+
 		if (keys[SDL_SCANCODE_L] == KEY_DOWN) currentScreen = GAME_OVER;
 
 		//------Debug-------
@@ -78,19 +137,22 @@ bool Game::Tick() {
 				shot[i].rec.y -= shot[i].speed;
 			}
 		}
-		//position update
 
 		//bool bx, by, ex, ey;
 		player->setBX(true);
 		player->setBY(true);
 		player->setYmove(0);
 		player->setXmove(0);
-		if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) { player->setYmove(-1);}
-		if (keys[SDL_SCANCODE_DOWN] == KEY_REPEAT) {player->setYmove(1);}
-		if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) {player->setXmove(-1);}
-		if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {player->setXmove(1);}
+		// Limitar rango de movimiento
+		if (keys[SDL_SCANCODE_UP] == KEY_REPEAT && player->getY() > OFFSET_SCREEN_HEIGHT) { player->setYmove(-1); };
+		if (keys[SDL_SCANCODE_DOWN] == KEY_REPEAT && player->getY() < SCREEN_HEIGHT - OFFSET_SCREEN_HEIGHT - 32) { player->setYmove(1); }
+		if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT && player->getX() > OFFSET_SCREEN_WIDTH) { player->setXmove(-1); }
+		if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT && player->getX() < SCREEN_WIDTH - OFFSET_SCREEN_WIDTH - 32) { player->setXmove(1); }
 
 		for (int i = 0; i < MAX_ENTITIES; i++) {
+
+			if (ent[i] == NULL) break;
+
 			if (player->checkCollisions(ent[i]->getX(), ent[i]->getY(), false)) {
 				player->setBX(false);
 
@@ -121,26 +183,29 @@ bool Game::Tick() {
 
 				}
 			}
+			
 		}
 		if(player->getBX()) player->moveX();
 		if(player->getBY()) player->moveY();
 
-		
+
 
 		//Entities update
 		//---------------------------------
 		player->tick();
 		for (int i = 0; i < MAX_ENTITIES; i++) {
+			if (ent[i] == NULL) break;
 			ent[i]->tick();
 		}
-
-
-
 
 		break;
 
 	case Game::GAME_OVER:
+
+
 		if (keys[SDL_SCANCODE_R] == KEY_DOWN) currentScreen = GAMEPLAY;
+
+
 		else if (keys[SDL_SCANCODE_E] == KEY_DOWN) currentScreen = MENU;
 
 		break;
@@ -158,33 +223,53 @@ void Game::Draw() {
 	switch (currentScreen) {
 	case MENU:
 
-		SDL_SetRenderDrawColor(canvas.getRenderer(), 0, 255, 0, 255);
+		SDL_SetRenderDrawColor(canvas.getRenderer(), 0, 0, 0, 0);
 
 		SDL_RenderClear(canvas.getRenderer());
 
 		menu.menuHUD(canvas.getRenderer());
 
-		menu.showText(canvas.getRenderer(), 90, 272, "Start Game with <Enter>", canvas.getFonts(50), canvas.getColors(0)); //Shows a Text
+		//MENU TEXT ////////////////////////////////////////////////////////////////////////////////////////
+		menu.showText(canvas.getRenderer(), 230, 272, "Start Game with <Enter>", canvas.getFonts(50), canvas.getColors(0));
+		menu.showText(canvas.getRenderer(), 230, 340, "Exit Game with <Esc>", canvas.getFonts(50), canvas.getColors(0));
+		menu.showText(canvas.getRenderer(), 215, 400, "Zhida", canvas.getFonts(50), canvas.getColors(1));
+		menu.showText(canvas.getRenderer(), 215, 440, "Chen", canvas.getFonts(50), canvas.getColors(1));
+		menu.showText(canvas.getRenderer(), 310, 400, "Robert", canvas.getFonts(50), canvas.getColors(0));
+		menu.showText(canvas.getRenderer(), 310, 440, "Record�", canvas.getFonts(50), canvas.getColors(0));
+		menu.showText(canvas.getRenderer(), 430, 400, "Pol", canvas.getFonts(50), canvas.getColors(1));
+		menu.showText(canvas.getRenderer(), 430, 440, "Rius", canvas.getFonts(50), canvas.getColors(1));
+		menu.showText(canvas.getRenderer(), 500, 400, "Adri�", canvas.getFonts(50), canvas.getColors(0));
+		menu.showText(canvas.getRenderer(), 500, 440, "Sellar�s", canvas.getFonts(50), canvas.getColors(0));
+		//-------------------------------------------------------------------------------------------------------------------//
 
 		break;
 	case GAMEPLAY:
 
 		//Rectangle Draw Test
-		SDL_SetRenderDrawColor(canvas.getRenderer(), 0, 0, 234, 0);
+		SDL_SetRenderDrawColor(canvas.getRenderer(), 0, 0, 0, 0);
 		SDL_RenderClear(canvas.getRenderer());
 
+		SDL_Rect mapRect;
+		mapRect.x = 148;
+		mapRect.y = 28;
+		mapRect.w = 544;
+		mapRect.h = 544;
 		//MAP
-		SDL_RenderCopy(canvas.getRenderer(), BackTex, NULL, NULL);
+		SDL_RenderCopy(canvas.getRenderer(), BackTex, NULL, &mapRect);
 
 		//--------Entities-------
 		player->draw(canvas.getRenderer());
 
+
 		for (int i = 0; i < MAX_ENTITIES; i++) {
+			if (ent[i] == NULL) break;
+
 			ent[i]->draw(canvas.getRenderer());
 		}
+		ent[68]->draw(canvas.getRenderer());
+		cout <<"x: "<< ent[68]->getCollsionBounds()->x << "\t y: "<<ent[68]->getCollsionBounds()->y << endl;
 
 		//-------------
-		//
 		for (int i = 0; i < 30; i++)
 		{
 			if (shot[i].alive)
@@ -197,6 +282,8 @@ void Game::Draw() {
 		menu.showText(canvas.getRenderer(), 65, 25, "x1", canvas.getFonts(50), canvas.getColors(2));
 		menu.showText(canvas.getRenderer(), 65, 60, "0", canvas.getFonts(50), canvas.getColors(2));
 
+
+		// ---------DEBUG-------------
 		if (debug == true) {
 			if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
 				menu.showText(canvas.getRenderer(), 0, 0, "UP!", canvas.getFonts(10), canvas.getColors(1));
@@ -216,13 +303,13 @@ void Game::Draw() {
 
 		break;
 	case GAME_OVER:
-		SDL_SetRenderDrawColor(canvas.getRenderer(), 255, 0, 0, 255);
+		SDL_SetRenderDrawColor(canvas.getRenderer(), 0, 0, 0, 255);
 
 		SDL_RenderClear(canvas.getRenderer());
 
-		menu.showText(canvas.getRenderer(), 150, 200, "Game Over!", canvas.getFonts(80), canvas.getColors(0));
-		menu.showText(canvas.getRenderer(), 50, 320, "Press <R> to retry.", canvas.getFonts(35), canvas.getColors(1));
-		menu.showText(canvas.getRenderer(), 50, 380, "Press <E> to exit to the Main Menu", canvas.getFonts(35), canvas.getColors(1));
+		menu.showText(canvas.getRenderer(), 250, 200, "Game Over!", canvas.getFonts(80), canvas.getColors(2));
+		menu.showText(canvas.getRenderer(), 250, 320, "Press <R> to retry.", canvas.getFonts(35), canvas.getColors(1));
+		menu.showText(canvas.getRenderer(), 250, 380, "Press <E> to exit to the Main Menu", canvas.getFonts(35), canvas.getColors(1));
 
 		break;
 	}
@@ -309,27 +396,30 @@ bool Game::Input()
 		// Inicializar restos de valor
 		//shot[shotCount].rec.x = player->getX() + player->getW();
 		//shot[shotCount].rec.y = player->getY() + (player->getH()/2);
-		
 
 		if (player->getXmove() == -1 || player->getLastMove() == LEFT) { //shoot left
 			shot[shotCount].rec.x = player->getX();
 			shot[shotCount].rec.y = player->getY() + (player->getH() / 2);
 			shot[shotCount].direction = LEFT;
+
 		}
 		else if (player->getXmove() == 1 || player->getLastMove() == RIGHT) { //shoot right
 			shot[shotCount].rec.x = player->getX() + player->getW();
 			shot[shotCount].rec.y = player->getY() + (player->getH() / 2);
 			shot[shotCount].direction = RIGHT;
+
 		}
 		else if (player->getYmove() == 1 || player->getLastMove() == UP) { //shoot up
 			shot[shotCount].rec.x = player->getX() + (player->getW() / 2);
 			shot[shotCount].rec.y = player->getY() + player->getH();
 			shot[shotCount].direction = UP;
+
 		}
 		else if (player->getYmove() == -1 || player->getLastMove() == DOWN) { //shoot down
 			shot[shotCount].rec.x = player->getX() + (player->getW() / 2);
 			shot[shotCount].rec.y = player->getY();
 			shot[shotCount].direction = DOWN;
+
 		}
 		shot[shotCount].alive = true;
 
@@ -337,12 +427,15 @@ bool Game::Input()
 		{
 			shotCount = 0;
 		}
+		Mix_PlayChannel(-1, fx_shoot, 0);
 	}
 
-	if (keys[SDL_SCANCODE_ESCAPE] == KEY_DOWN) return false;
+
+
+	if (keys[SDL_SCANCODE_ESCAPE] == KEY_DOWN) { menu.freeMemory(); return false; }
 
 	// Check QUIT window event to finish the game
-	if (window_events[WE_QUIT] == true) return false;
+	if (window_events[WE_QUIT] == true) { menu.freeMemory(); return false; }
 
 	return true;
 }

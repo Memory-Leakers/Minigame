@@ -1,11 +1,9 @@
 #include "Menu.h"
 
-
 Menu::Menu() {
 
 	text = nullptr;
 	textSurface = nullptr;
-
 
 	blackRc.x = 5;
 	blackRc.y = 10;
@@ -22,10 +20,20 @@ Menu::Menu() {
 	playerlifeHudRc.h = 22;
 	playerlifeHudRc.w = 26;
 	
-	menuRect.x = 0;
-	menuRect.y = 0;
+	menuRect.x = OFFSET_SCREEN_WIDTH;
+	menuRect.y = OFFSET_SCREEN_HEIGHT;
 	menuRect.h = 544;
 	menuRect.w = 544;	
+
+	logoRC.x = 235;
+	logoRC.y = 50;
+	logoRC.h = 250;
+	logoRC.w = 350;
+
+	teamLogoRC.x = 270;
+	teamLogoRC.y = 500;
+	teamLogoRC.h = 50;
+	teamLogoRC.w= 300;
 }
 
 
@@ -46,23 +54,60 @@ void Menu::showText(SDL_Renderer* renderer, int x, int y, const char* message, T
 
 void Menu::gameplayHUD(SDL_Renderer* renderer) {
 
-	
-	//SDL_Surface* blackRcSurface = SDL_CreateRGBSurface(0, blackRc.w, blackRc.h, 32, 0, 0, 0, 255);
-	blackRcTexture = SDL_CreateTextureFromSurface(renderer, gameplayHud);
-	coinTexture = SDL_CreateTextureFromSurface(renderer, coinHud);
-	playerlifeTexture = SDL_CreateTextureFromSurface(renderer, playerlifeHud);
-	
 	SDL_RenderCopy(renderer, blackRcTexture, NULL, &blackRc);
 	SDL_RenderCopy(renderer, coinTexture, NULL, &coinHudRc);
 	SDL_RenderCopy(renderer, playerlifeTexture, NULL, &playerlifeHudRc);
+
 }
 
 void Menu::menuHUD(SDL_Renderer* renderer) {
 
 	SDL_RenderCopy(renderer, menuTexture, NULL, &menuRect);
+
+	SDL_RenderCopy(renderer, logoTexture, NULL, &logoRC);
+
+	SDL_RenderCopy(renderer, teamLogoTexture, NULL, &teamLogoRC);
 }
 
-void Menu::initMap(SDL_Renderer* renderer) {
+void Menu::initSurfaces(SDL_Renderer* renderer) {
 
 	menuTexture = SDL_CreateTextureFromSurface(renderer, IMG_Load("Assets/myAssets/Sprites/Map.png"));
+
+	blackRcTexture = SDL_CreateTextureFromSurface(renderer, gameplayHud);
+	coinTexture = SDL_CreateTextureFromSurface(renderer, coinHud);
+	playerlifeTexture = SDL_CreateTextureFromSurface(renderer, playerlifeHud);
+
+	logoTexture = SDL_CreateTextureFromSurface(renderer, logoSurface);
+	teamLogoTexture = SDL_CreateTextureFromSurface(renderer, teamLogoSurface);
+
+}
+
+
+void Menu::freeMemory() {
+
+	gameplayHud = nullptr;
+	SDL_FreeSurface(gameplayHud);
+	coinHud = nullptr;
+	SDL_FreeSurface(coinHud);
+	playerlifeHud = nullptr;
+	SDL_FreeSurface(playerlifeHud);
+	logoSurface = nullptr;
+	SDL_FreeSurface(logoSurface);
+	teamLogoSurface = nullptr;
+	SDL_FreeSurface(teamLogoSurface);
+	textSurface = nullptr;
+	SDL_FreeSurface(textSurface);
+
+	delete blackRcTexture;
+	delete menuTexture;
+	delete logoTexture;
+	delete teamLogoTexture;
+	delete playerlifeTexture;
+	delete coinTexture;
+	delete text;
+
+}
+
+Menu::~Menu() {
+
 }

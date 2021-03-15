@@ -16,6 +16,8 @@ void Finish() {
 	//SDL_DestroyTexture(TxtBackground);
 	SDL_Quit();
 	IMG_Quit;
+	Mix_CloseAudio();
+	Mix_Quit();
 }
 
 void Start() {

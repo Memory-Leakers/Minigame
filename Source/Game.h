@@ -6,12 +6,14 @@
 #include "Enemy.h"
 #include "Box.h"
 
-#define SCREEN_WIDTH	544
-#define SCREEN_HEIGHT	544
+#define SCREEN_WIDTH	840
+#define SCREEN_HEIGHT	600
+#define OFFSET_SCREEN_WIDTH 148 // (840-544) / 2
+#define OFFSET_SCREEN_HEIGHT 28
 #define MAX_KEYBOARD_KEYS 256
 #define MAX_MOUSE_BUTTONS 5
 
-#define MAX_ENTITIES 6
+#define MAX_ENTITIES 200
 
 struct Shoot
 {
@@ -21,6 +23,11 @@ struct Shoot
 	float speed = 6;
 	int direction;
 	int toX, toY;//toX -1 right, 1 left || toY -1 up, 1 down
+};
+
+struct EnemyBornPoint
+{
+	int x, y;
 };
 
 class Game {
@@ -76,32 +83,33 @@ class Game {
 		// Player
 		Player* player;
 
-		// Enemigo
-		Enemy* enemy;
-		Box* test;
+		// Box & enemy
 		Entity* ent[MAX_ENTITIES];
+		EnemyBornPoint enemyPoints[12];
 
 		// Mapa
 		SDL_Texture* BackTex;
 		
 		// Tiempo
 		double TestTime = 0;
-
+		// Music 
+		Mix_Music* music;
+		Mix_Chunk* fx_shoot,*fx_lose;
 		// Funciones
 		bool Init(Display Disp);
 		void Draw();
 		bool Tick();
-		bool Input();
+		bool Input();	
 
 
-		
 
 		// Destructor
 		~Game()
 		{
+
 			delete player;
-			delete enemy;
-			
+			//delete enemy;
+			//delete[] ent;		
 		}
 
 };
