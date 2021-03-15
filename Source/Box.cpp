@@ -1,7 +1,5 @@
 #include "Box.h"
 
-
-
 void Box::tick() {
 	bounds.x = 0 + x;
 	bounds.y = 0 + y;

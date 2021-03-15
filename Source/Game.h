@@ -27,8 +27,10 @@ class Game {
 	private:
 		Display canvas;
 		SDL_Window* window;
-
 		SDL_Texture* TxtBackground;
+
+		int lifes; //Para cuando tengamos sistema de vidas
+		int score; //Para cuando tengamos sistema de puntos
 
 		enum shootDirection
 		{
@@ -99,6 +101,7 @@ class Game {
 		{
 			delete player;
 			delete enemy;
+			
 		}
 
 };

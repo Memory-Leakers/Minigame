@@ -8,23 +8,20 @@ bool Game::Init(Display Disp) {
 
 	canvas = Disp;
 
-
 	bool result = canvas.createDisplay(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	menu.initMap(canvas.getRenderer());
 
 	player = new Player(200, 200, 32, 32, 2, canvas.getRenderer());
-	ent[0] = new Box(300, 300, 32, 32, 2.5, canvas.getRenderer());
-	ent[1] = new Box(300, 332, 32, 32, 2.5, canvas.getRenderer());
-	ent[2] = new Box(300, 364, 32, 32, 2.5, canvas.getRenderer());
-	ent[3] = new Box(332, 332, 32, 32, 2.5, canvas.getRenderer());
-	ent[4] = new Box(364, 364, 32, 32, 2.5, canvas.getRenderer());
-	ent[5] = new Box(100, 100, 32, 32, 2.5, canvas.getRenderer());
-	enemy = new Enemy(200, 200, 32, 32, 2.5, canvas.getRenderer(), player->getCollsionBounds());
+	ent[0] = new Box(300, 300, 32, 32, 0, canvas.getRenderer());
+	ent[1] = new Box(300, 332, 32, 32, 0, canvas.getRenderer());
+	ent[2] = new Box(300, 364, 32, 32, 0, canvas.getRenderer());
+	ent[3] = new Box(332, 332, 32, 32, 0, canvas.getRenderer());
+	ent[4] = new Box(364, 364, 32, 32, 0, canvas.getRenderer());
+	ent[5] = new Box(100, 100, 32, 32, 0, canvas.getRenderer());
+	enemy = new Enemy(400, 200, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
 	currentScreen = MENU;
 	//dp.draw(canvas.draw());
-
-
 
 	//Initialize keys array
 	for (int i = 0; i < MAX_KEYBOARD_KEYS; ++i)
@@ -210,8 +207,9 @@ void Game::Draw() {
 
 		SDL_RenderClear(canvas.getRenderer());
 
-		menu.showText(canvas.getRenderer(), 100, 360, "Game Over!", canvas.getFonts(50), canvas.getColors(0));
-		menu.showText(canvas.getRenderer(), 50, 420, "Press <R> to retry. Press <E> to exit to the Main Menu", canvas.getFonts(35), canvas.getColors(1));
+		menu.showText(canvas.getRenderer(), 150, 200, "Game Over!", canvas.getFonts(80), canvas.getColors(0));
+		menu.showText(canvas.getRenderer(), 50, 320, "Press <R> to retry.", canvas.getFonts(35), canvas.getColors(1));
+		menu.showText(canvas.getRenderer(), 50, 380, "Press <E> to exit to the Main Menu", canvas.getFonts(35), canvas.getColors(1));
 
 		break;
 	}

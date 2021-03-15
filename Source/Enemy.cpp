@@ -39,17 +39,38 @@ void Enemy::texturesSet(SDL_Renderer* g)
 void Enemy::tick()
 {
 	// Utiliza el que tiene escrito en Entity
-	Entity::tick();	
+	Entity::tick();
+	double endTime = SDL_GetPerformanceCounter();
+	double timeOffset = SDL_GetPerformanceFrequency();
 
-	float disX, disY,dis;
-	disX = targetPos->x - x;
-	disY = targetPos->y - y;
-	dis = sqrt(pow(disX, 2) + pow(disY, 2));
-	float angle = (asin(abs(disY / dis)) * 180) / PI;
-	//cout << angle << endl;;
+	// Cada 0.01s ejecuta una vez para recalcular la posicion del jugador
+	if(((endTime - AIstartTime) / timeOffset) >= 0.01f)
+	{
+		//cout<< timeOffset <<endl;
+		AIstartTime = SDL_GetPerformanceCounter();
+		disX = targetPos->x - x;
+		disY = targetPos->y - y;
+		dis = sqrt(pow(disX, 2) + pow(disY, 2));
+		angle = (asin(abs(disY / dis)) * 180) / PI;
+	}
 
-
-
+	// Modificar la velocidad (x,y) y el sentido segun la posicion del player
+	if (disX < 0)
+	{
+		x -= speed * abs(cos(angle));
+	}
+	else
+	{
+		x += speed * abs(cos(angle));
+	}
+	if (disY < 0)
+	{
+		y -= speed * abs(sin(angle));
+	}
+	else
+	{
+		y += speed * abs(sin(angle));
+	}
 }
 
 /// <summary>
@@ -67,15 +88,15 @@ void Enemy::draw(SDL_Renderer* g)
 		anim.startTime = SDL_GetPerformanceCounter();
 		if (currentAnim == anim.walk[0])
 		{
-			//cout << "a" << endl;
 			currentAnim = anim.walk[1];
 		}
 		else
 		{
-			//cout << "b" << endl;
 			currentAnim = anim.walk[0];
 		}
 	}
+
+	SDL_RenderDrawLine(g, x, y, targetPos->x, targetPos->y);
 
 	SDL_RenderCopy(g, currentAnim, NULL, &bounds);
 }
