@@ -101,9 +101,12 @@ class Game {
 		bool Tick();
 		bool Input();	
 
+
+
 		// Destructor
 		~Game()
 		{
+
 			delete player;
 			//delete enemy;
 			//delete[] ent;		

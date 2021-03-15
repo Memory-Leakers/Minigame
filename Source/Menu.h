@@ -33,10 +33,13 @@ private:
 
 public: 
 	Menu();
+	~Menu();
 	void showText(SDL_Renderer* renderer, int x, int y, const char* message, TTF_Font* testFont, SDL_Color color);
 	void gameplayHUD(SDL_Renderer* renderer);
 	void menuHUD(SDL_Renderer* renderer);
-	void initMap(SDL_Renderer* renderer);
+	void initSurfaces(SDL_Renderer* renderer);
+	void freeMemory();
+	
 
 };
 
