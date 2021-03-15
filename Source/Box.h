@@ -12,14 +12,20 @@ struct TreeAnim {
 };
 
 class Box : public Entity {
-	using Entity::Entity;
 
 	private:
-
+		TreeAnim anim;
 	protected:
 
 	public:
+		void texturesSet(SDL_Renderer* g) override;
 		void draw(SDL_Renderer* g) override;
 		void tick() override;
+
+		Box(float x, float y, int width, int height, float speed, SDL_Renderer* g) :Entity(x, y, width, height, speed, g)
+		{
+			texturesSet(g);
+			anim.changeTime = 0.5f;
+		}
 };
 

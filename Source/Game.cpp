@@ -201,7 +201,6 @@ void Game::Draw() {
 			}
 			menu.showText(canvas.getRenderer(), 500, 0, "60 FPS", canvas.getFonts(10), canvas.getColors(1)); //DEBUG FPS
 		}
-
 		//-----------------------------
 
 		break;

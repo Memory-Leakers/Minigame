@@ -28,6 +28,8 @@ void Enemy::texturesSet(SDL_Renderer* g)
 			//cerr << SDL_GetError() << " 275 \n";
 		}
 		anim.walk[i]= SDL_CreateTextureFromSurface(g, dst);
+		// Limpiar dst
+		dst = IMG_Load("Assets/myAssets/Sprites/Invisible.png");
 		cut.x += 32;
 	}
 	currentAnim = anim.walk[0];
@@ -87,8 +89,9 @@ void Enemy::draw(SDL_Renderer* g) {
 	}
 	double endTime = SDL_GetPerformanceCounter();
 	double timeOffset = SDL_GetPerformanceFrequency();
-	// Puede añadir mas cosas abajo
+	// Puede anadir mas cosas abajo
 
+	// Cambia imagen cada 0.5s
 	if (((endTime - anim.startTime) / timeOffset) >= anim.changeTime)
 	{
 		anim.startTime = SDL_GetPerformanceCounter();
@@ -102,7 +105,8 @@ void Enemy::draw(SDL_Renderer* g) {
 		}
 	}
 
-	SDL_RenderDrawLine(g, x, y, targetPos->x, targetPos->y);
+	// Debug Line
+	//SDL_RenderDrawLine(g, x, y, targetPos->x, targetPos->y);
 
 	SDL_RenderCopy(g, currentAnim, NULL, &bounds);
 }
