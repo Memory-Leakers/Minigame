@@ -97,6 +97,8 @@ bool Game::Init(Display Disp) {
 	fx_lose = Mix_LoadWAV("Assets/myAssets/Sounds/lose.wav");
 	// -1 para que la musica suene para siempre
 	Mix_PlayMusic(music, -1);
+	Mix_Volume(-1, 5);
+	Mix_VolumeMusic(50);
 	return result;
 }
 
