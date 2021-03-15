@@ -33,6 +33,7 @@ private:
 	SDL_Rect logoRC;
 	SDL_Rect teamLogoRC;
 	SDL_Rect controlsRc;
+	SDL_Rect gameOverCoinRc;
 
 public: 
 	Menu();
@@ -41,6 +42,7 @@ public:
 	void gameplayHUD(SDL_Renderer* renderer);
 	void menuHUD(SDL_Renderer* renderer);
 	void initSurfaces(SDL_Renderer* renderer);
+	void gameOverHUD(SDL_Renderer* renderer, SDL_Color color1, SDL_Color color2, TTF_Font* font, TTF_Font* font2);
 	void freeMemory();
 	
 

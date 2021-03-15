@@ -378,10 +378,9 @@ void Game::Draw() {
 
 		scoreS = to_string(score);		//Converts Score to String
 
-		menu.showText(canvas.getRenderer(), 250, 100, scoreS.c_str(), canvas.getFonts(80), canvas.getColors(1));
-		menu.showText(canvas.getRenderer(), 250, 200, "Game Over!", canvas.getFonts(80), canvas.getColors(2));
-		menu.showText(canvas.getRenderer(), 250, 320, "Press <R> to retry.", canvas.getFonts(35), canvas.getColors(1));
-		menu.showText(canvas.getRenderer(), 250, 380, "Press <E> to exit to the Main Menu", canvas.getFonts(35), canvas.getColors(1));
+
+		menu.showText(canvas.getRenderer(), 320, 100, scoreS.c_str(), canvas.getFonts(80), canvas.getColors(1));
+		menu.gameOverHUD(canvas.getRenderer(), canvas.getColors(2), canvas.getColors(1), canvas.getFonts(80), canvas.getFonts(50));
 
 		break;
 	}
@@ -513,7 +512,7 @@ bool Game::Input()
 }
 
 void Game::CreateEnemy()
-{
+{	
 	int temp = rand() % 12;
 
 	ent[zombieCount++] = new Enemy(enemyPoints[temp].x, enemyPoints[temp].y, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());

@@ -39,6 +39,11 @@ Menu::Menu() {
 	controlsRc.y = 120;
 	controlsRc.h = 80;
 	controlsRc.w = 120;
+
+	gameOverCoinRc.x = 250;
+	gameOverCoinRc.y = 115;
+	gameOverCoinRc.h = 64;
+	gameOverCoinRc.w = 64;
 }
 
 
@@ -90,6 +95,13 @@ void Menu::initSurfaces(SDL_Renderer* renderer) {
 
 }
 
+void Menu::gameOverHUD(SDL_Renderer* renderer, SDL_Color color1, SDL_Color color2, TTF_Font *font1, TTF_Font *font2) {
+
+	SDL_RenderCopy(renderer, coinTexture, NULL, &gameOverCoinRc);
+	showText(renderer, 250, 200, "Game Over!", font1, color1);
+	showText(renderer, 200, 320, "Press <R> to retry.", font2, color2);
+	showText(renderer, 200, 380, "Press <E> to exit to the Main Menu", font2, color2);
+}
 
 void Menu::freeMemory() {
 
