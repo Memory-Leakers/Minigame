@@ -89,7 +89,9 @@ bool Game::Init(Display Disp) {
 		printf("Mix_OpenAudio: %s\n", Mix_GetError());
 	}
 	music = Mix_LoadMUS("Assets/myAssets/Sounds/BGM.mp3");
-	fx_shoot = Mix_LoadWAV("Assets/myAssets/Sounds/shoot.mp3");
+
+	fx_shoot = Mix_LoadWAV("Assets/myAssets/Sounds/shoot.wav");
+	fx_lose = Mix_LoadWAV("Assets/myAssets/Sounds/lose.wav");
 	// -1 para que la musica suene para siempre
 	Mix_PlayMusic(music, -1);
 	return result;
@@ -110,6 +112,8 @@ bool Game::Tick() {
 		break;
 
 	case Game::GAMEPLAY:
+
+		
 		if (keys[SDL_SCANCODE_L] == KEY_DOWN) currentScreen = GAME_OVER;
 
 		//------Debug-------
@@ -190,7 +194,11 @@ bool Game::Tick() {
 		break;
 
 	case Game::GAME_OVER:
+		
+		
 		if (keys[SDL_SCANCODE_R] == KEY_DOWN) currentScreen = GAMEPLAY;
+		
+		
 		else if (keys[SDL_SCANCODE_E] == KEY_DOWN) currentScreen = MENU;
 
 		break;
@@ -378,26 +386,30 @@ bool Game::Input()
 		// Inicializar restos de valor
 		//shot[shotCount].rec.x = player->getX() + player->getW();
 		//shot[shotCount].rec.y = player->getY() + (player->getH()/2);
-		Mix_PlayChannel(-1,fx_shoot, 0);
+		
 		if (player->getXmove() == -1 || player->getLastMove() == LEFT) { //shoot left
 			shot[shotCount].rec.x = player->getX();
 			shot[shotCount].rec.y = player->getY() + (player->getH() / 2);
 			shot[shotCount].direction = LEFT;
+			
 		}
 		else if (player->getXmove() == 1 || player->getLastMove() == RIGHT) { //shoot right
 			shot[shotCount].rec.x = player->getX() + player->getW();
 			shot[shotCount].rec.y = player->getY() + (player->getH() / 2);
 			shot[shotCount].direction = RIGHT;
+			
 		}
 		else if (player->getYmove() == 1 || player->getLastMove() == UP) { //shoot up
 			shot[shotCount].rec.x = player->getX() + (player->getW() / 2);
 			shot[shotCount].rec.y = player->getY() + player->getH();
 			shot[shotCount].direction = UP;
+			
 		}
 		else if (player->getYmove() == -1 || player->getLastMove() == DOWN) { //shoot down
 			shot[shotCount].rec.x = player->getX() + (player->getW() / 2);
 			shot[shotCount].rec.y = player->getY();
 			shot[shotCount].direction = DOWN;
+			
 		}
 		shot[shotCount].alive = true;
 
@@ -405,7 +417,10 @@ bool Game::Input()
 		{
 			shotCount = 0;
 		}
+		Mix_PlayChannel(-1, fx_shoot, 0);
 	}
+	
+	
 
 	if (keys[SDL_SCANCODE_ESCAPE] == KEY_DOWN) return false;
 
