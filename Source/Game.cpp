@@ -210,9 +210,7 @@ bool Game::Tick() {
 
 	case Game::GAME_OVER:
 
-		Mix_PauseMusic();
-
-		
+		Mix_PauseMusic();	
 
 		if (keys[SDL_SCANCODE_R] == KEY_DOWN){ Mix_PlayMusic(music, -1); currentScreen = GAMEPLAY; }
 		else if (keys[SDL_SCANCODE_E] == KEY_DOWN) { Mix_PlayMusic(music, -1); currentScreen = MENU; }
