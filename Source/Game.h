@@ -37,7 +37,7 @@ class Game {
 		SDL_Texture* TxtBackground;
 
 		int lifes; //Para cuando tengamos sistema de vidas
-		int score; //Para cuando tengamos sistema de puntos
+		 //Para cuando tengamos sistema de puntos
 
 		enum shootDirection
 		{
@@ -54,6 +54,9 @@ class Game {
 		} currentScreen;
 
 	public:
+
+		int score = 0;
+		string scoreS;
 
 		bool debug = false;
 		enum WindowEvent
@@ -95,7 +98,7 @@ class Game {
 		double TestTime = 0;
 		// Music 
 		Mix_Music* music;
-		Mix_Chunk* fx_shoot,*fx_lose;
+		Mix_Chunk* fx_shoot,*fx_lose,*fx_win;
 		// Funciones
 		bool Init(Display Disp);
 		void Draw();

@@ -117,6 +117,7 @@ bool Game::Init(Display Disp) {
 
 	fx_shoot = Mix_LoadWAV("Assets/myAssets/Sounds/shoot.wav");
 	fx_lose = Mix_LoadWAV("Assets/myAssets/Sounds/lose.wav");
+	fx_win = Mix_LoadWAV("Assets/myAssets/Sounds/win.wav"); 
 	// -1 para que la musica suene para siempre
 	Mix_PlayMusic(music, -1);
 	Mix_Volume(-1, 5);
@@ -141,7 +142,7 @@ bool Game::Tick() {
 	case Game::GAMEPLAY:
 
 
-		if (keys[SDL_SCANCODE_L] == KEY_DOWN) { Mix_PlayChannel(-1, fx_lose, 0); currentScreen = GAME_OVER; }
+		if (keys[SDL_SCANCODE_L] == KEY_DOWN) { Mix_PlayChannel(-1, fx_lose, 0); currentScreen = GAME_OVER; } //Esto cambiará cuando se pueda perder
 
 		//------Debug-------
 		if (keys[SDL_SCANCODE_F10] == KEY_DOWN) {
@@ -231,7 +232,10 @@ bool Game::Tick() {
 
 		Mix_PauseMusic();	
 
-		if (keys[SDL_SCANCODE_R] == KEY_DOWN){ Mix_PlayMusic(music, -1); currentScreen = GAMEPLAY; }
+		if (keys[SDL_SCANCODE_R] == KEY_DOWN) {
+			Mix_PlayMusic(music, -1); currentScreen = GAMEPLAY;
+			player->setX(SCREEN_WIDTH / 2); player->setY(SCREEN_HEIGHT / 2);
+		}
 		else if (keys[SDL_SCANCODE_E] == KEY_DOWN) { Mix_PlayMusic(music, -1); currentScreen = MENU; }
 
 		break;
@@ -303,9 +307,10 @@ void Game::Draw() {
 			}
 		}
 		//----------HUD--------------
-		menu.gameplayHUD(canvas.getRenderer());
-		menu.showText(canvas.getRenderer(), 65, 25, "x1", canvas.getFonts(50), canvas.getColors(2));
-		menu.showText(canvas.getRenderer(), 65, 60, "0", canvas.getFonts(50), canvas.getColors(2));
+		menu.gameplayHUD(canvas.getRenderer());	
+		scoreS = to_string(score);		//Converts Score to String
+		
+		menu.showText(canvas.getRenderer(), 65, 40, scoreS.c_str(), canvas.getFonts(35), canvas.getColors(2));
 
 		// ---------DEBUG-------------
 
@@ -344,6 +349,9 @@ void Game::Draw() {
 
 		SDL_RenderClear(canvas.getRenderer());
 
+		scoreS = to_string(score);		//Converts Score to String
+
+		menu.showText(canvas.getRenderer(), 250, 100, scoreS.c_str(), canvas.getFonts(80), canvas.getColors(1));
 		menu.showText(canvas.getRenderer(), 250, 200, "Game Over!", canvas.getFonts(80), canvas.getColors(2));
 		menu.showText(canvas.getRenderer(), 250, 320, "Press <R> to retry.", canvas.getFonts(35), canvas.getColors(1));
 		menu.showText(canvas.getRenderer(), 250, 380, "Press <E> to exit to the Main Menu", canvas.getFonts(35), canvas.getColors(1));
