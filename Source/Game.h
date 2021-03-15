@@ -86,6 +86,7 @@ class Game {
 		// Box & enemy
 		Entity* ent[MAX_ENTITIES];
 		EnemyBornPoint enemyPoints[12];
+		int zombieCount = 96;
 
 		// Mapa
 		SDL_Texture* BackTex;
@@ -101,15 +102,16 @@ class Game {
 		bool Tick();
 		bool Input();	
 
-
+		void CreateEnemy();
 
 		// Destructor
 		~Game()
 		{
-
 			delete player;
 			//delete enemy;
 			//delete[] ent;		
 		}
+
+
 
 };

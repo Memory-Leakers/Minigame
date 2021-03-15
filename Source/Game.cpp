@@ -1,10 +1,13 @@
 #include "Game.h"
 #include "Menu.h"
+#include <time.h>
 //Game::Game() {}
 //Game::~Game() {}
 Menu menu;
 
 bool Game::Init(Display Disp) {
+
+	srand((unsigned)time(NULL));
 
 	canvas = Disp;
 
@@ -18,13 +21,28 @@ bool Game::Init(Display Disp) {
 
 	for (int i = 0, k = 0; i < 2; i++)
 	{
+		int offsetY = OFFSET_SCREEN_HEIGHT;
+		int offsetX = OFFSET_SCREEN_WIDTH;
 		for (int j = 0; j < 3; j++, k += 2)
 		{
-			enemyPoints[k].x = j * 32 + 224;
-			enemyPoints[k].y = i * 32 + OFFSET_SCREEN_HEIGHT;
+			if (i == 0)
+			{
+				enemyPoints[k].x = (j * 32) + 224 + offsetX;
+				enemyPoints[k].y = (i * 32) + offsetY;
+				cout << "x: " << enemyPoints[k].x << "\ty: " << enemyPoints[k].y << endl;
 
-			enemyPoints[k + 1].x = i * 32 + 224;
-			enemyPoints[k + 1].y = j * 32 + OFFSET_SCREEN_HEIGHT;
+				enemyPoints[k + 1].x = (i * 32) + offsetX;
+				enemyPoints[k + 1].y = (j * 32) + offsetY + 228;
+				cout << "x: " << enemyPoints[k+1].x << "\ty: " << enemyPoints[k+1].y << endl;
+			}
+			else
+			{
+				enemyPoints[k].x = (j * 32) + 224 + offsetX;
+				enemyPoints[k].y = (i * 32) + offsetY + 480;
+
+				enemyPoints[k + 1].x = (i * 32) + offsetX + 480;
+				enemyPoints[k + 1].y = (j * 32) + offsetY + 228;
+			}
 		}
 	}
 
@@ -67,10 +85,13 @@ bool Game::Init(Display Disp) {
 	//cout << ent[12]->getH() << endl;
 
 	// Test zombie
+	/*
 	ent[96] = new Enemy(0, 200, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
 	ent[97] = new Enemy(0, 232, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
 	ent[98] = new Enemy(700, 250, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
 	ent[99] = new Enemy(700, 290, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
+	*/
+	CreateEnemy();
 	currentScreen = MENU;
 
 	//dp.draw(canvas.draw());
@@ -86,6 +107,7 @@ bool Game::Init(Display Disp) {
 	BackTex = SDL_CreateTextureFromSurface(canvas.getRenderer(), IMG_Load("Assets/myAssets/Sprites/Map.png"));
 	// Init Time
 	TestTime = SDL_GetPerformanceCounter();
+
 	// Init Music
 	Mix_Init(MIX_INIT_MP3);
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
@@ -98,7 +120,7 @@ bool Game::Init(Display Disp) {
 	// -1 para que la musica suene para siempre
 	Mix_PlayMusic(music, -1);
 	Mix_Volume(-1, 5);
-	Mix_VolumeMusic(50);
+	Mix_VolumeMusic(40);
 	return result;
 }
 
@@ -190,13 +212,10 @@ bool Game::Tick() {
 
 				}
 			}
-
-			
+	
 		}
 		if(player->getBX()) player->moveX();
 		if(player->getBY()) player->moveY();
-
-
 
 		//Entities update
 		//---------------------------------
@@ -267,14 +286,13 @@ void Game::Draw() {
 		//--------Entities-------
 		player->draw(canvas.getRenderer());
 
-
 		for (int i = 0; i < MAX_ENTITIES; i++) {
 			if (ent[i] == NULL) break;
 
 			ent[i]->draw(canvas.getRenderer());
 		}
-		ent[68]->draw(canvas.getRenderer());
-		cout <<"x: "<< ent[68]->getCollsionBounds()->x << "\t y: "<<ent[68]->getCollsionBounds()->y << endl;
+		//ent[68]->draw(canvas.getRenderer());
+		//cout <<"x: "<< ent[68]->getCollsionBounds()->x << "\t y: "<<ent[68]->getCollsionBounds()->y << endl;
 
 		//-------------
 		for (int i = 0; i < 30; i++)
@@ -289,8 +307,20 @@ void Game::Draw() {
 		menu.showText(canvas.getRenderer(), 65, 25, "x1", canvas.getFonts(50), canvas.getColors(2));
 		menu.showText(canvas.getRenderer(), 65, 60, "0", canvas.getFonts(50), canvas.getColors(2));
 
-
 		// ---------DEBUG-------------
+
+		SDL_SetRenderDrawColor(canvas.getRenderer(), 255, 255, 255, 255);
+
+		SDL_Rect r;
+		r.w = 32;
+		r.h = 32;
+		for (int i = 0; i < 12; i++)
+		{
+			r.x = enemyPoints[i].x;
+			r.y = enemyPoints[i].y;
+			SDL_RenderFillRect(canvas.getRenderer(), &r);
+		}
+
 		if (debug == true) {
 			if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
 				menu.showText(canvas.getRenderer(), 0, 0, "UP!", canvas.getFonts(10), canvas.getColors(1));
@@ -445,4 +475,15 @@ bool Game::Input()
 	if (window_events[WE_QUIT] == true) { menu.freeMemory(); return false; }
 
 	return true;
+}
+
+void Game::CreateEnemy()
+{
+	int temp = rand() % 12;
+
+	ent[zombieCount] = new Enemy(enemyPoints[temp].x, enemyPoints[temp].y, 32, 32, 0.8f, canvas.getRenderer(), player->getCollsionBounds());
+	if (zombieCount == MAX_ENTITIES)
+	{
+		zombieCount = 96;
+	}
 }
