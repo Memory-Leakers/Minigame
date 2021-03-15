@@ -104,7 +104,7 @@ class Game {
 		{
 			delete player;
 			//delete enemy;
-			delete[] ent;			
+			//delete[] ent;		
 		}
 
 };

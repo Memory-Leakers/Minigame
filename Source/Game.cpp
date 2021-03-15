@@ -16,16 +16,17 @@ bool Game::Init(Display Disp) {
 
 	// Init enemyBornPoint
 
-	/*
-	for (int i = 0, int k = 0; i < 2; i++)
+	for (int i = 0, k = 0; i < 2; i++)
 	{
 		for (int j = 0; j < 3; j++, k += 2)
 		{
-			//enemyPoints[k].x = i * 32+
-		}
-	}
-	*/
+			enemyPoints[k].x = j * 32 + 224;
+			enemyPoints[k].y = i * 32 + OFFSET_SCREEN_HEIGHT;
 
+			enemyPoints[k + 1].x = i * 32 + 224;
+			enemyPoints[k + 1].y = j * 32 + OFFSET_SCREEN_HEIGHT;
+		}
+	}	
 
 	// Posicion de arboles, 1 significa que existe un arbol
 	int treePos[17][17]
@@ -78,8 +79,7 @@ bool Game::Init(Display Disp) {
 	// Initialize Sprites
 	IMG_Init;
 
-	// Init map sprite
-	
+	// Init map sprite	
 	BackTex = SDL_CreateTextureFromSurface(canvas.getRenderer(), IMG_Load("Assets/myAssets/Sprites/Map.png"));
 	// Init Time
 	TestTime = SDL_GetPerformanceCounter();
