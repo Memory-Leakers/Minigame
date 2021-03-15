@@ -8,7 +8,6 @@ private:
 
 	SDL_Rect menuRect;
 
-
 	//TTF_Font* testFont;
 	SDL_Surface* gameplayHud = IMG_Load("Assets/myAssets/Sprites/GameplayHUD.png");
 	SDL_Surface* coinHud = IMG_Load("Assets/myAssets/Sprites/Coin1.png");
@@ -20,8 +19,6 @@ private:
 	SDL_Rect blackRc;
 	SDL_Rect coinHudRc;
 	SDL_Rect playerlifeHudRc;
-
-
 
 public: 
 	Menu();

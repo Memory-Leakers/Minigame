@@ -25,9 +25,7 @@ Menu::Menu() {
 	menuRect.x = 0;
 	menuRect.y = 0;
 	menuRect.h = 544;
-	menuRect.w = 544;
-
-	
+	menuRect.w = 544;	
 }
 
 
@@ -61,10 +59,7 @@ void Menu::gameplayHUD(SDL_Renderer* renderer) {
 
 void Menu::menuHUD(SDL_Renderer* renderer) {
 
-	
-	cout << "hello" << endl;
 	SDL_RenderCopy(renderer, menuTexture, NULL, &menuRect);
-
 }
 
 void Menu::initMap(SDL_Renderer* renderer) {
