@@ -18,6 +18,7 @@ private:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	SDL_Surface* surface;
+	TTF_Font* Font80;
 	TTF_Font* Font50;
 	TTF_Font* Font35;
 	TTF_Font* Font10;
@@ -31,6 +32,7 @@ public:
 
 	TTF_Font* getFonts(int size) {
 		switch (size) {
+		case 80: return Font80; break;
 		case 50: return Font50; break;
 		case 35: return Font35; break;
 		case 10: return Font10; break;

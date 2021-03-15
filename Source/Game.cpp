@@ -207,8 +207,9 @@ void Game::Draw() {
 
 		SDL_RenderClear(canvas.getRenderer());
 
-		menu.showText(canvas.getRenderer(), 100, 360, "Game Over!", canvas.getFonts(50), canvas.getColors(0));
-		menu.showText(canvas.getRenderer(), 50, 420, "Press <R> to retry. Press <E> to exit to the Main Menu", canvas.getFonts(35), canvas.getColors(1));
+		menu.showText(canvas.getRenderer(), 150, 200, "Game Over!", canvas.getFonts(80), canvas.getColors(0));
+		menu.showText(canvas.getRenderer(), 50, 320, "Press <R> to retry.", canvas.getFonts(35), canvas.getColors(1));
+		menu.showText(canvas.getRenderer(), 50, 380, "Press <E> to exit to the Main Menu", canvas.getFonts(35), canvas.getColors(1));
 
 		break;
 	}
