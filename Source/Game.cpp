@@ -140,7 +140,7 @@ bool Game::Tick() {
 		break;
 
 	case Game::GAMEPLAY:
-		if (keys[SDL_SCANCODE_L] == KEY_DOWN) { Mix_PlayChannel(-1, fx_lose, 0); currentScreen = GAME_OVER; } //Esto cambiará cuando se pueda perder
+		//if (keys[SDL_SCANCODE_L] == KEY_DOWN) { Mix_PlayChannel(-1, fx_lose, 0); currentScreen = GAME_OVER; } //Esto cambiará cuando se pueda perder
 
 		//--------------Debug------------
 		if (keys[SDL_SCANCODE_F10] == KEY_DOWN) {
@@ -204,6 +204,15 @@ bool Game::Tick() {
 				player->setBY(false);
 
 			}
+			if (player->checkCollisions(ent[i]->getX(), ent[i]->getY(), false) &&
+				player->checkCollisions(ent[i]->getX(), ent[i]->getY(), false)) {//Player death
+				Mix_PlayChannel(-1, fx_lose, 0); currentScreen = GAME_OVER;
+				for (int j = 0; j < MAX_ENTITIES; j++) {
+					if (ent[j] != NULL && ent[j]->getID() == 1) {
+						ent[j]->setAlive(false);
+					}
+				}
+			}
 			for (int j = 0; j < 30; j++) {
 				if (SDL_HasIntersection(&shot[j].rec, ent[i]->getCollsionBounds())) {
 					shot[j].alive = false;
@@ -222,13 +231,14 @@ bool Game::Tick() {
 			for (int j = 0; j < MAX_ENTITIES; j++) {
 			if (ent[j] == NULL) break;
 				if (ent[j] == ent[i]) { continue; }
-				if (ent[i]->checkCollisions(ent[j]->getX(), ent[j]->getY(), false)) {
-					ent[i]->setBX(false);
-				}
-				if (ent[i]->checkCollisions(ent[j]->getX(), ent[j]->getY(), true)) {
-					ent[i]->setBY(false);
-				}
-
+				//if (ent[i]->getID() == 2) {
+					if (ent[i]->checkCollisions(ent[j]->getX(), ent[j]->getY(), false)) {
+						ent[i]->setBX(false);
+					}
+					if (ent[i]->checkCollisions(ent[j]->getX(), ent[j]->getY(), true)) {
+						ent[i]->setBY(false);
+					}
+				//}
 			}
 		}
 		if(player->getBX()) player->moveX();
