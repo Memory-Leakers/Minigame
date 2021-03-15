@@ -15,16 +15,28 @@ bool Game::Init(Display Disp) {
 	player = new Player(400, 300, 32, 32, 2, canvas.getRenderer());
 
 	// Init enemyBornPoint
-
 	for (int i = 0, k = 0; i < 2; i++)
 	{
+		int offsetY = OFFSET_SCREEN_HEIGHT;
+		int offsetX = OFFSET_SCREEN_WIDTH;
 		for (int j = 0; j < 3; j++, k += 2)
 		{
-			enemyPoints[k].x = j * 32 + 224;
-			enemyPoints[k].y = i * 32 + OFFSET_SCREEN_HEIGHT;
+			if (i == 0)
+			{
+				enemyPoints[k].x = (j * 32) + 224 + offsetX;
+				enemyPoints[k].y = (i * 32) + offsetY;
 
-			enemyPoints[k + 1].x = i * 32 + 224;
-			enemyPoints[k + 1].y = j * 32 + OFFSET_SCREEN_HEIGHT;
+				enemyPoints[k + 1].x = (i * 32) + offsetX;
+				enemyPoints[k + 1].y = (j * 32) + offsetY + 228;
+			}
+			else
+			{
+				enemyPoints[k].x = (j * 32) + 224 + offsetX;
+				enemyPoints[k].y = (i * 32) + offsetY + 480;
+
+				enemyPoints[k + 1].x = (i * 32) + offsetX + 480;
+				enemyPoints[k + 1].y = (j * 32) + offsetY + 228;
+			}
 		}
 	}	
 
@@ -226,16 +238,13 @@ void Game::Draw() {
 		//--------Entities-------
 		player->draw(canvas.getRenderer());
 
-
 		for (int i = 0; i < MAX_ENTITIES; i++) {
 			if (ent[i] == NULL) break;
 			
 			ent[i]->draw(canvas.getRenderer());	
 		}
-		ent[68]->draw(canvas.getRenderer());
-		cout <<"x: "<< ent[68]->getCollsionBounds()->x << "\t y: "<<ent[68]->getCollsionBounds()->y << endl;
-
-		//-------------
+		
+		//---------SHOT--------------
 		for (int i = 0; i < 30; i++)
 		{
 			if (shot[i].alive)
@@ -250,6 +259,20 @@ void Game::Draw() {
 
 
 		// ---------DEBUG-------------
+
+		// Show Enemy born points
+		/*
+		SDL_Rect r;
+		r.w = 32;
+		r.h = 32;
+		for (int i = 0; i < 12; i++)
+		{
+			r.x = enemyPoints[i].x;
+			r.y = enemyPoints[i].y;
+			SDL_RenderFillRect(canvas.getRenderer(), &r);
+		}
+		*/
+
 		if (debug == true) {
 			if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
 				menu.showText(canvas.getRenderer(), 0, 0, "UP!", canvas.getFonts(10), canvas.getColors(1));
@@ -281,7 +304,6 @@ void Game::Draw() {
 	}
 
 	SDL_RenderPresent(canvas.getRenderer());
-
 	SDL_Delay(10);
 }
 
