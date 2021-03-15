@@ -94,6 +94,41 @@ void Enemy::tick() {
 			y += speed * abs(sin(angle) * yMove);
 		}
 	}
+	if (!bx && !by) {
+
+		switch (rand() % 4) {
+			case 0:
+				disX = 250 - x;
+				disY = 300 - y;
+				break;
+			case 1:
+				disX = 420 - x;
+				disY = 250 - y;
+				break;
+			case 2:
+				disX = 375 - x;
+				disY = 100 - y;
+				break;
+			case 3:
+				disX = 420 - x;
+				disY = 300 - y;
+				break;
+		}
+
+		if (disX < 0) {
+			x -= speed * abs(cos(angle) * xMove);
+		}
+		else {
+			x += speed * abs(cos(angle) * xMove);
+		}
+		if (disY < 0) {
+			y -= speed * abs(sin(angle) * yMove);
+		}
+		else {
+			y += speed * abs(sin(angle) * yMove);
+		}
+	}
+	
 }
 
 /// <summary>

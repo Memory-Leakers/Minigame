@@ -116,7 +116,7 @@ bool Game::Init(Display Disp) {
 
 	fx_shoot = Mix_LoadWAV("Assets/myAssets/Sounds/shoot.wav");
 	fx_lose = Mix_LoadWAV("Assets/myAssets/Sounds/lose.wav");
-	fx_win = Mix_LoadWAV("Assets/myAssets/Sounds/win.wav"); 
+	fx_win = Mix_LoadWAV("Assets/myAssets/Sounds/win.wav");
 	// -1 para que la musica suene para siempre
 	Mix_PlayMusic(music, -1);
 
@@ -140,7 +140,7 @@ bool Game::Tick() {
 		break;
 
 	case Game::GAMEPLAY:
-		if (keys[SDL_SCANCODE_L] == KEY_DOWN) { Mix_PlayChannel(-1, fx_lose, 0); currentScreen = GAME_OVER; } //Esto cambiará cuando se pueda perder
+		//if (keys[SDL_SCANCODE_L] == KEY_DOWN) { Mix_PlayChannel(-1, fx_lose, 0); currentScreen = GAME_OVER; } //Esto cambiará cuando se pueda perder
 
 		//--------------Debug------------
 		if (keys[SDL_SCANCODE_F10] == KEY_DOWN) {
@@ -151,17 +151,16 @@ bool Game::Tick() {
 		endTime = SDL_GetPerformanceCounter();
 		timeOffset = SDL_GetPerformanceFrequency();
 
-		// Cada 2.5s ejecuta una vez para recalcular la posicion del jugador
-		if (((endTime - enemySpawunTime) / timeOffset) >= 2.5f)
+		// Cada 1.5s ejecuta una vez para recalcular la posicion del jugador
+		if (((endTime - enemySpawunTime) / timeOffset) >= 1.5f)
 		{
 			//cout<< timeOffset <<endl;
 			enemySpawunTime = SDL_GetPerformanceCounter();
 			CreateEnemy();
 		}
 
-
 		//----------Shoot----------------
-		for (int i = 0; i < 20; i++) 
+		for (int i = 0; i < 20; i++)
 		{
 			// Modificar posicion de bala
 			if (shot[i].alive == false) continue;
@@ -204,7 +203,21 @@ bool Game::Tick() {
 				player->setBY(false);
 
 			}
-			for (int j = 0; j < 30; j++) {
+			if (player->checkCollisions(ent[i]->getX(), ent[i]->getY(), false) &&
+				player->checkCollisions(ent[i]->getX(), ent[i]->getY(), false)) {//Player death
+				Mix_PlayChannel(-1, fx_lose, 0); currentScreen = GAME_OVER;
+				for (int j = 0; j < MAX_ENTITIES; j++) {//Entities
+					if (ent[j] != NULL && ent[j]->getID() == 1) {
+						ent[j]->setAlive(false);
+					}
+				}
+				for (int j = 0; j < 20; j++) {//Bullet 
+					shot[j].alive = false;
+					shot[j].rec.x = 840;
+					shot[j].rec.y = 600;
+				}
+			}
+			for (int j = 0; j < 20; j++) {
 				if (SDL_HasIntersection(&shot[j].rec, ent[i]->getCollsionBounds())) {
 					shot[j].alive = false;
 					shot[j].rec.x = 554;
@@ -222,13 +235,14 @@ bool Game::Tick() {
 			for (int j = 0; j < MAX_ENTITIES; j++) {
 			if (ent[j] == NULL) break;
 				if (ent[j] == ent[i]) { continue; }
-				if (ent[i]->checkCollisions(ent[j]->getX(), ent[j]->getY(), false)) {
-					ent[i]->setBX(false);
-				}
-				if (ent[i]->checkCollisions(ent[j]->getX(), ent[j]->getY(), true)) {
-					ent[i]->setBY(false);
-				}
-
+				//if (ent[i]->getID() == 2) {
+					if (ent[i]->checkCollisions(ent[j]->getX(), ent[j]->getY(), false)) {
+						ent[i]->setBX(false);
+					}
+					if (ent[i]->checkCollisions(ent[j]->getX(), ent[j]->getY(), true)) {
+						ent[i]->setBY(false);
+					}
+				//}
 			}
 		}
 		if(player->getBX()) player->moveX();
@@ -247,16 +261,16 @@ bool Game::Tick() {
 
 	case Game::GAME_OVER:
 
-		Mix_PauseMusic();	
+		Mix_PauseMusic();
 
 		if (keys[SDL_SCANCODE_R] == KEY_DOWN) {
 			Mix_PlayMusic(music, -1); currentScreen = GAMEPLAY;
 			player->setX(SCREEN_WIDTH / 2); player->setY(SCREEN_HEIGHT / 2);
 			score = 0;
 		}
-		else if (keys[SDL_SCANCODE_E] == KEY_DOWN) { 
-			Mix_PlayMusic(music, -1); 
-			currentScreen = MENU; 
+		else if (keys[SDL_SCANCODE_E] == KEY_DOWN) {
+			Mix_PlayMusic(music, -1);
+			currentScreen = MENU;
 			score = 0;
 		}
 
@@ -324,9 +338,9 @@ void Game::Draw() {
 		for (int i = 0; i < 20; i++)
 
 		//-------------SHOT----------
-		for (int i = 0; i < 30; i++)
+		for (int i = 0; i < 20; i++)
 		{
-			if (shot[i].alive && shot[i].rec.x > OFFSET_SCREEN_WIDTH && shot[i].alive 
+			if (shot[i].alive && shot[i].rec.x > OFFSET_SCREEN_WIDTH && shot[i].alive
 				&& shot[i].rec.x < SCREEN_WIDTH - OFFSET_SCREEN_WIDTH
 				&& shot[i].rec.y < SCREEN_HEIGHT - OFFSET_SCREEN_HEIGHT
 				&& shot[i].rec.y > OFFSET_SCREEN_HEIGHT) {
@@ -334,24 +348,12 @@ void Game::Draw() {
 			}
 		}
 		//----------HUD--------------
-		menu.gameplayHUD(canvas.getRenderer());	
+		menu.gameplayHUD(canvas.getRenderer());
 		scoreS = to_string(score);		//Converts Score to String
-		
+
 		menu.showText(canvas.getRenderer(), 75, 40, scoreS.c_str(), canvas.getFonts(35), canvas.getColors(2));
 
 		// ---------DEBUG-------------
-
-		SDL_SetRenderDrawColor(canvas.getRenderer(), 255, 255, 255, 255);
-
-		SDL_Rect r;
-		r.w = 32;
-		r.h = 32;
-		for (int i = 0; i < 12; i++)
-		{
-			r.x = enemyPoints[i].x;
-			r.y = enemyPoints[i].y;
-			SDL_RenderFillRect(canvas.getRenderer(), &r);
-		}
 
 		if (debug == true) {
 			if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
@@ -367,6 +369,19 @@ void Game::Draw() {
 				menu.showText(canvas.getRenderer(), 0, 0, "RIGHT!", canvas.getFonts(10), canvas.getColors(1));
 			}
 			menu.showText(canvas.getRenderer(), 500, 0, "60 FPS", canvas.getFonts(10), canvas.getColors(1)); //DEBUG FPS
+
+			// Posicion de spawn zombie
+			SDL_SetRenderDrawColor(canvas.getRenderer(), 255, 255, 255, 255);
+
+			SDL_Rect r;
+			r.w = 32;
+			r.h = 32;
+			for (int i = 0; i < 12; i++)
+			{
+				r.x = enemyPoints[i].x;
+				r.y = enemyPoints[i].y;
+				SDL_RenderFillRect(canvas.getRenderer(), &r);
+			}
 		}
 		//-----------------------------
 
@@ -453,7 +468,7 @@ bool Game::Input()
 	}
 
 	// Init Shoot
-	if (keys[SDL_SCANCODE_SPACE] == KEY_DOWN)
+	if (keys[SDL_SCANCODE_SPACE] == KEY_DOWN && currentScreen == GAMEPLAY)
 	{
 		int x, y, w, h;
 		// Inicializar textura de shot
