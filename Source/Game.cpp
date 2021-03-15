@@ -16,13 +16,15 @@ bool Game::Init(Display Disp) {
 
 	// Init enemyBornPoint
 
+	/*
 	for (int i = 0, int k = 0; i < 2; i++)
 	{
 		for (int j = 0; j < 3; j++, k += 2)
 		{
-			//enemyPoints[k].x = i * 
+			//enemyPoints[k].x = i * 32+
 		}
 	}
+	*/
 
 
 	// Posicion de arboles, 1 significa que existe un arbol
