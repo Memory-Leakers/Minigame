@@ -24,6 +24,16 @@ Menu::Menu() {
 	menuRect.y = OFFSET_SCREEN_HEIGHT;
 	menuRect.h = 544;
 	menuRect.w = 544;	
+
+	logoRC.x = 235;
+	logoRC.y = 50;
+	logoRC.h = 250;
+	logoRC.w = 350;
+
+	teamLogoRC.x = 270;
+	teamLogoRC.y = 500;
+	teamLogoRC.h = 50;
+	teamLogoRC.w= 300;
 }
 
 
@@ -44,12 +54,6 @@ void Menu::showText(SDL_Renderer* renderer, int x, int y, const char* message, T
 
 void Menu::gameplayHUD(SDL_Renderer* renderer) {
 
-	
-	//SDL_Surface* blackRcSurface = SDL_CreateRGBSurface(0, blackRc.w, blackRc.h, 32, 0, 0, 0, 255);
-	blackRcTexture = SDL_CreateTextureFromSurface(renderer, gameplayHud);
-	coinTexture = SDL_CreateTextureFromSurface(renderer, coinHud);
-	playerlifeTexture = SDL_CreateTextureFromSurface(renderer, playerlifeHud);
-	
 	SDL_RenderCopy(renderer, blackRcTexture, NULL, &blackRc);
 	SDL_RenderCopy(renderer, coinTexture, NULL, &coinHudRc);
 	SDL_RenderCopy(renderer, playerlifeTexture, NULL, &playerlifeHudRc);
@@ -58,9 +62,21 @@ void Menu::gameplayHUD(SDL_Renderer* renderer) {
 void Menu::menuHUD(SDL_Renderer* renderer) {
 
 	SDL_RenderCopy(renderer, menuTexture, NULL, &menuRect);
+
+	SDL_RenderCopy(renderer, logoTexture, NULL, &logoRC);
+
+	SDL_RenderCopy(renderer, teamLogoTexture, NULL, &teamLogoRC);
 }
 
 void Menu::initMap(SDL_Renderer* renderer) {
 
 	menuTexture = SDL_CreateTextureFromSurface(renderer, IMG_Load("Assets/myAssets/Sprites/Map.png"));
+
+	blackRcTexture = SDL_CreateTextureFromSurface(renderer, gameplayHud);
+	coinTexture = SDL_CreateTextureFromSurface(renderer, coinHud);
+	playerlifeTexture = SDL_CreateTextureFromSurface(renderer, playerlifeHud);
+
+	logoTexture = SDL_CreateTextureFromSurface(renderer, logoSurface);
+	teamLogoTexture = SDL_CreateTextureFromSurface(renderer, teamLogoSurface);
+
 }

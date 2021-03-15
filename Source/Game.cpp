@@ -218,7 +218,15 @@ void Game::Draw() {
 
 		menu.menuHUD(canvas.getRenderer());
 
-		menu.showText(canvas.getRenderer(), 90, 272, "Start Game with <Enter>", canvas.getFonts(50), canvas.getColors(0)); //Shows a Text
+		menu.showText(canvas.getRenderer(), 230, 272, "Start Game with <Enter>", canvas.getFonts(50), canvas.getColors(0)); 
+		menu.showText(canvas.getRenderer(), 215, 360, "Zhida", canvas.getFonts(50), canvas.getColors(1));
+		menu.showText(canvas.getRenderer(), 215, 400, "Chen", canvas.getFonts(50), canvas.getColors(1));
+		menu.showText(canvas.getRenderer(), 310, 360, "Robert", canvas.getFonts(50), canvas.getColors(0));
+		menu.showText(canvas.getRenderer(), 310, 400, "Recordà", canvas.getFonts(50), canvas.getColors(0));
+		menu.showText(canvas.getRenderer(), 430, 360, "Pol", canvas.getFonts(50), canvas.getColors(1));
+		menu.showText(canvas.getRenderer(), 430, 400, "Rius", canvas.getFonts(50), canvas.getColors(1));
+		menu.showText(canvas.getRenderer(), 500, 360, "Adrià", canvas.getFonts(50), canvas.getColors(0));
+		menu.showText(canvas.getRenderer(), 500, 400, "Sellarés", canvas.getFonts(50), canvas.getColors(0));
 
 		break;
 	case GAMEPLAY:
