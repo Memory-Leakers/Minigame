@@ -74,10 +74,12 @@ void Entity::draw(SDL_Renderer* g) {}
 
 void Entity::moveY() {
 	y += speed * yMove;
+    lastMove = spY;
 }
 
 void Entity::moveX() {
 	x += speed * xMove;
+    lastMove = spY;
 }
 
 void Entity::animationController() {

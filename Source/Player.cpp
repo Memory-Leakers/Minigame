@@ -64,7 +64,7 @@ void Player::animationController() {
 		}
 		spY = 1;
 	}
-	else if (yMove == 1) { //Down
+	else if (yMove == 1) { //UP
 		if (((endTime - anim.startTime) / timeOffset) >= anim.changeTime) {
 			anim.startTime = SDL_GetPerformanceCounter();
 			if (spX == 1 || spX == 0) {
@@ -76,7 +76,7 @@ void Player::animationController() {
 		}
 		spY = 0;
 	}
-	else if (yMove == -1) { //UP
+	else if (yMove == -1) { //DOWN
 		if (((endTime - anim.startTime) / timeOffset) >= anim.changeTime) {
 			anim.startTime = SDL_GetPerformanceCounter();
 			if (spX == 1 || spX == 0) {

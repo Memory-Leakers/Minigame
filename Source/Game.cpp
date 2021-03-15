@@ -2,13 +2,16 @@
 #include "Menu.h"
 //Game::Game() {}
 //Game::~Game() {}
-
+Menu menu;
 
 bool Game::Init(Display Disp) {
 
 	canvas = Disp;
 
+
 	bool result = canvas.createDisplay(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+	menu.initMap(canvas.getRenderer());
 
 	player = new Player(200, 200, 32, 32, 2, canvas.getRenderer());
 	ent[0] = new Box(300, 300, 32, 32, 2.5, canvas.getRenderer());
@@ -21,6 +24,8 @@ bool Game::Init(Display Disp) {
 	currentScreen = MENU;
 	//dp.draw(canvas.draw());
 
+
+
 	//Initialize keys array
 	for (int i = 0; i < MAX_KEYBOARD_KEYS; ++i)
 		keys[i] = KEY_IDLE;
@@ -29,8 +34,8 @@ bool Game::Init(Display Disp) {
 	IMG_Init;
 
 	// Init map sprite
-	BackTex = SDL_CreateTextureFromSurface(canvas.getRenderer(), IMG_Load("Assets/myAssets/Sprites/map.png"));
-
+	
+	BackTex = SDL_CreateTextureFromSurface(canvas.getRenderer(), IMG_Load("Assets/myAssets/Sprites/Map.png"));
 	// Init Time
 	TestTime = SDL_GetPerformanceCounter();
 
@@ -67,7 +72,7 @@ bool Game::Tick() {
 		bx = true;
 		by = true;
 		player->setYmove(0);
-			player->setXmove(0);
+		player->setXmove(0);
 		if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) { player->setYmove(-1);}
 		if (keys[SDL_SCANCODE_DOWN] == KEY_REPEAT) {player->setYmove(1);}
 		if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) {player->setXmove(-1);}
@@ -89,9 +94,20 @@ bool Game::Tick() {
 		//--------Shoot------------------
 		for (int i = 0; i < 30; i++)
 		{
-			if(shot[i].alive)
-			{
-				shot[i].rec.x += shot[i].speed;
+			if(shot[i].alive) {
+				if (shot[i].direction == LEFT) { //shoot left
+					shot[i].rec.x -= shot[i].speed;
+				}
+				else if (shot[i].direction == RIGHT) { //shoot right
+					shot[i].rec.x += shot[i].speed;
+				}
+				else if (shot[i].direction == UP) { //shoot up
+					shot[i].rec.y += shot[i].speed;
+				}
+				else if (shot[i].direction == DOWN) { //shoot down
+					shot[i].rec.y -= shot[i].speed;
+				}
+				
 			}
 		}
 
@@ -277,8 +293,30 @@ bool Game::Input()
 			cout << shotCount << endl;
 		}
 		// Inicializar restos de valor
-		shot[shotCount].rec.x = player->getX() + player->getW();
-		shot[shotCount].rec.y = player->getY() + (player->getH()/2);
+		//shot[shotCount].rec.x = player->getX() + player->getW();
+		//shot[shotCount].rec.y = player->getY() + (player->getH()/2);
+		
+
+		if (player->getXmove() == -1 || player->getLastMove() == LEFT) { //shoot left
+			shot[shotCount].rec.x = player->getX();
+			shot[shotCount].rec.y = player->getY() + (player->getH() / 2);
+			shot[shotCount].direction = LEFT;
+		}
+		else if (player->getXmove() == 1 || player->getLastMove() == RIGHT) { //shoot right
+			shot[shotCount].rec.x = player->getX() + player->getW();
+			shot[shotCount].rec.y = player->getY() + (player->getH() / 2);
+			shot[shotCount].direction = RIGHT;
+		}
+		else if (player->getYmove() == 1 || player->getLastMove() == UP) { //shoot up
+			shot[shotCount].rec.x = player->getX() + (player->getW() / 2);
+			shot[shotCount].rec.y = player->getY() + player->getH();
+			shot[shotCount].direction = UP;
+		}
+		else if (player->getYmove() == -1 || player->getLastMove() == DOWN) { //shoot down
+			shot[shotCount].rec.x = player->getX() + (player->getW() / 2);
+			shot[shotCount].rec.y = player->getY();
+			shot[shotCount].direction = DOWN;
+		}
 		shot[shotCount].alive = true;
 
 		if (++shotCount >= 30)

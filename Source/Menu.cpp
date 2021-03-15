@@ -3,11 +3,33 @@
 
 Menu::Menu() {
 
-	gameplayHud = IMG_Load("Assets/myAssets/Sprites/GameplayHUD.png");
-	coinHud = IMG_Load("Assets/myAssets/Sprites/Coin1.png");
-	playerlifeHud = IMG_Load("Assets/myAssets/Sprites/lifeHUD.png");
-	menuSurface = IMG_Load("Assets/myAssets/Sprites/Map.png");
+	text = nullptr;
+	textSurface = nullptr;
+
+
+	blackRc.x = 5;
+	blackRc.y = 10;
+	blackRc.h = 120;
+	blackRc.w = 120;
+
+	coinHudRc.x = 28;
+	coinHudRc.y = 72;
+	coinHudRc.h = 32;
+	coinHudRc.w = 32;
+
+	playerlifeHudRc.x = 28;
+	playerlifeHudRc.y = 40;
+	playerlifeHudRc.h = 22;
+	playerlifeHudRc.w = 26;
+	
+	menuRect.x = 0;
+	menuRect.y = 0;
+	menuRect.h = 544;
+	menuRect.w = 544;
+
+	
 }
+
 
 void Menu::showText(SDL_Renderer* renderer, int x, int y, const char* message, TTF_Font* testFont, SDL_Color color){
 	//testFont = TTF_OpenFont("Assets/Fonts/arial.ttf", fontSize);
@@ -26,21 +48,7 @@ void Menu::showText(SDL_Renderer* renderer, int x, int y, const char* message, T
 
 void Menu::gameplayHUD(SDL_Renderer* renderer) {
 
-	blackRc.x = 5;
-	blackRc.y = 10;
-	blackRc.h = 120;
-	blackRc.w = 120;
-
-	coinHudRc.x = 28;
-	coinHudRc.y = 72;
-	coinHudRc.h = 32;
-	coinHudRc.w = 32;
-
-	playerlifeHudRc.x = 28;
-	playerlifeHudRc.y = 40;
-	playerlifeHudRc.h= 22;
-	playerlifeHudRc.w = 26;
-
+	
 	//SDL_Surface* blackRcSurface = SDL_CreateRGBSurface(0, blackRc.w, blackRc.h, 32, 0, 0, 0, 255);
 	SDL_Texture* blackRcTexture = SDL_CreateTextureFromSurface(renderer, gameplayHud);
 	SDL_Texture* coinTexture = SDL_CreateTextureFromSurface(renderer, coinHud);
@@ -53,13 +61,13 @@ void Menu::gameplayHUD(SDL_Renderer* renderer) {
 
 void Menu::menuHUD(SDL_Renderer* renderer) {
 
-	menuRect.x = 0;
-	menuRect.y = 0;
-	menuRect.h = 544;
-	menuRect.w = 544;
-
-	SDL_Texture* menuTexture = SDL_CreateTextureFromSurface(renderer, menuSurface);
-
+	
+	cout << "hello" << endl;
 	SDL_RenderCopy(renderer, menuTexture, NULL, &menuRect);
 
+}
+
+void Menu::initMap(SDL_Renderer* renderer) {
+
+	menuTexture = SDL_CreateTextureFromSurface(renderer, IMG_Load("Assets/myAssets/Sprites/Map.png"));
 }
