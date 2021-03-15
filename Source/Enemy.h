@@ -16,6 +16,13 @@ private:
 	EnemyAnim anim;
 	SDL_Rect*  targetPos;
 
+	// variables para la logica del movimiento
+	double AIstartTime = 1;
+	float disX = 0;
+	float disY = 0;
+	float dis = 0;
+	float angle = 0;
+
 public:
 	void texturesSet(SDL_Renderer* g) override;
 	void draw(SDL_Renderer* g) override;

@@ -39,7 +39,6 @@ void Player::animationController() {
 	double endTime = SDL_GetPerformanceCounter();
 	double timeOffset = SDL_GetPerformanceFrequency();
 
-
 	if (xMove == 1) {//Right
 		if (((endTime - anim.startTime) / timeOffset) >= anim.changeTime) {
 			anim.startTime = SDL_GetPerformanceCounter();
