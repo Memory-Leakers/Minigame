@@ -120,7 +120,7 @@ bool Game::Tick() {
 	case Game::GAMEPLAY:
 
 
-		if (keys[SDL_SCANCODE_L] == KEY_DOWN) { Mix_PlayChannel(-1, fx_lose, 0); currentScreen = GAME_OVER; }
+		if (keys[SDL_SCANCODE_L] == KEY_DOWN) { Mix_PlayChannel(-1, fx_lose, 0); currentScreen = GAME_OVER; } //Esto cambiará cuando se pueda perder
 
 		//------Debug-------
 		if (keys[SDL_SCANCODE_F10] == KEY_DOWN) {
@@ -290,8 +290,9 @@ void Game::Draw() {
 		}
 		//----------HUD--------------
 		menu.gameplayHUD(canvas.getRenderer());
-		menu.showText(canvas.getRenderer(), 65, 25, "x1", canvas.getFonts(50), canvas.getColors(2));
-		menu.showText(canvas.getRenderer(), 65, 60, "0", canvas.getFonts(50), canvas.getColors(2));
+		scoreS = to_string(score);
+		//menu.showText(canvas.getRenderer(), 65, 25, "x1", canvas.getFonts(50), canvas.getColors(2));
+		menu.showText(canvas.getRenderer(), 65, 40, scoreS.c_str(), canvas.getFonts(35), canvas.getColors(2));
 
 
 		// ---------DEBUG-------------
