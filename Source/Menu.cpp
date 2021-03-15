@@ -48,9 +48,9 @@ void Menu::gameplayHUD(SDL_Renderer* renderer) {
 
 	
 	//SDL_Surface* blackRcSurface = SDL_CreateRGBSurface(0, blackRc.w, blackRc.h, 32, 0, 0, 0, 255);
-	SDL_Texture* blackRcTexture = SDL_CreateTextureFromSurface(renderer, gameplayHud);
-	SDL_Texture* coinTexture = SDL_CreateTextureFromSurface(renderer, coinHud);
-	SDL_Texture* playerlifeTexture = SDL_CreateTextureFromSurface(renderer, playerlifeHud);
+	blackRcTexture = SDL_CreateTextureFromSurface(renderer, gameplayHud);
+	coinTexture = SDL_CreateTextureFromSurface(renderer, coinHud);
+	playerlifeTexture = SDL_CreateTextureFromSurface(renderer, playerlifeHud);
 	
 	SDL_RenderCopy(renderer, blackRcTexture, NULL, &blackRc);
 	SDL_RenderCopy(renderer, coinTexture, NULL, &coinHudRc);
