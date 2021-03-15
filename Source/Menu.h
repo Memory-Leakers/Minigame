@@ -14,6 +14,9 @@ private:
 	SDL_Surface* playerlifeHud = IMG_Load("Assets/myAssets/Sprites/lifeHUD.png");
 	SDL_Surface* textSurface;
 	SDL_Texture* menuTexture;
+	SDL_Texture* playerlifeTexture;
+	SDL_Texture* coinTexture;
+	SDL_Texture* blackRcTexture;
 	SDL_Texture* text;
 	SDL_Rect textRect;
 	SDL_Rect blackRc;
