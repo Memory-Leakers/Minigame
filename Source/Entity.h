@@ -18,7 +18,7 @@ class Entity {
 		float DEFAULT_SPEED = 2.5f;
 		int id;
 		float x, y; //Position
-		int xMove, yMove; //For movement direction
+		int xMove, yMove, lastMove; //For movement direction
 		int width, height;
 		int health;
 		SDL_Rect bounds; //Collisions box
@@ -34,9 +34,13 @@ class Entity {
 		int getY() { return y; }
 		int getW() { return width; }
 		int getH() { return height; }
+		int getXmove() { return xMove; }
+		int getYmove() { return yMove; }
+		int getLastMove() { return lastMove; }
 		//SETTERS
 		void setXmove(int xMove) { this->xMove = xMove; }
 		void setYmove(int yMove) { this->yMove = yMove; }
+		void setLastMove(int lastMove) { this->lastMove = lastMove; }
 
 		Entity(float x, float y, int width, int height, float speed, SDL_Renderer* g) {
 			this->x = x;
