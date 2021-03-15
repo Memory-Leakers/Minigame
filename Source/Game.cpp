@@ -206,13 +206,18 @@ bool Game::Tick() {
 			if (player->checkCollisions(ent[i]->getX(), ent[i]->getY(), false) &&
 				player->checkCollisions(ent[i]->getX(), ent[i]->getY(), false)) {//Player death
 				Mix_PlayChannel(-1, fx_lose, 0); currentScreen = GAME_OVER;
-				for (int j = 0; j < MAX_ENTITIES; j++) {
+				for (int j = 0; j < MAX_ENTITIES; j++) {//Entities
 					if (ent[j] != NULL && ent[j]->getID() == 1) {
 						ent[j]->setAlive(false);
 					}
 				}
+				for (int j = 0; j < 20; j++) {//Bullet 
+					shot[j].alive = false;
+					shot[j].rec.x = 840;
+					shot[j].rec.y = 600;
+				}
 			}
-			for (int j = 0; j < 30; j++) {
+			for (int j = 0; j < 20; j++) {
 				if (SDL_HasIntersection(&shot[j].rec, ent[i]->getCollsionBounds())) {
 					shot[j].alive = false;
 					shot[j].rec.x = 554;
@@ -333,7 +338,7 @@ void Game::Draw() {
 		for (int i = 0; i < 20; i++)
 
 		//-------------SHOT----------
-		for (int i = 0; i < 30; i++)
+		for (int i = 0; i < 20; i++)
 		{
 			if (shot[i].alive && shot[i].rec.x > OFFSET_SCREEN_WIDTH && shot[i].alive
 				&& shot[i].rec.x < SCREEN_WIDTH - OFFSET_SCREEN_WIDTH
@@ -464,7 +469,7 @@ bool Game::Input()
 	}
 
 	// Init Shoot
-	if (keys[SDL_SCANCODE_SPACE] == KEY_DOWN)
+	if (keys[SDL_SCANCODE_SPACE] == KEY_DOWN && currentScreen == GAMEPLAY)
 	{
 		int x, y, w, h;
 		// Inicializar textura de shot

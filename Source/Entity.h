@@ -33,7 +33,7 @@ class Entity {
 
 		//GETTERS
 		float getX() { return x; }
-		float getY() { return y; }
+   		float getY() { return y; }
 		int getW() { return width; }
 		int getH() { return height; }
 		int getXmove() { return xMove; }
