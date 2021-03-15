@@ -22,8 +22,10 @@ bool Display::createDisplay(int width, int height) {
 	}
 
 	// Init ventana
-	window = SDL_CreateWindow("Minijuego || Chaketeros", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
+	window = SDL_CreateWindow("Journey of the Prairie King || Chaketeros", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
 	SDL_GetWindowSurface(window);
+	SDL_Surface* playerlifeHud = IMG_Load("Assets/myAssets/Sprites/lifeHUD.png");
+	SDL_SetWindowIcon(window, playerlifeHud);
 	if (window == NULL) {
 		SDL_Log("Unable to create window: %s", SDL_GetError());
 		return false;
