@@ -106,6 +106,7 @@ class Game {
 		// Music 
 		Mix_Music* music;
 		Mix_Chunk* fx_shoot,*fx_lose,*fx_win;
+		Mix_Chunk* fx_death[5];
 		// Funciones
 		bool Init(Display Disp);
 		void Draw();

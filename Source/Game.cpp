@@ -117,11 +117,17 @@ bool Game::Init(Display Disp) {
 	fx_shoot = Mix_LoadWAV("Assets/myAssets/Sounds/shoot.wav");
 	fx_lose = Mix_LoadWAV("Assets/myAssets/Sounds/lose.wav");
 	fx_win = Mix_LoadWAV("Assets/myAssets/Sounds/win.wav");
+	string temp;
+
+	for (int i = 0; i < 5; i++) {
+		temp = "Assets/myAssets/Sounds/zombiegrunt"+ to_string(i) +".mp3";
+		fx_death[i] = Mix_LoadWAV(temp.c_str());
+	}
 	// -1 para que la musica suene para siempre
 	Mix_PlayMusic(music, -1);
 
-	Mix_Volume(-1, 5);
-	Mix_VolumeMusic(40);
+	Mix_Volume(-1, 25);
+	Mix_VolumeMusic(20);
 	return result;
 }
 
@@ -234,6 +240,7 @@ bool Game::Tick() {
 					ent[i]->setAlive(false);
 					if (ent[i]->getID() == 1) {
 						score++;
+						Mix_PlayChannel(-1, fx_death[rand() % 5], 0);
 					}
 				}
 			}
