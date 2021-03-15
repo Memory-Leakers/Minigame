@@ -15,28 +15,16 @@ bool Game::Init(Display Disp) {
 	player = new Player(400, 300, 32, 32, 2, canvas.getRenderer());
 
 	// Init enemyBornPoint
+
 	for (int i = 0, k = 0; i < 2; i++)
 	{
-		int offsetY = OFFSET_SCREEN_HEIGHT;
-		int offsetX = OFFSET_SCREEN_WIDTH;
 		for (int j = 0; j < 3; j++, k += 2)
 		{
-			if (i == 0)
-			{
-				enemyPoints[k].x = (j * 32) + 224 + offsetX;
-				enemyPoints[k].y = (i * 32) + offsetY;
+			enemyPoints[k].x = j * 32 + 224;
+			enemyPoints[k].y = i * 32 + OFFSET_SCREEN_HEIGHT;
 
-				enemyPoints[k + 1].x = (i * 32) + offsetX;
-				enemyPoints[k + 1].y = (j * 32) + offsetY + 228;
-			}
-			else
-			{
-				enemyPoints[k].x = (j * 32) + 224 + offsetX;
-				enemyPoints[k].y = (i * 32) + offsetY + 480;
-
-				enemyPoints[k + 1].x = (i * 32) + offsetX + 480;
-				enemyPoints[k + 1].y = (j * 32) + offsetY + 228;
-			}
+			enemyPoints[k + 1].x = i * 32 + 224;
+			enemyPoints[k + 1].y = j * 32 + OFFSET_SCREEN_HEIGHT;
 		}
 	}	
 
@@ -95,7 +83,15 @@ bool Game::Init(Display Disp) {
 	BackTex = SDL_CreateTextureFromSurface(canvas.getRenderer(), IMG_Load("Assets/myAssets/Sprites/Map.png"));
 	// Init Time
 	TestTime = SDL_GetPerformanceCounter();
-
+	// Init Music
+	Mix_Init(MIX_INIT_MP3);
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
+		printf("Mix_OpenAudio: %s\n", Mix_GetError());
+	}
+	music = Mix_LoadMUS("Assets/myAssets/Sounds/BGM.mp3");
+	fx_shoot = Mix_LoadWAV("Assets/myAssets/Sounds/shoot.mp3");
+	// -1 para que la musica suene para siempre
+	Mix_PlayMusic(music, -1);
 	return result;
 }
 
@@ -238,13 +234,16 @@ void Game::Draw() {
 		//--------Entities-------
 		player->draw(canvas.getRenderer());
 
+
 		for (int i = 0; i < MAX_ENTITIES; i++) {
 			if (ent[i] == NULL) break;
 			
 			ent[i]->draw(canvas.getRenderer());	
 		}
-		
-		//---------SHOT--------------
+		ent[68]->draw(canvas.getRenderer());
+		cout <<"x: "<< ent[68]->getCollsionBounds()->x << "\t y: "<<ent[68]->getCollsionBounds()->y << endl;
+
+		//-------------
 		for (int i = 0; i < 30; i++)
 		{
 			if (shot[i].alive)
@@ -259,20 +258,6 @@ void Game::Draw() {
 
 
 		// ---------DEBUG-------------
-
-		// Show Enemy born points
-		/*
-		SDL_Rect r;
-		r.w = 32;
-		r.h = 32;
-		for (int i = 0; i < 12; i++)
-		{
-			r.x = enemyPoints[i].x;
-			r.y = enemyPoints[i].y;
-			SDL_RenderFillRect(canvas.getRenderer(), &r);
-		}
-		*/
-
 		if (debug == true) {
 			if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
 				menu.showText(canvas.getRenderer(), 0, 0, "UP!", canvas.getFonts(10), canvas.getColors(1));
@@ -304,6 +289,7 @@ void Game::Draw() {
 	}
 
 	SDL_RenderPresent(canvas.getRenderer());
+
 	SDL_Delay(10);
 }
 
@@ -384,7 +370,7 @@ bool Game::Input()
 		// Inicializar restos de valor
 		//shot[shotCount].rec.x = player->getX() + player->getW();
 		//shot[shotCount].rec.y = player->getY() + (player->getH()/2);
-		
+		Mix_PlayChannel(-1,fx_shoot, 0);
 		if (player->getXmove() == -1 || player->getLastMove() == LEFT) { //shoot left
 			shot[shotCount].rec.x = player->getX();
 			shot[shotCount].rec.y = player->getY() + (player->getH() / 2);
