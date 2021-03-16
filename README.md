@@ -1,7 +1,7 @@
 # Minigame
 
 ## Description:
-This project is based on the Stardew Valley's minigame Journey of the praire king.<br/>
+This project is based on the Stardew Valley's minigame Journey of the praire king.<br/> It's a 2D shooter with a single level.
 
 ## Key Features:
 * Kill zombies<br/>
