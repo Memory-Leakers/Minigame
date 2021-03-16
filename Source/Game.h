@@ -58,6 +58,7 @@ class Game {
 
 	public:
 
+
 		int score = 0;
 		int tenScores = 0;
 		string scoreS;
@@ -118,6 +119,25 @@ class Game {
 		// Destructor
 		~Game()
 		{
+			for (int i = 0; i < 5; i++) {
+				Mix_FreeChunk(fx_death[i]);
+			}
+			Mix_FreeChunk(fx_shoot);
+			Mix_FreeChunk(fx_lose);
+			Mix_FreeChunk(fx_win);
+			
+			if (music != NULL) {
+				music = NULL;
+			}
+			
+			
+			for (int i = 0; i < MAX_ENTITIES; i++) {
+				if (ent[i] != NULL) {
+					delete ent[i];
+				}
+			}
+
+
 			delete player;
 			//delete enemy;
 			//delete[] ent;		

@@ -220,7 +220,9 @@ bool Game::Tick() {
 			}
 			if (player->checkCollisions(ent[i]->getX(), ent[i]->getY(), false) &&
 				player->checkCollisions(ent[i]->getX(), ent[i]->getY(), true)) {//Player death
-				Mix_PlayChannel(-1, fx_lose, 0); currentScreen = GAME_OVER;
+				Mix_PlayChannel(-1, fx_lose, 0); 
+				currentScreen = GAME_OVER;
+				spawnTime = 1.3f;
 				for (int j = 0; j < MAX_ENTITIES; j++) {//Entities
 					if (ent[j] != NULL && ent[j]->getID() == 1) {
 						ent[j]->setAlive(false);

@@ -18,6 +18,7 @@ void Finish() {
 	IMG_Quit;
 	Mix_CloseAudio();
 	Mix_Quit();
+
 }
 
 void Start() {
