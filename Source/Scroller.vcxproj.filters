@@ -99,5 +99,12 @@
     <ClInclude Include="Box.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Scroller.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Game\Assets\myAssets\Sprites\lifeHUD.ico" />
   </ItemGroup>
 </Project>
