@@ -20,7 +20,7 @@ Space: Attack<br/>
 * AdriSeSa (UI && Menu)<br/>
 
 ## Assets:
-Most asset art modification of the original game.<br/>
+Most asset are modifications of the original game.<br/>
 Music: https://www.bilibili.com/video/BV15t41147K5?t=841<br/>
 SFX: free sound source<br/>
 
