@@ -25,7 +25,7 @@ MrIllas
 
 Loproxi
 
-AdriSeSa
+AdriaSeSa
 
 ## Assets:
 Most asset art modification of the original game.
