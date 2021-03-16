@@ -14,11 +14,10 @@ Arrow keys: Move<br/>
 Space: Attack<br/>
 
 ## Developers:
-
-Xidashuaige<br/>
-MrIllas<br/>
-Loproxi<br/>
-AdriSeSa<br/>
+Xidashuaige (Sprites && Enemy && Aniamtion)<br/>
+MrIllas (Collision && Player)<br/>
+Loproxi (Sound && Input)<br/>
+AdriSeSa (UI && Menu)<br/>
 
 ## Assets:
 Most asset art modification of the original game.<br/>
