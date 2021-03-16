@@ -58,6 +58,7 @@ bool Display::createDisplay(int width, int height) {
 	Font80 = TTF_OpenFont("Assets/Fonts/advanced_pixel.ttf", 80);
 	Font50 = TTF_OpenFont("Assets/Fonts/advanced_pixel.ttf", 50);
 	Font35 = TTF_OpenFont("Assets/Fonts/advanced_pixel.ttf", 35);
+	Font20 = TTF_OpenFont("Assets/Fonts/advanced_pixel.ttf", 20);
 	Font10 = TTF_OpenFont("Assets/Fonts/advanced_pixel.ttf", 10);
 
 	blackC = { 0,0,0 };

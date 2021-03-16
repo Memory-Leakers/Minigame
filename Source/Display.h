@@ -22,6 +22,7 @@ private:
 	TTF_Font* Font80;
 	TTF_Font* Font50;
 	TTF_Font* Font35;
+	TTF_Font* Font20;
 	TTF_Font* Font10;
 	SDL_Color blackC;
 	SDL_Color whiteC;
@@ -36,6 +37,7 @@ public:
 		case 80: return Font80; break;
 		case 50: return Font50; break;
 		case 35: return Font35; break;
+		case 20: return Font20; break;
 		case 10: return Font10; break;
 		default: return Font50;
 		}

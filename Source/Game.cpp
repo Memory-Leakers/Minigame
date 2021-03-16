@@ -114,8 +114,8 @@ bool Game::Init(Display Disp) {
 	}
 	music = Mix_LoadMUS("Assets/myAssets/Sounds/BGM.mp3");
 
-	fx_shoot = Mix_LoadWAV("Assets/myAssets/Sounds/shoot.wav");
-	fx_lose = Mix_LoadWAV("Assets/myAssets/Sounds/lose.wav");
+	fx_shoot = Mix_LoadWAV("Assets/myAssets/Sounds/shoot.mp3");
+	fx_lose = Mix_LoadWAV("Assets/myAssets/Sounds/lose.mp3");
 	fx_win = Mix_LoadWAV("Assets/myAssets/Sounds/win.wav");
 	string temp;
 
@@ -220,6 +220,7 @@ bool Game::Tick() {
 			}
 			if (player->checkCollisions(ent[i]->getX(), ent[i]->getY(), false) &&
 				player->checkCollisions(ent[i]->getX(), ent[i]->getY(), true)) {//Player death
+				//cout << fx_lose;
 				Mix_PlayChannel(-1, fx_lose, 0); 
 				currentScreen = GAME_OVER;
 				spawnTime = 1.3f;
@@ -242,6 +243,7 @@ bool Game::Tick() {
 					ent[i]->setAlive(false);
 					if (ent[i]->getID() == 1) {
 						score++;
+						//cout << fx_death[rand() % 5];
 						Mix_PlayChannel(-1, fx_death[rand() % 5], 0);
 					}
 				}
@@ -324,6 +326,8 @@ void Game::Draw() {
 		menu.showText(canvas.getRenderer(), 430, 440, "Rius", canvas.getFonts(50), canvas.getColors(1));
 		menu.showText(canvas.getRenderer(), 500, 400, "Adria", canvas.getFonts(50), canvas.getColors(0));
 		menu.showText(canvas.getRenderer(), 500, 440, "Sellares", canvas.getFonts(50), canvas.getColors(0));
+ 
+		menu.showText(canvas.getRenderer(), 585, 580, "v1.0 87b3badc6c411651e56bfd19c770d53e", canvas.getFonts(20), canvas.getColors(2));
 		//-------------------------------------------------------------------------------------------------------------------//
 
 		break;
@@ -375,18 +379,18 @@ void Game::Draw() {
 
 		if (debug == true) {
 			if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
-				menu.showText(canvas.getRenderer(), 0, -10, "UP!", canvas.getFonts(35), canvas.getColors(1));
+				menu.showText(canvas.getRenderer(), 0, -4, "UP!", canvas.getFonts(20), canvas.getColors(1));
 			}
 			if (keys[SDL_SCANCODE_DOWN] == KEY_REPEAT) {
-				menu.showText(canvas.getRenderer(), 0, -10, "DOWN!", canvas.getFonts(35), canvas.getColors(1));
+				menu.showText(canvas.getRenderer(), 0, -4, "DOWN!", canvas.getFonts(20), canvas.getColors(1));
 			}
 			if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) {
-				menu.showText(canvas.getRenderer(), 0, -10, "LEFT!", canvas.getFonts(35), canvas.getColors(1));
+				menu.showText(canvas.getRenderer(), 0, -4, "LEFT!", canvas.getFonts(20), canvas.getColors(1));
 			}
 			if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
-				menu.showText(canvas.getRenderer(), 0, -10, "RIGHT!", canvas.getFonts(35), canvas.getColors(1));
+				menu.showText(canvas.getRenderer(), 0, -4, "RIGHT!", canvas.getFonts(20), canvas.getColors(1));
 			}
-			menu.showText(canvas.getRenderer(), 750, -10, "60 FPS", canvas.getFonts(35), canvas.getColors(1)); //DEBUG FPS
+			menu.showText(canvas.getRenderer(), 785, -4, "60 FPS", canvas.getFonts(20), canvas.getColors(1)); //DEBUG FPS
 
 			// Posicion de spawn zombie
 			SDL_SetRenderDrawColor(canvas.getRenderer(), 255, 255, 255, -255);
