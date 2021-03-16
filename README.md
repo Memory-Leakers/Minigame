@@ -4,8 +4,8 @@
 This project is based on the Stardew Valley's minigame Journey of the praire king.<br/>
 
 ## Key Features:
--Kill zombies<br/>
--Survive<br/>
+* Kill zombies<br/>
+* Survive<br/>
 
 ## Control:
 Enter: start game<br/>
@@ -14,10 +14,10 @@ Arrow keys: Move<br/>
 Space: Attack<br/>
 
 ## Developers:
-Xidashuaige (Sprites && Enemy && Aniamtion)<br/>
-MrIllas (Collision && Player)<br/>
-Loproxi (Sound && Input)<br/>
-AdriSeSa (UI && Menu)<br/>
+* Xidashuaige (Sprites && Enemy && Aniamtion)<br/>
+* MrIllas (Collision && Player)<br/>
+* Loproxi (Sound && Input)<br/>
+* AdriSeSa (UI && Menu)<br/>
 
 ## Assets:
 Most asset art modification of the original game.<br/>
