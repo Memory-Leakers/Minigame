@@ -5,13 +5,18 @@ This project is based on the Stardew Valley's minigame Journey of the praire kin
 
 ## Key Features:
 -Kill zombies
+
 -Survive
 
 ## Control:
 Enter: start game
+
 R: Restart
+
 Arrow keys: Move
+
 Space: Attack
+
 
 ## Developers:
 Xidashuaige
