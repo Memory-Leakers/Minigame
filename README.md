@@ -15,13 +15,18 @@ Space: Attack
 
 ## Developers:
 Xidashuaige
+
 MrIllas
+
 Loproxi
+
 AdriSeSa
 
 ## Assets:
 Most asset art modification of the original game.
+
 Music: https://www.bilibili.com/video/BV15t41147K5?t=841
+
 SFX: free sound source
 
 
