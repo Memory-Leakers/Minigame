@@ -8,10 +8,10 @@ This project is based on the Stardew Valley's minigame Journey of the praire kin
 * Survive<br/>
 
 ## Control:
-Enter: start game<br/>
-R: Restart<br/>
-Arrow keys: Move<br/>
-Space: Attack<br/>
+* Enter: start game<br/>
+* R: Restart<br/>
+* Arrow keys: Move<br/>
+* Space: Attack<br/>
 
 ## Developers:
 * Xidashuaige (Sprites && Enemy && Aniamtion)<br/>
