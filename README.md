@@ -12,6 +12,7 @@ This project is based on the Stardew Valley's minigame Journey of the praire kin
 * R: Restart<br/>
 * Arrow keys: Move<br/>
 * Space: Attack<br/>
+* F10: Debug<br/>
 
 ## Developers:
 * Xidashuaige (Sprites && Enemy && Aniamtion)<br/>
