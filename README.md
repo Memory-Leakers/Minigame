@@ -25,7 +25,6 @@ Most asset art modification of the original game.<br/>
 Music: https://www.bilibili.com/video/BV15t41147K5?t=841<br/>
 SFX: free sound source<br/>
 
-
 ## Licence:
 This project is licensed under an unmodifield MIT licence, which is an OSI-certifield license that allows static linking with closed source software. Check [LICENSE](LICENSE) for further details.
 
